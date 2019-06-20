@@ -1,0 +1,20 @@
+{
+  "short_name": "react-prime-ssr",
+  "name": "react-prime-ssr",
+  "icons": [
+    {
+      "src": "/_next/static/favicon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/_next/static/favicon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#e7ff00",
+  "background_color": "#e7ff00"
+}

@@ -1,0 +1,30 @@
+{
+  "presets": [
+    "next/babel"
+  ],
+  "plugins": [
+    "lodash",
+    ["babel-plugin-styled-components", {
+        "ssr": true,
+        "preprocess": false
+    }],
+    ["module-resolver", {
+      "root": ["./"],
+      "alias": {
+        "app": "./src",
+        "client": "./client",
+        "common": "./src/components/common",
+        "config": "./config",
+        "ducks": "./src/ducks",
+        "images": "./src/static/images",
+        "modules": "./src/components/modules",
+        "pages": "./src/pages",
+        "router": "./server/router.js",
+        "server": "./server",
+        "services": "./src/services",
+        "styles": "./src/styles",
+        "vectors": "./src/static/vectors"
+      }
+    }]
+  ]
+}

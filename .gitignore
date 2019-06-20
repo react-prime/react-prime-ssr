@@ -1,0 +1,22 @@
+dist/
+node_modules/
+src/.next/
+bundle_analytics/
+
+.idea
+.vscode
+.gitattributes
+
+# OS generated files #
+######################
+.AppleDouble/
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+*.happypack*
+ehthumbs.db
+Thumbs.db
+npm-debug.log
+stats.json

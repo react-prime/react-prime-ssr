@@ -1,0 +1,53 @@
+{
+  "name": "react-prime-ssr",
+  "version": "1.0.0",
+  "description": "A starter kit to create comprehensive server side rendered React apps with Redux",
+  "scripts": {
+    "start": "node server/index.js",
+    "build": "npm run clean && next build src",
+    "server": "NODE_ENV=production node server/index.js",
+    "clean": "rimraf dist/",
+    "lint": "eslint src/",
+    "analyze:build": "BUNDLE_ANALYZE=both npm run build",
+    "analyze:build:server": "BUNDLE_ANALYZE=server npm run build",
+    "analyze:build:browser": "BUNDLE_ANALYZE=browser npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.17.1",
+    "lodash": "4.17.11",
+    "next": "8.1.0",
+    "next-offline": "4.0.2",
+    "next-routes": "1.4.2",
+    "prop-types": "15.7.2",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "react-redux": "7.1.0",
+    "redux": "4.0.1",
+    "redux-thunk": "^2.3.0",
+    "styled-components": "4.3.2"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "4.3.0",
+    "@zeit/next-bundle-analyzer": "0.1.2",
+    "babel-eslint": "^8.2.5",
+    "babel-loader": "8.0.4",
+    "babel-plugin-lodash": "3.3.4",
+    "babel-plugin-module-resolver": "^3.1.1",
+    "babel-plugin-styled-components": "1.10.0",
+    "eslint": "5.14.0",
+    "eslint-config-react-app": "3.0.5",
+    "eslint-import-resolver-babel-module": "5.1.0",
+    "eslint-plugin-flowtype": "3.2.0",
+    "eslint-plugin-import": "2.17.3",
+    "eslint-plugin-jsx-a11y": "^6.1.0",
+    "eslint-plugin-react": "7.13.0",
+    "file-loader": "^1.1.11",
+    "json-loader": "0.5.7",
+    "rimraf": "^2.6.2",
+    "url-loader": "1.1.2",
+    "webpack": "4.25.1"
+  }
+}
