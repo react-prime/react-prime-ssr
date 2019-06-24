@@ -1,11 +1,12 @@
 const { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } = require('next/constants');
 const globals = require('./config/globals');
 const path = require('path');
+// const pkg = require('./package.json');
 
 // Set up our Next environment based on compilation phase
 const config = (phase) => {
   const dirPaths = {
-    distDir: '../dist',
+    distDir: '../../dist',
     publicRuntimeConfig: {
       staticFolder: '/static',
     },
@@ -28,8 +29,9 @@ const config = (phase) => {
         config.entry = async () => {
           const entries = await originalEntry();
 
-          if (entries['main.js'] && !entries['main.js'].includes('../client/polyfills.js')) {
-            entries['main.js'].unshift('../client/polyfills.js');
+          // Root path is of the folder containing "pages"
+          if (entries['main.js'] && !entries['main.js'].includes('./client/polyfills.js')) {
+            entries['main.js'].unshift('./client/polyfills.js');
           }
 
           return entries;
@@ -95,6 +97,7 @@ const config = (phase) => {
           {
             exclude: [
               /\.jsx?$/,
+              /\.mjs$/,
               /\.css$/,
               /\.svg$/,
               /\.(jpe?g|png|gif)$/i,
@@ -108,10 +111,10 @@ const config = (phase) => {
         ];
 
         // Transpile config files
-        const clientCfg = config.module.rules.find((rule) => !rule.use.options.isServer);
-        if (clientCfg) {
-          clientCfg.include.push(path.resolve('config'));
-        }
+        // const clientCfg = config.module.rules.find((rule) => !rule.use.options.isServer);
+        // if (clientCfg) {
+        //   clientCfg.include.push(path.resolve('config'));
+        // }
 
         // Preserve Next rules while appending our rules
         config.module.rules = [...config.module.rules, ...rules];
@@ -135,7 +138,7 @@ const config = (phase) => {
     //   // Gain control of sw registration
     //   dontAutoRegisterSw: true,
     //   workboxOpts: {
-    //     cacheId: 'labela',
+    //     cacheId: pkg.name,
     //     skipWaiting: true,
     //     clientsClaim: true,
     //     include: [/\.html$/, /\.js$/, /\.png$/],
