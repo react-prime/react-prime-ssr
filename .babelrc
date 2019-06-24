@@ -4,6 +4,7 @@
   ],
   "plugins": [
     "lodash",
+    "@babel/plugin-proposal-export-default-from",
     ["babel-plugin-styled-components", {
         "ssr": true,
         "preprocess": false
@@ -11,19 +12,19 @@
     ["module-resolver", {
       "root": ["./"],
       "alias": {
-        "app": "./src",
-        "client": "./client",
-        "common": "./src/components/common",
+        "app": "./src/app",
+        "client": "./src/app/client",
+        "common": "./src/app/components/common",
         "config": "./config",
-        "ducks": "./src/ducks",
-        "images": "./src/static/images",
-        "modules": "./src/components/modules",
-        "pages": "./src/pages",
-        "router": "./server/router.js",
-        "server": "./server",
-        "services": "./src/services",
-        "styles": "./src/styles",
-        "vectors": "./src/static/vectors"
+        "ducks": "./src/app/ducks",
+        "images": "./src/app/static/images",
+        "modules": "./src/app/components/modules",
+        "pages": "./src/app/components/pages",
+        "router": "./src/server/router.js",
+        "server": "./src/server",
+        "services": "./src/app/services",
+        "styles": "./src/app/styles",
+        "vectors": "./src/app/static/vectors"
       }
     }]
   ]

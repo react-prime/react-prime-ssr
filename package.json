@@ -4,7 +4,7 @@
   "description": "A starter kit to create comprehensive server side rendered React apps with Redux",
   "scripts": {
     "start": "node src/server/index.js",
-    "build": "npm run clean && next build src/app",
+    "build": "npm run clean && next build src/app/components",
     "server": "NODE_ENV=production node src/server/index.js",
     "clean": "rimraf dist/",
     "lint": "eslint src/",
@@ -30,6 +30,7 @@
     "styled-components": "4.3.2"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-export-default-from": "7.2.0",
     "@svgr/webpack": "4.3.0",
     "@zeit/next-bundle-analyzer": "0.1.2",
     "babel-eslint": "^8.2.5",

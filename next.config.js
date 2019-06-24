@@ -6,7 +6,7 @@ const path = require('path');
 // Set up our Next environment based on compilation phase
 const config = (phase) => {
   const dirPaths = {
-    distDir: '../../dist',
+    distDir: '../../../dist',
     publicRuntimeConfig: {
       staticFolder: '/static',
     },
@@ -30,8 +30,10 @@ const config = (phase) => {
           const entries = await originalEntry();
 
           // Root path is of the folder containing "pages"
-          if (entries['main.js'] && !entries['main.js'].includes('./client/polyfills.js')) {
-            entries['main.js'].unshift('./client/polyfills.js');
+          const polyfillsPath = '../client/polyfills.js';
+
+          if (entries['main.js'] && !entries['main.js'].includes(polyfillsPath)) {
+            entries['main.js'].unshift(polyfillsPath);
           }
 
           return entries;
