@@ -27,7 +27,7 @@ const config = (phase) => {
           const entries = await originalEntry();
 
           // Root path is of the folder containing "pages"
-          const polyfillsPath = './client/polyfills.js';
+          const polyfillsPath = '../config/polyfills.js';
 
           if (entries['main.js'] && !entries['main.js'].includes(polyfillsPath)) {
             entries['main.js'].unshift(polyfillsPath);

@@ -1,7 +1,11 @@
 import React from 'react';
 import App, { Container } from 'next/app';
+import Head from 'next/head';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
+
+// eslint-disable-next-line no-unused-vars
+import Manifest from 'public/manifest?external.json'; // nessecary to include with the Next build process
 
 import withReduxStore from 'services/withReduxStore';
 // import registerServiceWorker from 'services/registerServiceWorker';
@@ -19,6 +23,10 @@ class LabelApp extends App {
 
     return (
       <>
+        <Head>
+          <link rel="manifest" href="/_next/static/manifest.json" />
+        </Head>
+
         <GlobalStyling />
         <ThemeProvider theme={theme}>
           <Container>
@@ -33,5 +41,3 @@ class LabelApp extends App {
 }
 
 export default withReduxStore(LabelApp);
-
-// export default LabelApp;

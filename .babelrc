@@ -13,7 +13,7 @@
       "root": ["./"],
       "alias": {
         "src": "./src",
-        "client": "./src/client",
+        "public": "./public",
         "common": "./src/components/common",
         "config": "./config",
         "ducks": "./src/ducks",
