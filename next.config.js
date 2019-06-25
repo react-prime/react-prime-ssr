@@ -7,9 +7,6 @@ const path = require('path');
 const config = (phase) => {
   const dirPaths = {
     distDir: '../../../dist',
-    publicRuntimeConfig: {
-      staticFolder: '/static',
-    },
   };
 
   let cfg = dirPaths;
