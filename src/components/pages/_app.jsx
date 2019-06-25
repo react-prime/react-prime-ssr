@@ -6,6 +6,7 @@ import { ThemeProvider } from 'styled-components';
 
 // eslint-disable-next-line no-unused-vars
 import Manifest from 'public/manifest?external.json'; // nessecary to include with the Next build process
+import favicon from 'public/favicon.ico?external';
 
 import withReduxStore from 'services/withReduxStore';
 // import registerServiceWorker from 'services/registerServiceWorker';
@@ -25,6 +26,7 @@ class LabelApp extends App {
       <>
         <Head>
           <link rel="manifest" href="/_next/static/manifest.json" />
+          <link rel="icon" sizes="192x192" href={favicon} />
         </Head>
 
         <GlobalStyling />

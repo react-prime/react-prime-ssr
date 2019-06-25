@@ -63,7 +63,7 @@ const config = (phase) => {
             ],
           },
           {
-            test: /\.(jpe?g|png|gif)$/i,
+            test: /\.(jpe?g|png|gif|ico)$/i,
             oneOf: [
               {
                 resourceQuery: /external/,
