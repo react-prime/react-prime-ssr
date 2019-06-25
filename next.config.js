@@ -76,37 +76,6 @@ const config = (phase) => {
               },
             ],
           },
-          {
-            type: 'javascript/auto',
-            test: /\.json$/,
-            exclude: /(node_modules)/,
-            oneOf: [
-              {
-                resourceQuery: /external/,
-                loader: 'file-loader',
-                options: {
-                  name: 'static/[name].[ext]',
-                },
-              },
-              {
-                loader: 'json-loader',
-              },
-            ],
-          },
-          {
-            exclude: [
-              /\.jsx?$/,
-              /\.mjs$/,
-              /\.css$/,
-              /\.svg$/,
-              /\.(jpe?g|png|gif)$/i,
-              /\.json$/,
-            ],
-            loader: 'file-loader',
-            options: {
-              name: 'static/[name].[ext]',
-            },
-          },
         ];
 
         // Preserve Next rules while appending our rules
