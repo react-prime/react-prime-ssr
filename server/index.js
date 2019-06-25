@@ -2,7 +2,7 @@ const next = require('next');
 const express = require('express');
 const url = require('url');
 const path = require('path');
-const { port, env } = require('../../config/env');
+const { port, env } = require('../config/env');
 const router = require('./router');
 
 const app = next({
@@ -21,6 +21,7 @@ app.prepare().then(() => {
     const parsedUrl = url.parse(req.url, true);
     const { pathname } = parsedUrl;
 
+    // Fix static urls that don't include _next in the URL
     if (req.url.includes('static') && !req.url.includes('_next')) {
       req.url = req.url.replace('/static', '/_next/static');
     }

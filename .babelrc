@@ -20,8 +20,8 @@
         "images": "./src/app/static/images",
         "modules": "./src/app/components/modules",
         "pages": "./src/app/components/pages",
-        "router": "./src/server/router.js",
-        "server": "./src/server",
+        "router": "./server/router.js",
+        "server": "./server",
         "services": "./src/app/services",
         "styles": "./src/app/styles",
         "vectors": "./src/app/static/vectors"
