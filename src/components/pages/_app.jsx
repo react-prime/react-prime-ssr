@@ -9,16 +9,11 @@ import Manifest from 'public/manifest?external.json'; // nessecary to include wi
 import favicon from 'public/favicon.ico?external';
 
 import withReduxStore from 'services/withReduxStore';
-// import registerServiceWorker from 'services/registerServiceWorker';
 
 import theme from 'styles/theme';
 import GlobalStyling from 'styles';
 
 class LabelApp extends App {
-  componentDidMount() {
-    // registerServiceWorker();
-  }
-
   render() {
     const { Component, pageProps, reduxStore } = this.props;
 

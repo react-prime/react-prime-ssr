@@ -1,8 +1,9 @@
 const path = require('path');
 const { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } = require('next/constants');
+
 const globals = require('./config/globals');
 const nextOptions = require('./config/next');
-// const pkg = require('./package.json');
+const pkg = require('./package.json');
 
 // Set up our Next environment based on compilation phase
 const config = (phase) => {
@@ -63,6 +64,20 @@ const config = (phase) => {
             ],
           },
           {
+            type: 'javascript/auto',
+            test: /\.json$/,
+            exclude: /(node_modules)/,
+            oneOf: [
+              {
+                resourceQuery: /external/,
+                loader: 'file-loader?name=static/[name].[ext]',
+              },
+              {
+                loader: 'json-loader',
+              },
+            ],
+          },
+          {
             test: /\.(jpe?g|png|gif|ico)$/i,
             oneOf: [
               {
@@ -98,20 +113,18 @@ const config = (phase) => {
     ADDITIONAL PRODUCTION BUILD CONFIG
   */
   if (phase === PHASE_PRODUCTION_BUILD) {
-    // const withOffline = require('next-offline');
+    const withOffline = require('next-offline');
 
     // Add service worker to our production build with Workbox
-    // cfg = withOffline({
-    //   ...cfg,
-    //   // Gain control of sw registration
-    //   dontAutoRegisterSw: true,
-    //   workboxOpts: {
-    //     cacheId: pkg.name,
-    //     skipWaiting: true,
-    //     clientsClaim: true,
-    //     include: [/\.html$/, /\.js$/, /\.png$/],
-    //   },
-    // });
+    cfg = withOffline({
+      ...cfg,
+      workboxOpts: {
+        cacheId: pkg.name,
+        skipWaiting: true,
+        clientsClaim: true,
+        include: [/\.html$/, /\.js$/, /\.png$/],
+      },
+    });
 
     // Add Bundle Analyzer if requested by script
     if (process.env.BUNDLE_ANALYZE) {
