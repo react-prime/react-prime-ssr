@@ -1,12 +1,13 @@
 const path = require('path');
 const { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } = require('next/constants');
 const globals = require('./config/globals');
+const nextOptions = require('./config/next');
 // const pkg = require('./package.json');
 
 // Set up our Next environment based on compilation phase
 const config = (phase) => {
   const dirPaths = {
-    distDir: '../../dist',
+    distDir: nextOptions.distDir,
   };
 
   let cfg = dirPaths;
@@ -26,11 +27,8 @@ const config = (phase) => {
         config.entry = async () => {
           const entries = await originalEntry();
 
-          // Root path is of the folder containing "pages"
-          const polyfillsPath = '../../config/polyfills.js';
-
-          if (entries['main.js'] && !entries['main.js'].includes(polyfillsPath)) {
-            entries['main.js'].unshift(polyfillsPath);
+          if (entries['main.js'] && !entries['main.js'].includes(nextOptions.polyfillsPath)) {
+            entries['main.js'].unshift(nextOptions.polyfillsPath);
           }
 
           return entries;

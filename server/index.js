@@ -3,12 +3,12 @@ const path = require('path');
 const next = require('next');
 const express = require('express');
 const { port, env } = require('../config/env');
+const nextOptions = require('../config/next');
 const router = require('./router');
 
 const app = next({
   dev: env !== 'production',
-  // Directory where pages folder is located
-  dir: 'src/components',
+  dir: nextOptions.pagesDir,
 });
 
 const handle = router.getRequestHandler(app);
