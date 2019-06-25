@@ -109,26 +109,8 @@ const config = (phase) => {
           },
         ];
 
-        // Include the entire src folder instead of only src/components
-        // config.module.rules = config.module.rules.map((rule) => {
-        //   const include = rule.include.map((include) => {
-        //     const includeStr = include.toString();
-
-        //     if (includeStr.includes('src/components')) {
-        //       return includeStr.replace('src/components', 'src');
-        //     }
-
-        //     return include;
-        //   });
-
-        //   return { ...rule, include };
-        // });
-
         // Preserve Next rules while appending our rules
         config.module.rules = [...config.module.rules, ...rules];
-
-        // Change context to src folder
-        // config.context = config.context.replace('src/components', 'src');
 
         config.plugins.push(new webpack.DefinePlugin(globals));
 
