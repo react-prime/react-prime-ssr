@@ -7,9 +7,8 @@ const router = require('./router');
 
 const app = next({
   dev: env !== 'production',
-
-  // Set directory to search for pages
-  dir: 'src',
+  // Directory where pages folder is located
+  dir: 'src/components',
 });
 
 const handle = router.getRequestHandler(app);

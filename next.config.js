@@ -1,12 +1,12 @@
+const path = require('path');
 const { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } = require('next/constants');
 const globals = require('./config/globals');
-// const path = require('path');
 // const pkg = require('./package.json');
 
 // Set up our Next environment based on compilation phase
 const config = (phase) => {
   const dirPaths = {
-    distDir: '../dist',
+    distDir: '../../dist',
   };
 
   let cfg = dirPaths;
@@ -27,7 +27,7 @@ const config = (phase) => {
           const entries = await originalEntry();
 
           // Root path is of the folder containing "pages"
-          const polyfillsPath = '../config/polyfills.js';
+          const polyfillsPath = '../../config/polyfills.js';
 
           if (entries['main.js'] && !entries['main.js'].includes(polyfillsPath)) {
             entries['main.js'].unshift(polyfillsPath);
@@ -43,6 +43,12 @@ const config = (phase) => {
           config of Next (unless you are trying to overwrite something) or things might break.
         */
         const rules = [
+          {
+            test: /\.jsx?$/,
+            include: path.resolve('src'),
+            exclude: path.resolve('src/components'),
+            loader: 'babel-loader',
+          },
           {
             test: /\.svg$/,
             oneOf: [
@@ -80,6 +86,8 @@ const config = (phase) => {
 
         // Preserve Next rules while appending our rules
         config.module.rules = [...config.module.rules, ...rules];
+
+        // console.log(config.module.rules);
 
         config.plugins.push(new webpack.DefinePlugin(globals));
 
