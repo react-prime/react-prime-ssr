@@ -4,7 +4,7 @@
   "description": "A starter kit to create comprehensive server side rendered React apps with Redux",
   "scripts": {
     "start": "node server/index.js",
-    "build": "npm run clean && next build src/app/components",
+    "build": "npm run clean && next build src/components",
     "server": "NODE_ENV=production node server/index.js",
     "clean": "rimraf dist/",
     "lint": "eslint src/",

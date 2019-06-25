@@ -12,19 +12,19 @@
     ["module-resolver", {
       "root": ["./"],
       "alias": {
-        "app": "./src/app",
-        "client": "./src/app/client",
-        "common": "./src/app/components/common",
+        "app": "./src",
+        "client": "./src/client",
+        "common": "./src/components/common",
         "config": "./config",
-        "ducks": "./src/app/ducks",
-        "images": "./src/app/static/images",
-        "modules": "./src/app/components/modules",
-        "pages": "./src/app/components/pages",
+        "ducks": "./src/ducks",
+        "images": "./src/static/images",
+        "modules": "./src/components/modules",
+        "pages": "./src/components/pages",
         "router": "./server/router.js",
         "server": "./server",
-        "services": "./src/app/services",
-        "styles": "./src/app/styles",
-        "vectors": "./src/app/static/vectors"
+        "services": "./src/services",
+        "styles": "./src/styles",
+        "vectors": "./src/static/vectors"
       }
     }]
   ]

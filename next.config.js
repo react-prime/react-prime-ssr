@@ -6,7 +6,7 @@ const path = require('path');
 // Set up our Next environment based on compilation phase
 const config = (phase) => {
   const dirPaths = {
-    distDir: '../../../dist',
+    distDir: '../../dist',
   };
 
   let cfg = dirPaths;

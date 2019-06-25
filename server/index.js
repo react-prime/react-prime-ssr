@@ -9,7 +9,7 @@ const app = next({
   dev: env !== 'production',
 
   // Set directory to search for pages
-  dir: 'src/app/components',
+  dir: 'src/components',
 });
 
 const handle = router.getRequestHandler(app);
@@ -27,7 +27,7 @@ app.prepare().then(() => {
     }
 
     if (env === 'production' && pathname === '/service-worker.js') {
-      const filePath = path.join(__dirname, '../dist', pathname);
+      const filePath = path.resolve('dist', pathname);
 
       app.serveStatic(req, res, filePath);
     } else {
