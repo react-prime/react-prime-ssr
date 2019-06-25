@@ -15,6 +15,7 @@ class LabelApp extends App {
   }
 
   render() {
+    // eslint-disable-next-line
     const { Component, pageProps, reduxStore } = this.props;
 
     return (
@@ -24,7 +25,7 @@ class LabelApp extends App {
           {/* <ErrorBoundary> */}
             <Container>
               {/* <Provider store={reduxStore}> */}
-                <Component {...pageProps} />
+              <Component {...pageProps} />
               {/* </Provider> */}
             </Container>
           {/* </ErrorBoundary> */}

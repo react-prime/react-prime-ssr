@@ -1,6 +1,6 @@
 const { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } = require('next/constants');
 const globals = require('./config/globals');
-const path = require('path');
+// const path = require('path');
 // const pkg = require('./package.json');
 
 // Set up our Next environment based on compilation phase

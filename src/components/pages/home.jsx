@@ -8,7 +8,7 @@ import { Button } from 'common/interaction';
 const Home = () => (
   <Container>
     <LogoIcon />
-    <img src={githubLogo} />
+    <img src={githubLogo} alt="github logo" />
     {test()}
     <Button>Click me</Button>
   </Container>
