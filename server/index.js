@@ -9,7 +9,7 @@ const app = next({
   dev: env !== 'production',
 
   // Set directory to search for pages
-  dir: 'src/components',
+  dir: 'src',
 });
 
 const handle = router.getRequestHandler(app);

@@ -12,7 +12,7 @@
     ["module-resolver", {
       "root": ["./"],
       "alias": {
-        "app": "./src",
+        "src": "./src",
         "client": "./src/client",
         "common": "./src/components/common",
         "config": "./config",

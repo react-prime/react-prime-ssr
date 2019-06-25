@@ -6,7 +6,7 @@ const globals = require('./config/globals');
 // Set up our Next environment based on compilation phase
 const config = (phase) => {
   const dirPaths = {
-    distDir: '../../dist',
+    distDir: '../dist',
   };
 
   let cfg = dirPaths;
@@ -27,7 +27,7 @@ const config = (phase) => {
           const entries = await originalEntry();
 
           // Root path is of the folder containing "pages"
-          const polyfillsPath = '../client/polyfills.js';
+          const polyfillsPath = './client/polyfills.js';
 
           if (entries['main.js'] && !entries['main.js'].includes(polyfillsPath)) {
             entries['main.js'].unshift(polyfillsPath);
@@ -109,14 +109,26 @@ const config = (phase) => {
           },
         ];
 
-        // Transpile config files
-        // const clientCfg = config.module.rules.find((rule) => !rule.use.options.isServer);
-        // if (clientCfg) {
-        //   clientCfg.include.push(path.resolve('config'));
-        // }
+        // Include the entire src folder instead of only src/components
+        // config.module.rules = config.module.rules.map((rule) => {
+        //   const include = rule.include.map((include) => {
+        //     const includeStr = include.toString();
+
+        //     if (includeStr.includes('src/components')) {
+        //       return includeStr.replace('src/components', 'src');
+        //     }
+
+        //     return include;
+        //   });
+
+        //   return { ...rule, include };
+        // });
 
         // Preserve Next rules while appending our rules
         config.module.rules = [...config.module.rules, ...rules];
+
+        // Change context to src folder
+        // config.context = config.context.replace('src/components', 'src');
 
         config.plugins.push(new webpack.DefinePlugin(globals));
 
