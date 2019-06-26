@@ -1,7 +1,6 @@
 const path = require('path');
 const { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } = require('next/constants');
 
-const globals = require('./config/globals');
 const nextOptions = require('./config/next');
 const pkg = require('./package.json');
 
@@ -20,6 +19,7 @@ const config = (phase) => {
     // Only add Webpack config for compile phases
     const webpack = require('webpack');
     const CopyWebpackPlugin = require('copy-webpack-plugin');
+    const globals = require('./config/globals');
 
     cfg = {
       ...cfg,
@@ -87,6 +87,7 @@ const config = (phase) => {
         // Preserve Next rules while appending our rules
         config.module.rules = [...config.module.rules, ...rules];
 
+        // Add plugins
         config.plugins = config.plugins.concat(
           new webpack.DefinePlugin(globals),
           new CopyWebpackPlugin([
