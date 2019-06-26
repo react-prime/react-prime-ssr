@@ -19,12 +19,14 @@ const config = (phase) => {
   if (phase !== PHASE_PRODUCTION_SERVER) {
     // Only add Webpack config for compile phases
     const webpack = require('webpack');
+    const CopyWebpackPlugin = require('copy-webpack-plugin');
 
     cfg = {
       ...cfg,
-      webpack: (config) => {
+      webpack: (config, { isServer }) => {
         // Push polyfills before all other code
         const originalEntry = config.entry;
+
         config.entry = async () => {
           const entries = await originalEntry();
 
@@ -45,7 +47,8 @@ const config = (phase) => {
           {
             test: /\.jsx?$/,
             include: path.resolve('src'),
-            exclude: path.resolve('src/components'),
+            // Next already handles this dir for us
+            exclude: path.resolve(nextOptions.pagesDir),
             loader: 'babel-loader',
           },
           {
@@ -64,33 +67,17 @@ const config = (phase) => {
             ],
           },
           {
-            type: 'javascript/auto',
-            test: /\.json$/,
-            exclude: /(node_modules)/,
-            oneOf: [
-              {
-                resourceQuery: /external/,
-                loader: 'file-loader?name=static/[name].[ext]',
-              },
-              {
-                loader: 'json-loader',
-              },
-            ],
-          },
-          {
-            test: /\.(jpe?g|png|gif|ico)$/i,
-            oneOf: [
-              {
-                resourceQuery: /external/,
-                loader: 'file-loader',
-                options: {
-                  name: 'static/[name].[ext]',
-                },
-              },
+            test: /\.(jpe?g|png|gif|ico|webp)$/,
+            exclude: cfg.exclude,
+            use: [
               {
                 loader: 'url-loader',
                 options: {
                   limit: 10000,
+                  fallback: 'file-loader',
+                  publicPath: '/_next/static/images/',
+                  outputPath: `${isServer ? '../' : ''}static/images/`,
+                  name: '[name].[ext]',
                 },
               },
             ],
@@ -100,9 +87,15 @@ const config = (phase) => {
         // Preserve Next rules while appending our rules
         config.module.rules = [...config.module.rules, ...rules];
 
-        // console.log(config.module.rules);
-
-        config.plugins.push(new webpack.DefinePlugin(globals));
+        config.plugins = config.plugins.concat(
+          new webpack.DefinePlugin(globals),
+          new CopyWebpackPlugin([
+            {
+              from: path.resolve('public/manifest.json'),
+              to: path.resolve('dist/static'),
+            },
+          ]),
+        );
 
         return config;
       },

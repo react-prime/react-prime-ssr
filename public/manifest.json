@@ -3,7 +3,7 @@
   "short_name": "prime",
   "icons": [
     {
-      "src": "/_next/static/favicon.ico",
+      "src": "/_next/static/images/favicon.ico",
       "sizes": "64x64"
     }
   ],

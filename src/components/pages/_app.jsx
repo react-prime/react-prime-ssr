@@ -5,8 +5,7 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
 // eslint-disable-next-line no-unused-vars
-import Manifest from 'public/manifest?external.json'; // nessecary to include with the Next build process
-import favicon from 'public/favicon.ico?external';
+import favicon from 'public/favicon.ico';
 
 import withReduxStore from 'services/withReduxStore';
 
