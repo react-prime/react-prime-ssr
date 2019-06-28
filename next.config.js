@@ -6,11 +6,9 @@ const pkg = require('./package.json');
 
 // Set up our Next environment based on compilation phase
 const config = (phase) => {
-  const dirPaths = {
+  let cfg = {
     distDir: nextOptions.distDir,
   };
-
-  let cfg = dirPaths;
 
   /*
     BUILD CONFIG
