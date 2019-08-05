@@ -2,7 +2,6 @@ const path = require('path');
 const { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } = require('next/constants');
 
 const nextOptions = require('./config/next');
-const pkg = require('./package.json');
 
 // Set up our Next environment based on compilation phase
 const config = (phase) => {
@@ -106,6 +105,7 @@ const config = (phase) => {
   */
   if (phase === PHASE_PRODUCTION_BUILD) {
     const withOffline = require('next-offline');
+    const pkg = require('./package.json');
 
     // Add service worker to our production build with Workbox
     cfg = withOffline({
