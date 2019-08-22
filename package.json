@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node server/index.js",
     "build": "npm run clean && next build src/components && npm run build:cpserver",
-    "build:cpserver": "cp -r server/ dist/server/ && cp -r config/ dist/config/",
+    "build:cpserver": "cp ./server/* ./dist/server && cp -r ./config/ ./dist/config",
     "server": "NODE_ENV=production node dist/server/index.js",
     "clean": "rimraf dist/",
     "lint": "eslint --ext .jsx --ext .js src/",

@@ -41,6 +41,8 @@ const config = (phase) => {
           config of Next (unless you are trying to overwrite something) or things might break.
         */
         const rules = [
+          // Default jsx rule from NextJS only watches files in the pages dir.
+          // In our case we need to also watch files outside of that dir.
           {
             test: /\.jsx?$/,
             include: path.resolve('src'),
@@ -65,7 +67,6 @@ const config = (phase) => {
           },
           {
             test: /\.(jpe?g|png|gif|ico|webp)$/,
-            exclude: cfg.exclude,
             use: [
               {
                 loader: 'url-loader',
