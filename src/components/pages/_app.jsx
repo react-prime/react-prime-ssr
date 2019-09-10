@@ -11,7 +11,7 @@ import withReduxStore from 'services/withReduxStore';
 import theme from 'styles/theme';
 import GlobalStyling from 'styles';
 
-class LabelApp extends App {
+class NextApp extends App {
   render() {
     const { Component, pageProps, reduxStore } = this.props;
 
@@ -35,4 +35,4 @@ class LabelApp extends App {
   }
 }
 
-export default withReduxStore(LabelApp);
+export default withReduxStore(NextApp);
