@@ -12,6 +12,17 @@ import theme from 'styles/theme';
 import GlobalStyling from 'styles';
 
 class NextApp extends App {
+  static async getInitialProps({ ctx, Component }) {
+    let pageProps = {};
+
+    // Execute component's getInitialProps first
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx);
+    }
+
+    return { pageProps };
+  }
+
   render() {
     const { Component, pageProps, reduxStore } = this.props;
 
