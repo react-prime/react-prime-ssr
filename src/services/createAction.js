@@ -5,9 +5,11 @@
 * boilerplate, this action creator must be used.
 */
 
-export default (type) => (payload, meta) => ({
+const createAction = (type) => (payload, meta) => ({
   type,
   payload,
   error: payload instanceof Error,
   meta,
 });
+
+export default createAction;

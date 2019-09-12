@@ -1,9 +1,9 @@
 import React from 'react';
 import PT from 'prop-types';
 import _ from 'lodash';
-import { getPageFromRoute } from 'services';
 import { useRouter } from 'hooks';
 import Router from 'router';
+import getPageFromRoute from 'services/getPageFromRoute';
 
 const Link = ({
   children, className, to, ariaLabel, currentTab, type, disabled, external, ...props
