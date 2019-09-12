@@ -1,14 +1,13 @@
 import React from 'react';
 import PT from 'prop-types';
 import _ from 'lodash';
-import { useRouter } from 'hooks';
+import { withRouter } from 'next/router';
 import Router from 'router';
 import getPageFromRoute from 'services/getPageFromRoute';
 
 const Link = ({
-  children, className, to, ariaLabel, currentTab, type, disabled, external, ...props
+  children, className, to, ariaLabel, currentTab, type, disabled, external, router, ...props
 }) => {
-  const router = useRouter();
   const formattedAriaLabel = _.capitalize(ariaLabel);
 
   let linkProps = {
@@ -93,10 +92,13 @@ Link.propTypes = {
   disabled: PT.bool,
   external: PT.bool,
   params: PT.object,
+  router: PT.shape({
+    prefetch: PT.func.isRequired,
+  }).isRequired,
 };
 
 Link.defaultProps = {
   type: 'route',
 };
 
-export default Link;
+export default withRouter(Link);
