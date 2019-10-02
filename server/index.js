@@ -1,6 +1,7 @@
 const path = require('path');
 const next = require('next');
 const express = require('express');
+const compression = require('compression');
 const { port, env } = require('../config/env');
 const nextOptions = require('../config/next');
 const router = require('./router');
@@ -17,6 +18,9 @@ const handle = router.getRequestHandler(app);
 app.prepare()
   .then(() => {
     const server = express();
+
+    // Serve as GZIP
+    server.use(compression());
 
     if (isProd) {
       server.get('/service-worker.js', (req, res) => {
