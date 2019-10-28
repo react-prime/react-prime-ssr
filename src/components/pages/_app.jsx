@@ -1,5 +1,5 @@
 import React from 'react';
-import App, { Container } from 'next/app';
+import App from 'next/app';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
@@ -35,11 +35,9 @@ class NextApp extends App {
 
         <GlobalStyling />
         <ThemeProvider theme={theme}>
-          <Container>
-            <Provider store={reduxStore}>
-              <Component {...pageProps} />
-            </Provider>
-          </Container>
+          <Provider store={reduxStore}>
+            <Component {...pageProps} />
+          </Provider>
         </ThemeProvider>
       </>
     );
