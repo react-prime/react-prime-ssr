@@ -3,8 +3,8 @@ import path from 'path';
 import { Configuration, EntryFunc, Entry } from 'webpack';
 import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from 'next/constants';
 import TSConfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
-import { NextConfig } from './node_modules/@types/next';
-import nextOptions from './config/next';
+import { NextConfig } from '../node_modules/@types/next';
+import nextOptions from './next';
 
 // Set up our Next environment based on compilation phase
 const config = (phase: string): NextConfig => {

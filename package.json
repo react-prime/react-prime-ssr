@@ -6,7 +6,7 @@
     "start": "npm run build:nextconfig && ts-node --project tsconfig.server.json server/index.ts",
     "build": "npm run build:nextconfig && npm run clean && next build src && npm run build:server",
     "build:server": "rimraf dist/src/ && rimraf serverDist/ && tsc --project tsconfig.server.json && npm run server:move && rimraf serverDist/",
-    "build:nextconfig": "npm run clean:nextconfig && tsc --project tsconfig.nextconfig.json",
+    "build:nextconfig": "npm run clean:nextconfig && tsc --project tsconfig.nextconfig.json && mv config/next.config.js next.config.js",
     "server:move": "mkdir -p dist/src/server && mv serverDist/src/server/ dist/src/server/ && mv serverDist/config/ dist/src/",
     "server": "NODE_ENV=production node dist/src/server/server/index.js",
     "clean": "rimraf dist/",
