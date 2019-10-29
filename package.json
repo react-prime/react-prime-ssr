@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A starter kit to create comprehensive server side rendered React apps with Redux",
   "scripts": {
-    "start": "npm run build:nextconfig && ts-node server/index.ts",
+    "start": "npm run build:nextconfig && ts-node --project tsconfig.server.json server/index.ts",
     "build": "npm run build:nextconfig && npm run clean && next build src && npm run build:server",
     "build:server": "rimraf dist/src/ && rimraf serverDist/ && tsc --project tsconfig.server.json && npm run server:move && rimraf serverDist/",
     "build:nextconfig": "npm run clean:nextconfig && tsc --project tsconfig.nextconfig.json",
@@ -39,7 +39,8 @@
     "react-redux": "7.1.0",
     "redux": "4.0.1",
     "redux-thunk": "^2.3.0",
-    "styled-components": "4.3.2"
+    "styled-components": "4.3.2",
+    "typesafe-actions": "5.1.0-1"
   },
   "devDependencies": {
     "@babel/plugin-proposal-export-default-from": "7.2.0",
@@ -50,6 +51,8 @@
     "@types/node": "12.11.7",
     "@types/react": "16.9.11",
     "@types/react-dom": "16.9.3",
+    "@types/react-redux": "7.1.5",
+    "@types/redux": "3.6.0",
     "@types/styled-components": "4.1.20",
     "@typescript-eslint/eslint-plugin": "2.5.0",
     "@typescript-eslint/parser": "2.5.0",
@@ -72,6 +75,8 @@
     "next-offline": "4.0.2",
     "rimraf": "^2.6.2",
     "ts-node": "8.4.1",
+    "tsconfig-paths": "3.9.0",
+    "tsconfig-paths-webpack-plugin": "3.2.0",
     "typescript": "3.6.4",
     "url-loader": "1.1.2",
     "webpack": "4.25.1"

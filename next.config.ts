@@ -1,8 +1,10 @@
-import { NextConfig } from './node_modules/@types/next';
+/* eslint-disable @typescript-eslint/no-var-requires */
 import path from 'path';
-import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from 'next/constants';
-import nextOptions from './config/next';
 import { Configuration, EntryFunc, Entry } from 'webpack';
+import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from 'next/constants';
+import TSConfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import { NextConfig } from './node_modules/@types/next';
+import nextOptions from './config/next';
 
 // Set up our Next environment based on compilation phase
 const config = (phase: string): NextConfig => {
@@ -10,8 +12,9 @@ const config = (phase: string): NextConfig => {
     distDir: nextOptions.distDir,
   };
 
-  /*
-    BUILD CONFIG
+  /**
+   * BUILD CONFIG
+   * This config will run in every build phase but the starting the production server
   */
   if (phase !== PHASE_PRODUCTION_SERVER) {
     // Only add Webpack config for compile phases
@@ -21,6 +24,7 @@ const config = (phase: string): NextConfig => {
 
     cfg = {
       ...cfg,
+      /** @TODO Find correct typing for options */
       webpack: (config: Configuration, { isServer }: any) => {
         // Push polyfills before all other code
         const originalEntry = config.entry as EntryFunc;
@@ -36,11 +40,11 @@ const config = (phase: string): NextConfig => {
           return entries;
         };
 
-        /*
-          WEBPACK CONFIG
-          Your regular Webpack configuration, except we have to work with an already existing
-          Webpack configuration from Next. When changing anything, keep in mind to preserve the
-          config of Next (unless you are trying to overwrite something) or things might break.
+        /**
+         * WEBPACK CONFIG
+         * Your regular Webpack configuration, except we have to work with an already existing
+         * Webpack configuration from Next. When changing anything, keep in mind to preserve the
+         * config of Next (unless you are trying to overwrite something) or things might break.
         */
         const rules = [
           // Default jsx rule from NextJS only watches files in the pages dir.
@@ -98,13 +102,23 @@ const config = (phase: string): NextConfig => {
           ]),
         );
 
+        // Fix baseurl in tsconfig
+        if (config.resolve) {
+          if (config.resolve.plugins) {
+            config.resolve.plugins.push(new TSConfigPathsPlugin());
+          } else {
+            config.resolve.plugins = [new TSConfigPathsPlugin()];
+          }
+        }
+
         return config;
       },
     };
   }
 
-  /*
-    ADDITIONAL PRODUCTION BUILD CONFIG
+  /**
+   * PRODUCTION BUILD CONFIG
+   * This is the config for production builds in addition to the previous build phase
   */
   if (phase === PHASE_PRODUCTION_BUILD) {
     const withOffline = require('next-offline');

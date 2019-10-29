@@ -9,9 +9,11 @@
     "skipLibCheck": true,
     "strict": true,
     "noImplicitAny": false,
+    "allowJs": false,
+    "isolatedModules": true,
     "moduleResolution": "node",
     "target": "esnext",
-    "module": "commonjs",
+    "module": "esnext",
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
@@ -31,8 +33,24 @@
       "types": ["src/types/index"],
       "vectors/*": ["src/static/vectors/*"]
     },
-    "lib": ["dom", "es2017"],
+    "lib": [
+      "dom",
+      "es2017"
+    ],
   },
-  "typeRoots": ["node_modules/@types"],
-  "exclude": ["dist", ".next", "out", "next.config.js", "node_modules"]
+  "typeRoots": [
+    "node_modules/@types"
+  ],
+  "exclude": [
+    "dist",
+    ".next",
+    "out",
+    "next.config.js",
+    "node_modules"
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }

@@ -4,8 +4,10 @@
     "sourceMap": false,
     "noEmit": false,
     "skipLibCheck": true,
+    "isolatedModules": false,
     "module": "commonjs",
-    "outDir": "serverDist"
+    "outDir": "dist",
+    "target": "es2017"
   },
   "include": [
     "src/types/declarations.d.ts",
