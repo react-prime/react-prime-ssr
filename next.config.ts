@@ -47,15 +47,6 @@ const config = (phase: string): NextConfig => {
          * config of Next (unless you are trying to overwrite something) or things might break.
         */
         const rules = [
-          // Default jsx rule from NextJS only watches files in the pages dir.
-          // In our case we need to also watch files outside of that dir.
-          {
-            test: /\.jsx?$/,
-            include: path.resolve('src'),
-            // Next already handles this dir for us
-            exclude: path.resolve(nextOptions.pagesDir),
-            loader: 'babel-loader',
-          },
           {
             test: /\.svg$/,
             oneOf: [
