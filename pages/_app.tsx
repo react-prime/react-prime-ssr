@@ -1,17 +1,16 @@
+import * as i from 'types';
 import React from 'react';
-import App from 'next/app';
+import App, { AppInitialProps, AppProps } from 'next/app';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
-
-import favicon from 'public/favicon.ico';
 
 import withReduxStore from 'services/withReduxStore';
 
 import theme from 'styles/theme';
 import GlobalStyling from 'styles';
 
-class NextApp extends App {
+class NextApp extends App<Props> {
   static async getInitialProps({ ctx, Component }) {
     let pageProps = {};
 
@@ -30,7 +29,7 @@ class NextApp extends App {
       <>
         <Head>
           <link rel="manifest" href="/_next/static/manifest.json" />
-          <link rel="icon" sizes="192x192" href={favicon} />
+          <link rel="icon" sizes="192x192" href="/_next/static/favicon.ico" />
         </Head>
 
         <GlobalStyling />
@@ -42,6 +41,10 @@ class NextApp extends App {
       </>
     );
   }
+}
+
+type Props = AppInitialProps & AppProps & {
+  reduxStore: i.Store;
 }
 
 export default withReduxStore(NextApp);
