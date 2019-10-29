@@ -9,4 +9,4 @@ const nextOptions = {
   polyfillsPath: '../../config/polyfills.js',
 };
 
-module.exports = nextOptions;
+export default nextOptions;

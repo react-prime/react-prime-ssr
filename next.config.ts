@@ -1,11 +1,12 @@
-const path = require('path');
-const { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } = require('next/constants');
-
-const nextOptions = require('./config/next');
+import { NextConfig } from './node_modules/@types/next';
+import path from 'path';
+import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from 'next/constants';
+import nextOptions from './config/next';
+import { Configuration, EntryFunc, Entry } from 'webpack';
 
 // Set up our Next environment based on compilation phase
-const config = (phase) => {
-  let cfg = {
+const config = (phase: string): NextConfig => {
+  let cfg: NextConfig = {
     distDir: nextOptions.distDir,
   };
 
@@ -20,15 +21,16 @@ const config = (phase) => {
 
     cfg = {
       ...cfg,
-      webpack: (config, { isServer }) => {
+      webpack: (config: Configuration, { isServer }: any) => {
         // Push polyfills before all other code
-        const originalEntry = config.entry;
+        const originalEntry = config.entry as EntryFunc;
 
         config.entry = async () => {
-          const entries = await originalEntry();
+          const entries = await originalEntry() as Entry;
+          const mainEntry = entries['main.js'] as string[];
 
-          if (entries['main.js'] && !entries['main.js'].includes(nextOptions.polyfillsPath)) {
-            entries['main.js'].unshift(nextOptions.polyfillsPath);
+          if (mainEntry && !mainEntry.includes(nextOptions.polyfillsPath)) {
+            mainEntry.unshift(nextOptions.polyfillsPath);
           }
 
           return entries;
@@ -83,10 +85,10 @@ const config = (phase) => {
         ];
 
         // Preserve Next rules while appending our rules
-        config.module.rules = [...config.module.rules, ...rules];
+        config.module!.rules = [...config.module!.rules, ...rules];
 
         // Add plugins
-        config.plugins = config.plugins.concat(
+        config.plugins = config.plugins!.concat(
           new webpack.DefinePlugin(globals),
           new CopyWebpackPlugin([
             {

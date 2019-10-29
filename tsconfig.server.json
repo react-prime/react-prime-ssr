@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "sourceMap": false,
+    "noEmit": false,
+    "skipLibCheck": true,
+    "module": "commonjs",
+    "outDir": "serverDist"
+  },
+  "include": [
+    "src/types/declarations.d.ts",
+    "src/server/**/*.ts"
+  ]
+}

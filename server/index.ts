@@ -1,10 +1,10 @@
-const path = require('path');
-const next = require('next');
-const express = require('express');
-const compression = require('compression');
-const { port, env } = require('../config/env');
-const nextOptions = require('../config/next');
-const router = require('./router');
+import path from 'path';
+import next from 'next';
+import express from 'express';
+import compression from 'compression';
+import { port, env } from '../config/env';
+import nextOptions from '../config/next';
+import router from './router';
 
 const isProd = env === 'production';
 
@@ -38,9 +38,7 @@ app.prepare()
     // Handle other routes
     server.get('*', handle);
 
-    server.listen(port, (err) => {
-      if (err) throw err;
-
+    server.listen(port, () => {
       console.info(`[${env}] Server running on http://localhost:${port}`);
     });
   })

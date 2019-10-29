@@ -6,6 +6,7 @@ bundle_analytics/
 .idea
 .vscode
 .gitattributes
+next.config.js
 
 # OS generated files #
 ######################
