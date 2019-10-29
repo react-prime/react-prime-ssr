@@ -1,31 +1,40 @@
+/* eslint-disable no-underscore-dangle, @typescript-eslint/no-explicit-any */
 import React from 'react';
-import initializeStore from '../store';
+import initializeStore from 'store';
+import { NextPageContext } from 'next';
+import { AppInitialProps } from 'next/app';
+import { Store } from 'redux';
 import isServer from './isServer';
 
-const __NEXT_REDUX_STORE__ = '__NEXT_REDUX_STORE__';
+type AppComponentProps = AppInitialProps & {
+  initialReduxState: any;
+}
 
-function getOrCreateStore(initialState) {
+function getOrCreateStore(initialState?: any): Store {
   // Always make a new store if server, otherwise state is shared between requests
   if (isServer) {
     return initializeStore(initialState);
   }
 
   // Create store if unavailable on the client and set it on the window object
-  if (!window[__NEXT_REDUX_STORE__]) {
-    window[__NEXT_REDUX_STORE__] = initializeStore(initialState);
+  if (!window.__NEXT_REDUX_STORE__) {
+    window.__NEXT_REDUX_STORE__ = initializeStore(initialState);
   }
 
-  return window[__NEXT_REDUX_STORE__];
+  return window.__NEXT_REDUX_STORE__;
 }
 
-export default (App) => (
-  class AppWithRedux extends React.Component {
-    static async getInitialProps(appContext) {
+const withReduxStore = (App: any) => (
+  class AppWithRedux extends React.Component<AppComponentProps> {
+    reduxStore: Store;
+
+    // eslint-disable-next-line react/sort-comp
+    static async getInitialProps(appContext: NextPageContext) {
       // Get or Create the store with `undefined` as initialState
       // This allows you to set a custom default initialState
       const reduxStore = getOrCreateStore();
 
-      // Provide the store to getInitialProps of pages
+      // @ts-ignore Provide the store to getInitialProps of pages
       appContext.ctx.store = reduxStore;
 
       let appProps = {};
@@ -39,9 +48,9 @@ export default (App) => (
       };
     }
 
-    constructor(props) {
+    constructor(props: AppComponentProps) {
       super(props);
-      // eslint-disable-next-line react/prop-types
+
       this.reduxStore = getOrCreateStore(props.initialReduxState);
     }
 
@@ -50,3 +59,5 @@ export default (App) => (
     }
   }
 );
+
+export default withReduxStore;

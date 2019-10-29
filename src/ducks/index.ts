@@ -1,1 +1,1 @@
-export data from './data';
+export { default as data } from './data';
