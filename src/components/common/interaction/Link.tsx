@@ -76,7 +76,7 @@ const Link = ({
       {React.Children.only(
         <a {...prefetchProps} {...linkProps} {...validProps}>
           {children}
-        </a>
+        </a>,
       )}
     </Router.Link>
   );
