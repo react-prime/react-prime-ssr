@@ -9,11 +9,11 @@ export type BaseStyled = {
 }
 
 // Get color strings from theme
-export type ThemeColors = keyof typeof theme.colors;
+export type ThemeColors = keyof typeof theme.color;
 
 // Get subcolors from colors if they exist
 export type SubThemeColors = {
-  [color in i.ThemeColors]: Exclude<keyof typeof theme.colors[color], keyof string>
+  [color in i.ThemeColors]: Exclude<keyof typeof theme.color[color], keyof string>
 }
 
 // Ensures colors exist in theme

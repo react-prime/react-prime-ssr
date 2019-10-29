@@ -4,7 +4,7 @@ export const PrimeHeader = styled.header`
   text-align: center;
   padding: 50px 10px;
   margin: 0 0 50px;
-  background: ${(props) => props.theme.black};
+  background: ${(props) => props.theme.color.black};
 
   & > svg {
     width: 250px;
