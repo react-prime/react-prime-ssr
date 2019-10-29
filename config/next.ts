@@ -1,13 +1,16 @@
 const nextOptions = {
   // Where the pages folder is located
-  pagesDir: '.',
+  pagesDir: 'src/components',
 
-  // root of these settings is the folder where the page folder is located
+  /**
+   * NOTE:
+   * Root path of the following settings is the directory where the 'pages' folder is located in
+   */
   // Location where the build folder should go
-  distDir: 'dist',
+  distDir: '../../dist',
 
   // Where the polyfills file is located
-  polyfillsPath: 'config/polyfills.ts',
+  polyfillsPath: '../../config/polyfills.ts',
 };
 
 export default nextOptions;

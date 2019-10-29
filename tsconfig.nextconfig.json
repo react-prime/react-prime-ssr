@@ -4,12 +4,12 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "module": "commonjs",
-    "outDir": "./config",
+    "outDir": ".",
     "target": "es5",
     "lib": [
       "es2017"
     ]
   },
-  "include": ["config/next.config.ts"],
+  "include": ["next.config.ts"],
   "exclude": []
 }

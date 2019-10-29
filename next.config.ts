@@ -3,8 +3,8 @@ import path from 'path';
 import { Configuration, EntryFunc, Entry } from 'webpack';
 import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from 'next/constants';
 import TSConfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
-import { NextConfig } from '../node_modules/@types/next';
-import nextOptions from './next';
+import { NextConfig } from './node_modules/@types/next';
+import nextOptions from './config/next';
 
 // Set up our Next environment based on compilation phase
 const config = (phase: string): NextConfig => {
@@ -88,6 +88,17 @@ const config = (phase: string): NextConfig => {
           },
         ];
 
+        // Remove 'include' property from rule so all ts(x) files are transpiled
+        config.module!.rules.forEach((rule) => {
+          const ruleStr = rule.test ? rule.test.toString() : '';
+          const ruleContainsTs = ruleStr.includes('tsx|ts') || ruleStr.includes('ts|tsx');
+
+          // @ts-ignore
+          if (ruleContainsTs && rule.use && rule.use.loader === 'next-babel-loader') {
+            delete rule.include;
+          }
+        });
+
         // Preserve Next rules while appending our rules
         config.module!.rules = [...config.module!.rules, ...rules];
 
@@ -102,7 +113,7 @@ const config = (phase: string): NextConfig => {
           ]),
         );
 
-        // Fix baseurl in tsconfig
+        // Add tsconfig paths to webpack
         if (config.resolve) {
           if (config.resolve.plugins) {
             config.resolve.plugins.push(new TSConfigPathsPlugin());
