@@ -1,6 +1,6 @@
 import * as i from 'types';
 import React from 'react';
-import App, { AppInitialProps, AppProps } from 'next/app';
+import App, { AppInitialProps, AppProps, AppContext } from 'next/app';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
@@ -11,7 +11,7 @@ import theme from 'styles/theme';
 import GlobalStyling from 'styles';
 
 class NextApp extends App<Props> {
-  static async getInitialProps({ ctx, Component }) {
+  static async getInitialProps({ ctx, Component }: AppContext) {
     let pageProps = {};
 
     // Execute component's getInitialProps first
