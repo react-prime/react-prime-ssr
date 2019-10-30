@@ -1,7 +1,6 @@
 import path from 'path';
 import next from 'next';
 import express from 'express';
-import compression from 'compression';
 import { port, env } from '../config/env';
 import nextOptions from '../config/next';
 import router from './router';
@@ -18,9 +17,6 @@ const handle = router.getRequestHandler(app);
 app.prepare()
   .then(() => {
     const server = express();
-
-    // Serve as GZIP
-    server.use(compression());
 
     if (isProd) {
       server.get('/service-worker.js', (req, res) => {
