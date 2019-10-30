@@ -2,15 +2,13 @@ import * as i from 'types';
 import React from 'react';
 import _ from 'lodash';
 import { RouteParams } from 'next-routes';
+import { LinkProps as NextLinkProps } from 'next/link';
 
 import Router from 'router';
-import { useRouter } from 'hooks';
-import { getPageFromRoute } from 'services';
 
 export const Link: React.FC<LinkProps> = ({
   children, className, to, ariaLabel, currentTab, type, disabled, external, ...props
 }) => {
-  const router = useRouter();
   const formattedAriaLabel = _.capitalize(ariaLabel);
 
   let linkProps: React.AnchorHTMLAttributes<{}> = {
@@ -62,22 +60,12 @@ export const Link: React.FC<LinkProps> = ({
     );
   }
 
-  // We route with route name, but prefetch with page name
-  const prefetchPage = getPageFromRoute(to);
-  let prefetchProps = {};
-
-  if (prefetchPage) {
-    prefetchProps = {
-      onMouseOver: () => router.prefetch(prefetchPage),
-    };
-  }
-
   const anchorProps = _.omit(props, 'params');
 
   return (
-    <Router.Link route={to} params={props.params}>
+    <Router.Link {...props} route={to} params={props.params}>
       {React.Children.only(
-        <a {...prefetchProps} {...linkProps} {...anchorProps}>
+        <a {...linkProps} {...anchorProps}>
           {children}
         </a>,
       )}
@@ -98,7 +86,7 @@ type BaseProps = React.AnchorHTMLAttributes<{}> & {
   If external prop is not present we can assume it's an internal link and only internal routes are
   allowed.
 */
-type InternalLinkProps = {
+type InternalLinkProps = Omit<NextLinkProps, 'href'> & {
   external?: false;
   to: i.RouteNames;
   params?: RouteParams;
