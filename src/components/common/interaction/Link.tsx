@@ -1,16 +1,18 @@
+import * as i from 'types';
 import React from 'react';
-import PT from 'prop-types';
 import _ from 'lodash';
-import { withRouter } from 'next/router';
+import { RouteParams } from 'next-routes';
 import Router from 'router';
 import getPageFromRoute from 'services/getPageFromRoute';
+import useRouter from 'hooks/useRouter';
 
-const Link = ({
-  children, className, to, ariaLabel, currentTab, type, disabled, external, router, ...props
+const Link: React.FC<LinkProps> = ({
+  children, className, to, ariaLabel, currentTab, type, disabled, external, ...props
 }) => {
+  const router = useRouter();
   const formattedAriaLabel = _.capitalize(ariaLabel);
 
-  let linkProps = {
+  let linkProps: React.AnchorHTMLAttributes<{}> = {
     className: className || '',
   };
 
@@ -19,7 +21,7 @@ const Link = ({
       ? '_self'
       : '_blank';
 
-    let href;
+    let href: string;
 
     switch (type) {
       case 'mail': href = `mailto:${to}`; break;
@@ -50,10 +52,10 @@ const Link = ({
       );
     }
 
-    const validProps = _.omit(props, 'external');
+    const anchorProps = _.omit(props, 'external');
 
     return (
-      <a {...linkProps} {...validProps}>
+      <a {...linkProps} {...anchorProps}>
         {children}
       </a>
     );
@@ -69,12 +71,12 @@ const Link = ({
     };
   }
 
-  const validProps = _.omit(props, 'params');
+  const anchorProps = _.omit(props, 'params');
 
   return (
     <Router.Link route={to} params={props.params}>
       {React.Children.only(
-        <a {...prefetchProps} {...linkProps} {...validProps}>
+        <a {...prefetchProps} {...linkProps} {...anchorProps}>
           {children}
         </a>,
       )}
@@ -82,23 +84,21 @@ const Link = ({
   );
 };
 
-Link.propTypes = {
-  children: PT.string.isRequired,
-  className: PT.string,
-  to: PT.string.isRequired,
-  ariaLabel: PT.string,
-  currentTab: PT.bool,
-  type: PT.oneOf(['route', 'text', 'mail', 'phone']),
-  disabled: PT.bool,
-  external: PT.bool,
-  params: PT.object,
-  router: PT.shape({
-    prefetch: PT.func.isRequired,
-  }).isRequired,
-};
+type LinkProps = React.AnchorHTMLAttributes<{}> & {
+  children: React.ReactNode;
+  to: i.RouteNames;
+  className?: string;
+  ariaLabel?: string;
+  currentTab?: boolean;
+  type?: 'route' | 'text' | 'mail' | 'phone';
+  disabled?: boolean;
+  params?: RouteParams;
+  external?: boolean;
+}
 
 Link.defaultProps = {
   type: 'route',
+  params: {},
 };
 
-export default withRouter(Link);
+export default Link;

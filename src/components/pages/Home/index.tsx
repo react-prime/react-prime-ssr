@@ -4,6 +4,7 @@ import Logo from 'vectors/logo.svg';
 import GithubLogo from 'images/github-logo.png';
 
 import { Anchor } from 'common/interaction';
+import Link from 'common/interaction/Link';
 import { PrimeHeader, PrimeContent, GithubLink } from './components/styled';
 
 const Prime = () => (

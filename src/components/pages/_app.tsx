@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
+import { RouterContextProvider } from 'hooks/useRouter';
 import withReduxStore from 'services/withReduxStore';
 
 import theme from 'styles/theme';
@@ -33,11 +34,13 @@ class NextApp extends App<Props> {
         </Head>
 
         <GlobalStyling />
-        <ThemeProvider theme={theme}>
-          <Provider store={reduxStore}>
-            <Component {...pageProps} />
-          </Provider>
-        </ThemeProvider>
+        <RouterContextProvider>
+          <ThemeProvider theme={theme}>
+            <Provider store={reduxStore}>
+              <Component {...pageProps} />
+            </Provider>
+          </ThemeProvider>
+        </RouterContextProvider>
       </>
     );
   }
