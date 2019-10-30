@@ -2,11 +2,12 @@ import * as i from 'types';
 import React from 'react';
 import _ from 'lodash';
 import { RouteParams } from 'next-routes';
-import Router from 'router';
-import getPageFromRoute from 'services/getPageFromRoute';
-import useRouter from 'hooks/useRouter';
 
-const Link: React.FC<LinkProps> = ({
+import Router from 'router';
+import { useRouter } from 'hooks';
+import getPageFromRoute from 'services/getPageFromRoute';
+
+export const Link: React.FC<LinkProps> = ({
   children, className, to, ariaLabel, currentTab, type, disabled, external, ...props
 }) => {
   const router = useRouter();
@@ -84,21 +85,39 @@ const Link: React.FC<LinkProps> = ({
   );
 };
 
-type LinkProps = React.AnchorHTMLAttributes<{}> & {
+type BaseProps = React.AnchorHTMLAttributes<{}> & {
   children: React.ReactNode;
-  to: i.RouteNames;
   className?: string;
   ariaLabel?: string;
   currentTab?: boolean;
   type?: 'route' | 'text' | 'mail' | 'phone';
   disabled?: boolean;
-  params?: RouteParams;
-  external?: boolean;
 }
+
+/*
+  If external prop is not present we can assume it's an internal link and only internal routes are
+  allowed.
+*/
+type InternalLinkProps = {
+  external?: false;
+  to: i.RouteNames;
+  params?: RouteParams;
+}
+
+/* If external prop is present all strings on "to" are allowed */
+type ExternalLinkProps = {
+  external: true;
+  to: string;
+  params?: never;
+}
+
+/* Combine all possible type combinations into a Discriminated Union type */
+type LinkProps = BaseProps & (
+  | InternalLinkProps
+  | ExternalLinkProps
+)
 
 Link.defaultProps = {
   type: 'route',
   params: {},
 };
-
-export default Link;
