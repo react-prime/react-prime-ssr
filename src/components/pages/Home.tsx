@@ -5,7 +5,7 @@ import GithubLogo from 'images/github-logo.png';
 
 import { useSelector } from 'hooks';
 import { Anchor } from 'common';
-import { PrimeHeader, PrimeContent, GithubLink } from './components/styled';
+import { PrimeHeader, PrimeContent, GithubLink } from 'modules/Home/styled';
 
 const Home = () => {
   const dataLoading = useSelector((state) => state.data.loading);
