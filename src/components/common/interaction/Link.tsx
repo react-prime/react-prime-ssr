@@ -5,7 +5,7 @@ import { RouteParams } from 'next-routes';
 
 import Router from 'router';
 import { useRouter } from 'hooks';
-import getPageFromRoute from 'services/getPageFromRoute';
+import { getPageFromRoute } from 'services';
 
 export const Link: React.FC<LinkProps> = ({
   children, className, to, ariaLabel, currentTab, type, disabled, external, ...props

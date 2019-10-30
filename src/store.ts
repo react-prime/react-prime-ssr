@@ -1,7 +1,8 @@
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import * as appReducers from 'ducks';
-import isServer from 'services/isServer';
+
+import { isServer } from 'services';
 
 const store = (initialState = {}) => {
   let middleware = applyMiddleware(thunk);

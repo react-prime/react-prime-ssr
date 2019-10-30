@@ -31,6 +31,7 @@
       "server/*": ["server/*"],
       "styles": ["src/styles/index"],
       "styles/*": ["src/styles/*"],
+      "services": ["src/services"],
       "services/*": ["src/services/*"],
       "store": ["src/store"],
       "styled-components": ["src/services/styled-components"],

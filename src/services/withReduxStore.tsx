@@ -4,11 +4,8 @@ import initializeStore from 'store';
 import { NextPageContext } from 'next';
 import { AppInitialProps } from 'next/app';
 import { Store } from 'redux';
-import isServer from './isServer';
 
-type AppComponentProps = AppInitialProps & {
-  initialReduxState: any;
-}
+import { isServer } from './isServer';
 
 function getOrCreateStore(initialState?: any): Store {
   // Always make a new store if server, otherwise state is shared between requests
@@ -24,7 +21,7 @@ function getOrCreateStore(initialState?: any): Store {
   return window.__NEXT_REDUX_STORE__;
 }
 
-const withReduxStore = (App: any) => (
+export const withReduxStore = (App: any) => (
   class AppWithRedux extends React.Component<AppComponentProps> {
     reduxStore: Store;
 
@@ -60,4 +57,6 @@ const withReduxStore = (App: any) => (
   }
 );
 
-export default withReduxStore;
+type AppComponentProps = AppInitialProps & {
+  initialReduxState: any;
+}

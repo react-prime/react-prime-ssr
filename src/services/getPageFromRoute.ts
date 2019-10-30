@@ -1,6 +1,6 @@
 import Router from 'router';
 
-const getPageFromRoute = (routeName) => {
+export const getPageFromRoute = (routeName: string) => {
   let name = routeName;
 
   if (name.charAt(0) === '/') name = name.slice(1);
@@ -9,5 +9,3 @@ const getPageFromRoute = (routeName) => {
 
   return route ? route.page : null;
 };
-
-export default getPageFromRoute;

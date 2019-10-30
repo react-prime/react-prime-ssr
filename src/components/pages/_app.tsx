@@ -6,10 +6,8 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
 import { RouterContextProvider } from 'hooks';
-import withReduxStore from 'services/withReduxStore';
-
-import theme from 'styles/theme';
-import GlobalStyling from 'styles';
+import { withReduxStore } from 'services';
+import { theme, GlobalStyling } from 'styles';
 
 class NextApp extends App<Props> {
   static async getInitialProps({ ctx, Component }: AppContext) {
