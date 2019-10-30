@@ -2,7 +2,7 @@ import React from 'react';
 import Document, { Head, Main, NextScript, DocumentProps, DocumentContext } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
-export default class MyDocument extends Document<DocumentProps> {
+class NextDocument extends Document<DocumentProps> {
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
@@ -43,3 +43,5 @@ export default class MyDocument extends Document<DocumentProps> {
     );
   }
 }
+
+export default NextDocument;

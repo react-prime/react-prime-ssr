@@ -6,10 +6,25 @@ import TSConfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import { NextConfig } from './node_modules/@types/next';
 import nextOptions from './config/next';
 
+const APP_ENV = process.env.APP_ENV || 'development';
+
+const GLOBALS = {
+  'process.env': {
+    NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+    APP_ENV: JSON.stringify(process.env.APP_ENV || 'development'),
+    PORT: process.env.PORT || 3000,
+  },
+  __DEV__: APP_ENV === 'development',
+  __TEST__: APP_ENV === 'test',
+  __ACC__: APP_ENV === 'acceptation',
+  __PROD__: APP_ENV === 'production',
+};
+
 // Set up our Next environment based on compilation phase
 const config = (phase: string): NextConfig => {
   let cfg: NextConfig = {
     distDir: nextOptions.distDir,
+    pageExtensions: ['tsx'],
   };
 
   /**
@@ -20,7 +35,6 @@ const config = (phase: string): NextConfig => {
     // Only add Webpack config for compile phases
     const webpack = require('webpack');
     const CopyWebpackPlugin = require('copy-webpack-plugin');
-    const globals = require('./config/globals');
 
     cfg = {
       ...cfg,
@@ -95,7 +109,7 @@ const config = (phase: string): NextConfig => {
 
         // Add plugins
         config.plugins = config.plugins!.concat(
-          new webpack.DefinePlugin(globals),
+          new webpack.DefinePlugin(GLOBALS),
           new CopyWebpackPlugin([
             {
               from: path.resolve('public/manifest.json'),

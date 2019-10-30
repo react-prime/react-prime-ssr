@@ -11,6 +11,6 @@
   },
   "include": [
     "src/types/declarations.d.ts",
-    "src/server/**/*.ts"
+    "server/**/*.ts"
   ]
 }

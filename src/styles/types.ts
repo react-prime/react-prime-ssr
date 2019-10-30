@@ -1,6 +1,6 @@
 import * as i from 'types';
 import { ThemedCssFunction } from '../../node_modules/@types/styled-components';
-import theme from './theme';
+import { theme } from './theme';
 import { sizes } from './utils';
 
 export type BaseStyled = {

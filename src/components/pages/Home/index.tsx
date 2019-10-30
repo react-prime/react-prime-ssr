@@ -7,7 +7,7 @@ import { useSelector } from 'hooks';
 import { Anchor } from 'common';
 import { PrimeHeader, PrimeContent, GithubLink } from './components/styled';
 
-const Prime = () => {
+const Home = () => {
   const dataLoading = useSelector((state) => state.data.loading);
 
   return (
@@ -40,4 +40,4 @@ const Prime = () => {
   );
 };
 
-export default Prime;
+export default Home;

@@ -1,6 +1,6 @@
 import * as i from 'types';
 import React from 'react';
-import App, { AppInitialProps, AppProps, AppContext } from 'next/app';
+import App, { AppInitialProps, AppProps } from 'next/app';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
@@ -10,19 +10,8 @@ import { withReduxStore } from 'services';
 import { theme, GlobalStyling } from 'styles';
 
 class NextApp extends App<Props> {
-  static async getInitialProps({ ctx, Component }: AppContext) {
-    let pageProps = {};
-
-    // Execute component's getInitialProps first
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
-    }
-
-    return { pageProps };
-  }
-
   render() {
-    const { Component, pageProps, reduxStore } = this.props;
+    const { Component, reduxStore } = this.props;
 
     return (
       <>
@@ -35,7 +24,7 @@ class NextApp extends App<Props> {
         <RouterContextProvider>
           <ThemeProvider theme={theme}>
             <Provider store={reduxStore}>
-              <Component {...pageProps} />
+              <Component />
             </Provider>
           </ThemeProvider>
         </RouterContextProvider>
