@@ -2,16 +2,14 @@ import * as i from 'types';
 import React from 'react';
 import App, { AppInitialProps, AppProps } from 'next/app';
 import Head from 'next/head';
-import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
 import { RouterContextProvider } from 'hooks';
-import { withReduxStore } from 'services';
 import { theme, GlobalStyling } from 'styles';
 
 class NextApp extends App<Props> {
   render() {
-    const { Component, reduxStore } = this.props;
+    const { Component } = this.props;
 
     return (
       <>
@@ -23,9 +21,7 @@ class NextApp extends App<Props> {
         <GlobalStyling />
         <RouterContextProvider>
           <ThemeProvider theme={theme}>
-            <Provider store={reduxStore}>
-              <Component />
-            </Provider>
+            <Component />
           </ThemeProvider>
         </RouterContextProvider>
       </>
@@ -37,4 +33,4 @@ type Props = AppInitialProps & AppProps & {
   reduxStore: i.Store;
 }
 
-export default withReduxStore(NextApp);
+export default NextApp;

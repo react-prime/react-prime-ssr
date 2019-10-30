@@ -1,62 +1,76 @@
-/* eslint-disable no-underscore-dangle, @typescript-eslint/no-explicit-any */
+import * as i from 'types';
 import React from 'react';
-import initializeStore from 'store';
+import { Provider } from 'react-redux';
 import { NextPageContext } from 'next';
-import { AppInitialProps } from 'next/app';
-import { Store } from 'redux';
+import App from 'next/app';
 
-import { isServer } from './isServer';
+import initializeStore from 'store';
 
-function getOrCreateStore(initialState?: any): Store {
+export const withRedux = (PageComponent: any, { ssr = true } = {}) => {
+  const WithRedux = ({ initialReduxState, ...props }) => {
+    const store = getOrInitializeStore(initialReduxState);
+
+    return (
+      <Provider store={store}>
+        <PageComponent {...props} />
+      </Provider>
+    );
+  };
+
+  // Make sure people don't use this HOC on _app
+  if (!__PROD__) {
+    const isAppHoc = PageComponent === App || PageComponent.prototype instanceof App;
+
+    if (isAppHoc) {
+      console.error('The withRedux HOC should not be used on _app.tsx as it will reduce performance.');
+    }
+  }
+
+  // Set the correct displayName in development
+  if (!__PROD__) {
+    const displayName = PageComponent.displayName || PageComponent.name || 'Component';
+
+    WithRedux.displayName = `withRedux(${displayName})`;
+  }
+
+  if (ssr || PageComponent.getInitialProps) {
+    WithRedux.getInitialProps = async (context: NextPageContext) => {
+      // Get or Create the store with `undefined` as initialState
+      // This allows you to set a custom default initialState
+      const reduxStore = getOrInitializeStore();
+
+      // @ts-ignore Provide the store to getInitialProps of pages
+      context.store = reduxStore;
+
+      // Run getInitialProps from HOCed PageComponent
+      const pageProps = typeof PageComponent.getInitialProps === 'function'
+        ? await PageComponent.getInitialProps.call(PageComponent, context)
+        : {};
+
+      // Pass props to PageComponent
+      return {
+        ...pageProps,
+        initialReduxState: reduxStore.getState(),
+      };
+    };
+  }
+
+  return WithRedux;
+};
+
+
+let reduxStore: i.Store;
+
+const getOrInitializeStore = (initialState?: any): i.Store => {
   // Always make a new store if server, otherwise state is shared between requests
-  if (isServer) {
+  if (typeof window === 'undefined') {
     return initializeStore(initialState);
   }
 
   // Create store if unavailable on the client and set it on the window object
-  if (!window.__NEXT_REDUX_STORE__) {
-    window.__NEXT_REDUX_STORE__ = initializeStore(initialState);
+  if (!reduxStore) {
+    reduxStore = initializeStore(initialState);
   }
 
-  return window.__NEXT_REDUX_STORE__;
-}
-
-export const withReduxStore = (App: any) => (
-  class AppWithRedux extends React.Component<AppComponentProps> {
-    reduxStore: Store;
-
-    // eslint-disable-next-line react/sort-comp
-    static async getInitialProps(appContext: NextPageContext) {
-      // Get or Create the store with `undefined` as initialState
-      // This allows you to set a custom default initialState
-      const reduxStore = getOrCreateStore();
-
-      // @ts-ignore Provide the store to getInitialProps of pages
-      appContext.ctx.store = reduxStore;
-
-      let appProps = {};
-      if (typeof App.getInitialProps === 'function') {
-        appProps = await App.getInitialProps.call(App, appContext);
-      }
-
-      return {
-        ...appProps,
-        initialReduxState: reduxStore.getState(),
-      };
-    }
-
-    constructor(props: AppComponentProps) {
-      super(props);
-
-      this.reduxStore = getOrCreateStore(props.initialReduxState);
-    }
-
-    render() {
-      return <App {...this.props} reduxStore={this.reduxStore} />;
-    }
-  }
-);
-
-type AppComponentProps = AppInitialProps & {
-  initialReduxState: any;
-}
+  return reduxStore;
+};
