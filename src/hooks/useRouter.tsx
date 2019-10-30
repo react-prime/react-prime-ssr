@@ -11,7 +11,5 @@ type ProviderProps = {
   router: SingletonRouter;
 }
 
-const useRouter = () => useContext(RouterContext);
-
+export const useRouter = () => useContext(RouterContext);
 export const RouterContextProvider = withRouter(Provider);
-export default useRouter;
