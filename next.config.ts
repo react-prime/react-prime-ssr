@@ -21,8 +21,9 @@ const GLOBALS = {
 };
 
 // Set up our Next environment based on compilation phase
-const config = (phase: string): NextConfig => {
+const config = (phase: string, config: NextConfig): NextConfig => {
   let cfg: NextConfig = {
+    ...config,
     distDir: nextOptions.distDir,
     pageExtensions: ['tsx'],
   };
