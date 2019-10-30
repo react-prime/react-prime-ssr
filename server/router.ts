@@ -4,7 +4,7 @@ import { routeNames } from './routeNames';
 
 const router = (new routes() as i.Router)
   .add({ pattern: '/', page: 'home', name: routeNames.home })
-  .add({ pattern: '/', page: 'data', name: routeNames.data });
+  .add({ pattern: '/data', page: 'data', name: routeNames.data });
 
 router.push = router.Router.pushRoute;
 
