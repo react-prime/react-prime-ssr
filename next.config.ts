@@ -2,7 +2,6 @@
 import path from 'path';
 import { Configuration, EntryFunc, Entry } from 'webpack';
 import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from 'next/constants';
-import TSConfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import { NextConfig } from './node_modules/@types/next';
 import nextOptions from './config/next';
 
@@ -36,6 +35,7 @@ const config = (phase: string, config: NextConfig): NextConfig => {
     // Only add Webpack config for compile phases
     const webpack = require('webpack');
     const CopyWebpackPlugin = require('copy-webpack-plugin');
+    const TSConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
     cfg = {
       ...cfg,
