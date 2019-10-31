@@ -40,6 +40,7 @@ const config = (phase: string, config: NextConfig): NextConfig => {
     cfg = {
       ...cfg,
       /** @TODO Find correct typing for options */
+      // eslint-disable-next-line
       webpack: (config: Configuration, { isServer }: any) => {
         // Push polyfills before all other code
         const originalEntry = config.entry as EntryFunc;
