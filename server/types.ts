@@ -1,7 +1,8 @@
-import * as i from 'types';
 import { Registry } from 'next-routes';
-import { Router, NextRouter } from 'next/router';
-import { routeNames } from 'server/routeNames';
+import { NextRouter } from 'next/router';
+import routeNames from 'server/routeNames';
+
+export type RouteOptions = Parameters<Registry['add']>[0];
 
 export type Router = Registry & {
   push: NextRouter['push'];
@@ -11,4 +12,4 @@ export type Router = Registry & {
   }[];
 }
 
-export type RouteNames = i.ValueOf<typeof routeNames>;
+export type RouteNames = typeof routeNames[number]['name'];

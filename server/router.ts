@@ -1,11 +1,10 @@
 import * as i from 'types';
 import routes from 'next-routes';
-import { routeNames } from './routeNames';
+import appRoutes from './routeNames';
 
-const router = (new routes() as i.Router)
-  .add({ pattern: '/', page: 'home', name: routeNames.home })
-  .add({ pattern: '/data', page: 'data', name: routeNames.data });
-
+const router = (new routes() as i.Router);
 router.push = router.Router.pushRoute;
+
+appRoutes.map(router.add);
 
 export default router;
