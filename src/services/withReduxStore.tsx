@@ -1,12 +1,12 @@
 import * as i from 'types';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { NextPageContext } from 'next';
 import App from 'next/app';
 
 import initializeStore from 'store';
+import { AugmentedNextPageContext } from './types';
 
-export const withRedux = (PageComponent: any, { ssr = true } = {}) => {
+export const withRedux = (PageComponent: i.NextPageComponent, { ssr = true } = {}) => {
   const WithRedux = ({ initialReduxState, ...props }) => {
     const store = getOrInitializeStore(initialReduxState);
 
@@ -19,6 +19,7 @@ export const withRedux = (PageComponent: any, { ssr = true } = {}) => {
 
   // Make sure people don't use this HOC on _app
   if (!__PROD__) {
+    // @ts-ignore Example is from NextJS but errors in TypeScript ("always false" error). Will leave as is.
     const isAppHoc = PageComponent === App || PageComponent.prototype instanceof App;
 
     if (isAppHoc) {
@@ -34,7 +35,7 @@ export const withRedux = (PageComponent: any, { ssr = true } = {}) => {
   }
 
   if (ssr || PageComponent.getInitialProps) {
-    WithRedux.getInitialProps = async (context: NextPageContext) => {
+    WithRedux.getInitialProps = async (context: AugmentedNextPageContext) => {
       // Get or Create the store with `undefined` as initialState
       // This allows you to set a custom default initialState
       const reduxStore = getOrInitializeStore();
@@ -61,7 +62,7 @@ export const withRedux = (PageComponent: any, { ssr = true } = {}) => {
 
 let reduxStore: i.Store;
 
-const getOrInitializeStore = (initialState?: any): i.Store => {
+const getOrInitializeStore = (initialState?: {}): i.Store => {
   // Always make a new store if server, otherwise state is shared between requests
   if (typeof window === 'undefined') {
     return initializeStore(initialState);
