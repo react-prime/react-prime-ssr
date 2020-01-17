@@ -1,7 +1,7 @@
 const routes = require('next-routes');
 
 const router = routes()
-  .add({ pattern: '/', page: 'Home', name: 'home' });
+  .add({ pattern: '/', page: 'Prime', name: 'prime' });
 
 router.push = router.Router.pushRoute;
 
