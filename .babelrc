@@ -8,24 +8,6 @@
     ["babel-plugin-styled-components", {
         "ssr": true,
         "preprocess": false
-    }],
-    ["module-resolver", {
-      "root": ["./"],
-      "alias": {
-        "src": "./src",
-        "public": "./public",
-        "common": "./src/components/common",
-        "config": "./config",
-        "ducks": "./src/ducks",
-        "images": "./src/static/images",
-        "modules": "./src/components/modules",
-        "pages": "./src/components/pages",
-        "router": "./server/router.js",
-        "server": "./server",
-        "services": "./src/services",
-        "styles": "./src/styles",
-        "vectors": "./src/static/vectors"
-      }
     }]
   ]
 }

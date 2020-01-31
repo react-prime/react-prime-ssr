@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "commonjs",
+    "outDir": ".",
+    "target": "es5",
+    "lib": [
+      "es2017"
+    ]
+  },
+  "include": ["next.config.ts"],
+  "exclude": []
+}
