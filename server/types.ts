@@ -1,6 +1,6 @@
 import { Registry } from 'next-routes';
 import { NextRouter } from 'next/router';
-import routeNames from 'server/routeNames';
+import routes from 'server/routes';
 
 export type RouteOptions = Parameters<Registry['add']>[0];
 
@@ -12,4 +12,4 @@ export type Router = Registry & {
   }[];
 }
 
-export type RouteNames = typeof routeNames[number]['name'];
+export type RouteNames = typeof routes[number]['name'];
