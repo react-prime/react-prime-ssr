@@ -18,7 +18,6 @@ const Data: i.NextPageComponent = () => {
       <PrimeContent>
         This page is to show how to use Redux.
         This page will also NOT be generated as static because of that.
-        {dataLoading ? 'loading' : 'not loading'}
       </PrimeContent>
     </>
   );
