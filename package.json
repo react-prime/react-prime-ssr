@@ -12,7 +12,8 @@
     "clean": "rimraf dist/",
     "clean:nextconfig": "rimraf next.config.js",
     "lint": "eslint --ext .ts --ext .tsx src/",
-    "analyze": "BUNDLE_ANALYZE=both npm run build"
+    "analyze": "BUNDLE_ANALYZE=both npm run build",
+    "typecheck": "tsc"
   },
   "keywords": [
     "react",
