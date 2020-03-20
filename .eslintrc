@@ -50,12 +50,7 @@
     "quotes": ["error", "single"],
     "react/no-unused-prop-types": 2,
     "react/prop-types": 2,
-    "react/jsx-tag-spacing": {
-      "closingSlash": 0,
-      "beforeSelfClosing": 2,
-      "afterOpening": 0,
-      "beforeClosing": 0
-    },
+    "react/jsx-tag-spacing": 2,
     "semi": ["error", "always"],
     "space-before-blocks": "error",
     "space-before-function-paren": ["error", {
