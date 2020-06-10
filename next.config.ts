@@ -2,7 +2,6 @@
 import path from 'path';
 import { Configuration, EntryFunc, Entry } from 'webpack';
 import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from 'next/constants';
-import { NextConfig } from './node_modules/@types/next';
 import nextOptions from './config/next';
 
 const APP_ENV = process.env.APP_ENV || 'development';
@@ -19,12 +18,20 @@ const GLOBALS = {
   __PROD__: APP_ENV === 'production',
 };
 
+
+/**
+ * NextJS does not seem to want Next Config to be typed
+ * Thread: https://github.com/vercel/next.js/pull/10275
+ */
+
+
 // Set up our Next environment based on compilation phase
-const config = (phase: string, config: NextConfig): NextConfig => {
-  let cfg: NextConfig = {
+const config = (phase: string, config) => {
+  let cfg = {
     ...config,
     distDir: nextOptions.distDir,
-    pageExtensions: ['tsx'],
+    // Remove x-powered-by header to remove information about the server
+    poweredByHeader: false,
   };
 
   /**
@@ -40,7 +47,7 @@ const config = (phase: string, config: NextConfig): NextConfig => {
     cfg = {
       ...cfg,
       /** @TODO Find correct typing for options */
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       webpack: (config: Configuration, { isServer }: any) => {
         // Push polyfills before all other code
         const originalEntry = config.entry as EntryFunc;
@@ -95,14 +102,21 @@ const config = (phase: string, config: NextConfig): NextConfig => {
           },
         ];
 
-        // Remove 'include' property from rule so all ts(x) files are transpiled
+        // Include all relevant directories with .tsx files that need to be transpiled
         config.module!.rules.forEach((rule) => {
-          const ruleStr = rule.test ? rule.test.toString() : '';
-          const ruleContainsTs = ruleStr.includes('tsx|ts') || ruleStr.includes('ts|tsx');
+          const ruleContainsTs = rule.test?.toString().includes('tsx');
 
-          // @ts-ignore
-          if (ruleContainsTs && rule.use && rule.use.loader === 'next-babel-loader') {
-            delete rule.include;
+          if (ruleContainsTs) {
+            if (Array.isArray(rule.include)) {
+              rule.include = rule.include.map((path) => {
+                // Go down a directory to include everything from 'src'
+                if (typeof path === 'string' && path.includes('src')) {
+                  return path.replace('/components', '');
+                }
+
+                return path;
+              });
+            }
           }
         });
 
@@ -122,7 +136,7 @@ const config = (phase: string, config: NextConfig): NextConfig => {
 
         // Add tsconfig paths to webpack
         if (config.resolve) {
-          if (config.resolve.plugins) {
+          if (Array.isArray(config.resolve.plugins)) {
             config.resolve.plugins.push(new TSConfigPathsPlugin());
           } else {
             config.resolve.plugins = [new TSConfigPathsPlugin()];
