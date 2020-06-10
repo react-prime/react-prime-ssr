@@ -13,7 +13,8 @@
     "clean:nextconfig": "rimraf next.config.js",
     "lint": "eslint --ext .ts --ext .tsx src/",
     "analyze": "BUNDLE_ANALYZE=both npm run build",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "preinstall": "npx npm-force-resolutions"
   },
   "keywords": [
     "react",
@@ -31,7 +32,7 @@
   "dependencies": {
     "express": "4.17.1",
     "lodash": "4.17.14",
-    "next": "9.3.1",
+    "next": "9.4.4",
     "next-routes": "1.4.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -81,5 +82,9 @@
     "typescript": "3.8.3",
     "url-loader": "4.0.0",
     "webpack": "4.42.0"
+  },
+  "resolutions": {
+    "minimist": "^1.2.5",
+    "webpack-bundle-analyzer": "^3.3.2"
   }
 }
