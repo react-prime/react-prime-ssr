@@ -18,18 +18,15 @@ app.prepare()
   .then(() => {
     const server = express();
 
-    if (isProd) {
-      server.get('/service-worker.js', (req, res) => {
-        const filePath = path.resolve('dist/service-worker.js');
+    server.get('/service-worker.js', (req, res) => {
+      const filePath = path.resolve('dist/static/service-worker.js');
 
-        // Don't cache service worker is a best practice
-        // Clients wont get emergency bug fixes etc.
-        res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-        res.set('Content-Type', 'application/javascript');
+      // Don't cache service worker is a best practice
+      // Clients wont get emergency bug fixes etc.
+      res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
 
-        app.serveStatic(req, res, filePath);
-      });
-    }
+      app.serveStatic(req, res, filePath);
+    });
 
     // Handle other routes
     server.get('*', handle);

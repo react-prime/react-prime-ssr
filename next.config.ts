@@ -25,7 +25,7 @@ const GLOBALS = {
  */
 
 
-// Set up our Next environment based on compilation phase
+// Set up our Next environment based on build phase
 const config = (phase: string, config) => {
   let cfg = {
     ...config,
@@ -36,19 +36,25 @@ const config = (phase: string, config) => {
 
   /**
    * BUILD CONFIG
-   * This config will run in every build phase but the starting the production server
+   * This config will run in every build phase, but NOT when starting the production server
   */
   if (phase !== PHASE_PRODUCTION_SERVER) {
-    // Only add Webpack config for compile phases
+    // Important that we import dev dependencies only in build phases
     const webpack = require('webpack');
     const CopyWebpackPlugin = require('copy-webpack-plugin');
     const TSConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
     cfg = {
       ...cfg,
-      /** @TODO Find correct typing for options */
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      webpack: (config: Configuration, { isServer }: any) => {
+      webpack: (config: Configuration, { isServer }) => {
+        /**
+         * WEBPACK CONFIG
+         * Your regular Webpack configuration, except we have to work with an already existing
+         * Webpack configuration from Next. When changing anything, keep in mind to preserve the
+         * config of Next (unless you are trying to overwrite something) or things might break.
+        */
+
+
         // Push polyfills before all other code
         const originalEntry = config.entry as EntryFunc;
 
@@ -63,12 +69,7 @@ const config = (phase: string, config) => {
           return entries;
         };
 
-        /**
-         * WEBPACK CONFIG
-         * Your regular Webpack configuration, except we have to work with an already existing
-         * Webpack configuration from Next. When changing anything, keep in mind to preserve the
-         * config of Next (unless you are trying to overwrite something) or things might break.
-        */
+
         const rules = [
           {
             test: /\.svg$/,
@@ -93,8 +94,8 @@ const config = (phase: string, config) => {
                 options: {
                   limit: 10000,
                   fallback: 'file-loader',
-                  publicPath: '/_next/static/images/',
-                  outputPath: `${isServer ? '../' : ''}static/images/`,
+                  publicPath: '/_next/static/',
+                  outputPath: `${isServer ? '../' : ''}static/`,
                   name: '[name].[ext]',
                 },
               },
@@ -116,6 +117,9 @@ const config = (phase: string, config) => {
 
                 return path;
               });
+
+              // Include server directory
+              rule.include?.push(path.resolve('server'));
             }
           }
         });
@@ -128,7 +132,7 @@ const config = (phase: string, config) => {
           new webpack.DefinePlugin(GLOBALS),
           new CopyWebpackPlugin([
             {
-              from: path.resolve('public/manifest.json'),
+              from: path.resolve('public'),
               to: path.resolve('dist/static'),
             },
           ]),
@@ -159,11 +163,30 @@ const config = (phase: string, config) => {
     // Add service worker to our production build with Workbox
     cfg = withOffline({
       ...cfg,
+      transformManifest: (manifest) => ['/'].concat(manifest), // add the homepage to the cache
       workboxOpts: {
+        swDest: 'static/service-worker.js',
         cacheId: pkg.name,
         skipWaiting: true,
         clientsClaim: true,
         include: [/\.html$/, /\.js$/, /\.png$/],
+        runtimeCaching: [
+          {
+            urlPattern: /^https?.*/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'https-calls',
+              networkTimeoutSeconds: 15,
+              expiration: {
+                maxEntries: 150,
+                maxAgeSeconds: 30 * 24 * 60 * 60, // 1 month
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+        ],
       },
     });
 
