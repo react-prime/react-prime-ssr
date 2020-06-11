@@ -18,14 +18,27 @@ app.prepare()
   .then(() => {
     const server = express();
 
-    server.get('/service-worker.js', (req, res) => {
-      const filePath = path.resolve('dist/static/service-worker.js');
+    [
+      {
+        path: '/service-worker.js',
+        // Don't cache service worker is a best practice
+        // Clients wont get emergency bug fixes etc.
+        cache: false,
+      },
+      {
+        path: '/robots.txt',
+        cache: true,
+      },
+    ].forEach((staticFile) => {
+      server.get(staticFile.path, (req, res) => {
+        const filePath = path.resolve(`dist/static${staticFile.path}`);
 
-      // Don't cache service worker is a best practice
-      // Clients wont get emergency bug fixes etc.
-      res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+        if (!staticFile.cache) {
+          res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+        }
 
-      app.serveStatic(req, res, filePath);
+        app.serveStatic(req, res, filePath);
+      });
     });
 
     // Handle other routes
