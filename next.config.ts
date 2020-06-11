@@ -130,12 +130,11 @@ const config = (phase: string, config) => {
         // Add plugins
         config.plugins = config.plugins!.concat(
           new webpack.DefinePlugin(GLOBALS),
-          new CopyWebpackPlugin([
-            {
-              from: path.resolve('public'),
-              to: path.resolve('dist/static'),
-            },
-          ]),
+          new CopyWebpackPlugin({
+            patterns: [
+              { from: path.resolve('public'), to: path.resolve('dist/static') },
+            ],
+          }),
         );
 
         // Add tsconfig paths to webpack

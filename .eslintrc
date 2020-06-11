@@ -88,9 +88,12 @@
     "@typescript-eslint/no-object-literal-type-assertion": [0],
     "@typescript-eslint/no-parameter-properties": [0],
     "@typescript-eslint/no-non-null-assertion": [0],
-
     "@typescript-eslint/camelcase": [0],
     "@typescript-eslint/ban-ts-ignore": [0],
+    "@typescript-eslint/explicit-module-boundary-types": [1, {
+      "allowedNames": ["render", "getInitialProps"]
+    }],
+
     "react/jsx-pascal-case": [0]
   }
 }
