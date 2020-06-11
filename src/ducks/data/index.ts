@@ -3,21 +3,20 @@
  */
 import * as i from 'types';
 import { ActionType, action } from 'typesafe-actions';
-import { DataState } from './types';
 
 export const dataActions = {
   load: () => action('data/GET'),
   success: (success: boolean) => action('data/GET_SUCCESS', success),
   failed: () => action('data/GET_FAILED'),
-};
+} as const; // <-- Important if you don't want to explicitly type the return type of all actions
 
-const initialState: DataState = {
+const initialState: i.DataState = {
   data: undefined,
   error: false,
   loading: false,
 };
 
-export default (state = initialState, action: ActionType<typeof dataActions>) => {
+export default (state = initialState, action: ActionType<typeof dataActions>): i.DataState => {
   switch (action.type) {
     case 'data/GET':
       return {

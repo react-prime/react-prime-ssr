@@ -3,18 +3,20 @@ import { NextPageContext } from 'next';
 import { AppInitialProps } from 'next/app';
 import { O } from 'ts-toolbelt';
 
-export type AugmentedNextPageContext<Q = {}> = O.Update<NextPageContext, 'query', Q>
+export type AugmentedNextPageContext<Q = i.StringKeyObject> = O.Update<NextPageContext, 'query', Q>
 
-export type AugmentedNextPageContextWithRedux<Q = {}> = AugmentedNextPageContext<Q> & {
+export type AugmentedNextPageContextWithRedux<Q = i.StringKeyObject> = AugmentedNextPageContext<Q> & {
   store: i.Store;
 }
 
-type NextPageComponentReturn<P = {}> = Partial<AppInitialProps> & P;
+type NextPageComponentReturn<P = i.StringKeyObject> = Partial<AppInitialProps> & P;
 
-type NextPageBaseProps<C, P> = React.FC<P> & {
+export type NextPageBaseComponent<P, C> = React.ComponentType<P> & {
   getInitialProps?(context: C): Promise<NextPageComponentReturn<P>> | NextPageComponentReturn<P>;
 }
 
-export type NextPageComponent<P = {}, Q = {}> = NextPageBaseProps<AugmentedNextPageContext<Q>, P>;
+export type NextPageComponent<P = i.StringKeyObject, Q = i.StringKeyObject> =
+  NextPageBaseComponent<P, AugmentedNextPageContext<Q>>;
 
-export type NextPageReduxComponent<P = {}, Q = {}> = NextPageBaseProps<AugmentedNextPageContextWithRedux<Q>, P>;
+export type NextPageReduxComponent<P = i.StringKeyObject, Q = i.StringKeyObject> =
+  NextPageBaseComponent<P, AugmentedNextPageContextWithRedux<Q>>;

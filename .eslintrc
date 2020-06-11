@@ -48,7 +48,6 @@
     "object-curly-spacing": ["error", "always"],
     "prefer-const": ["error"],
     "quotes": ["error", "single"],
-    "react/jsx-tag-spacing": 2,
     "semi": ["error", "always"],
     "space-before-blocks": "error",
     "space-before-function-paren": ["error", {
@@ -63,10 +62,6 @@
     "space-in-parens": ["error", "never"],
     "space-infix-ops": "error",
     "eol-last": ["error", "always"],
-    "react/self-closing-comp": ["error", {
-      "component": true,
-      "html": true
-    }],
     "import/no-unresolved": [0],
     "import/named": [0],
     "import/order": ["error", {
@@ -79,6 +74,14 @@
         "sibling"
       ]
     }],
+
+    "react/jsx-tag-spacing": 2,
+    "react/jsx-pascal-case": [0],
+    "react/self-closing-comp": ["error", {
+      "component": true,
+      "html": true
+    }],
+
     "@typescript-eslint/indent": [2, 2],
     "@typescript-eslint/explicit-function-return-type": [0],
     "@typescript-eslint/no-empty-interface": [0],
@@ -91,9 +94,9 @@
     "@typescript-eslint/camelcase": [0],
     "@typescript-eslint/ban-ts-ignore": [0],
     "@typescript-eslint/explicit-module-boundary-types": [1, {
-      "allowedNames": ["render", "getInitialProps"]
+      "allowedNames": ["render", "getInitialProps"],
+      "allowDirectConstAssertionInArrowFunctions": true
     }],
-
-    "react/jsx-pascal-case": [0]
+    "@typescript-eslint/ban-ts-comment": [0]
   }
 }

@@ -109,17 +109,14 @@ const config = (phase: string, config) => {
 
           if (ruleContainsTs) {
             if (Array.isArray(rule.include)) {
-              rule.include = rule.include.map((path) => {
+              rule.include = rule.include.map((includePath) => {
                 // Go down a directory to include everything from 'src'
-                if (typeof path === 'string' && path.includes('src')) {
-                  return path.replace('/components', '');
+                if (typeof includePath === 'string' && includePath.includes('src')) {
+                  return path.resolve('src');
                 }
 
-                return path;
+                return includePath;
               });
-
-              // Include server directory
-              rule.include?.push(path.resolve('server'));
             }
           }
         });
