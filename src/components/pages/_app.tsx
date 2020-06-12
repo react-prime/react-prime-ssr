@@ -1,27 +1,38 @@
 import * as i from 'types';
 import React from 'react';
-import { AppInitialProps, AppProps } from 'next/app';
-import Head from 'next/head';
+import App, { AppInitialProps, AppProps, AppContext } from 'next/app';
 import { ThemeProvider } from 'styled-components';
 
 import { RouterContextProvider } from 'hooks';
 import { theme, GlobalStyling } from 'styles';
 
-const NextApp: React.FC<Props> = ({ Component }) => (
-  <>
-    <Head>
-      <link rel="manifest" href="/_next/static/manifest.json" />
-      <link rel="icon" sizes="192x192" href="/_next/static/favicon.ico" />
-    </Head>
+class NextApp extends App<Props> {
+  static getInitialProps = async ({ Component, ctx }: AppContext): Promise<AppInitialProps> => {
+    let pageProps = {};
 
-    <GlobalStyling />
-    <RouterContextProvider>
-      <ThemeProvider theme={theme}>
-        <Component />
-      </ThemeProvider>
-    </RouterContextProvider>
-  </>
-);
+    // Execute the component's getInitialProps
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx);
+    }
+
+    return { pageProps };
+  }
+
+  render() {
+    const { Component, pageProps } = this.props;
+
+    return (
+      <>
+        <GlobalStyling />
+        <RouterContextProvider>
+          <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </RouterContextProvider>
+      </>
+    );
+  }
+}
 
 type Props = AppInitialProps & AppProps & {
   reduxStore: i.Store;

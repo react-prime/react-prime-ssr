@@ -34,6 +34,8 @@ class NextDocument extends Document<DocumentProps> {
         <Head>
           {this.props.styles}
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=10" />
+          <link rel="manifest" href="/_next/static/manifest.json" />
+          <link rel="icon" sizes="192x192" href="/_next/static/favicon.ico" />
         </Head>
         <body>
           <Main />
