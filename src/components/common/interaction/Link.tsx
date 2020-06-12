@@ -11,7 +11,7 @@ export const Link: React.FC<LinkProps> = ({
 }) => {
   const formattedAriaLabel = _.capitalize(ariaLabel);
 
-  let linkProps: React.AnchorHTMLAttributes<{}> = {
+  let linkProps: React.AnchorHTMLAttributes<Element> = {
     className: className || '',
   };
 
@@ -73,7 +73,7 @@ export const Link: React.FC<LinkProps> = ({
   );
 };
 
-type BaseProps = React.AnchorHTMLAttributes<{}> & {
+type BaseProps = React.AnchorHTMLAttributes<Element> & {
   children: React.ReactNode;
   className?: string;
   ariaLabel?: string;

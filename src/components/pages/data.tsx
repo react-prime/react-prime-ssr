@@ -14,6 +14,8 @@ import { PrimeHeader, PrimeContent } from 'modules/Home/styled';
  * The second parameter is for typing URL queries
  */
 const Data: i.NextPageReduxComponent<DataProps, DataQueries> = ({ data, query }) => {
+  // This line here is to test Redux functionality
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const dataLoading = useSelector((state) => state.data.loading);
 
   return (
