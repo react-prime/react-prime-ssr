@@ -38,7 +38,7 @@ export type Action<P = any> = {
  * Thunk action type with pre-filled generics
  * ReturnType = return type of function
  */
-type ExtraArgument = Record<any, any>;
+type ExtraArgument = i.AnyObject;
 export type ThunkAction<ReturnType = void> = IThunkAction<ReturnType, i.ReduxState, ExtraArgument, i.Action>;
 
 /**
