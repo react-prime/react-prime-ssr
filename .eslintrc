@@ -94,7 +94,21 @@
     "@typescript-eslint/camelcase": [0],
     "@typescript-eslint/ban-ts-ignore": [0],
     "@typescript-eslint/explicit-module-boundary-types": [1, {
-      "allowedNames": ["render", "getInitialProps"],
+      "allowedNames": [
+        "render",
+        "getInitialProps",
+        "componentDidMount",
+        "componentWillUnmount",
+        "shouldComponentUpdate",
+        "componentDidUpdate",
+        "componentDidCatch",
+        "getSnapshotBeforeUpdate",
+        "getDerivedStateFromProps",
+        "getDerivedStateFromError",
+        "UNSAFE_componentWillUpdate",
+        "UNSAFE_componentWillReceiveProps",
+        "UNSAFE_componentWillMount"
+      ],
       "allowDirectConstAssertionInArrowFunctions": true
     }],
     "@typescript-eslint/ban-ts-comment": [0]
