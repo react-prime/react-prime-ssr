@@ -19,6 +19,7 @@
         "version": "detect"
     }
   },
+  "ignorePatterns": ["**/dist/**/*.js"],
   "globals": {
     "__DEV__": false,
     "__TEST__": false,
