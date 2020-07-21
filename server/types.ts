@@ -6,10 +6,7 @@ export type RouteOptions = Parameters<Registry['add']>[0];
 
 export type Router = Registry & {
   push: NextRouter['push'];
-  routes: {
-    name: string;
-    page: string;
-  }[];
+  routes: RouteOptions[];
 }
 
 export type RouteNames = typeof routes[number]['name'];
