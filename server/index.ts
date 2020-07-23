@@ -5,10 +5,8 @@ import { port, env } from '../config/env';
 import nextOptions from '../config/next';
 import router from './router';
 
-const isProd = env === 'production';
-
 const app = next({
-  dev: !isProd,
+  dev: env === 'development',
   dir: nextOptions.pagesDir,
 });
 
@@ -18,7 +16,7 @@ app.prepare()
   .then(() => {
     const server = express();
 
-    [
+    const staticFiles = [
       {
         path: '/service-worker.js',
         // Don't cache service worker is a best practice
@@ -29,17 +27,20 @@ app.prepare()
         path: '/robots.txt',
         cache: true,
       },
-    ].forEach((staticFile) => {
-      server.get(staticFile.path, (req, res) => {
-        const filePath = path.resolve(`dist/static${staticFile.path}`);
+    ];
 
-        if (!staticFile.cache) {
+    // Handle static file routes
+    for (const file of staticFiles) {
+      server.get(file.path, (req, res) => {
+        const filePath = path.resolve(`dist/static${file.path}`);
+
+        if (!file.cache) {
           res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
         }
 
         app.serveStatic(req, res, filePath);
       });
-    });
+    };
 
     // Handle other routes
     server.get('*', handle);

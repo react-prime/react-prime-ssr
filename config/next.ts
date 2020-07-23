@@ -4,7 +4,7 @@ const nextOptions = {
 
   /**
    * NOTE:
-   * Root path of the following settings is the directory where the 'pages' folder is located in
+   * Root path of the following settings is the directory where the 'pages' folder is located
    */
   // Location where the build folder should go
   distDir: '../../dist',
