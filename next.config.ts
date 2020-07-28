@@ -117,6 +117,8 @@ const config = (phase: string, config) => {
 
                 return includePath;
               });
+
+              rule.include?.push(path.resolve('server'));
             }
           }
         });

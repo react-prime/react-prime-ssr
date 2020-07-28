@@ -40,7 +40,7 @@ app.prepare()
 
         app.serveStatic(req, res, filePath);
       });
-    };
+    }
 
     // Handle other routes
     server.get('*', handle);
