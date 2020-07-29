@@ -4,7 +4,8 @@ import App, { AppInitialProps, AppProps, AppContext } from 'next/app';
 import { ThemeProvider } from 'styled-components';
 
 import { RouterContextProvider } from 'hooks';
-import { theme, GlobalStyling } from 'styles';
+import { GlobalStyling } from 'styles';
+import theme from 'styles/theme';
 
 class NextApp extends App<Props> {
   static getInitialProps = async ({ Component, ctx }: AppContext): Promise<AppInitialProps> => {
