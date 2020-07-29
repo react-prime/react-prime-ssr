@@ -73,7 +73,12 @@
         "index",
         "parent",
         "sibling"
-      ]
+      ],
+      "pathGroups": [{
+        "pattern": "types",
+        "group": "builtin",
+        "position": "before"
+      }]
     }],
 
     "react/jsx-tag-spacing": 2,
@@ -82,6 +87,8 @@
       "component": true,
       "html": true
     }],
+
+    "react-hooks/exhaustive-deps": 0,
 
     "@typescript-eslint/indent": [2, 2],
     "@typescript-eslint/explicit-function-return-type": [0],
