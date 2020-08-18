@@ -49,7 +49,7 @@ For production I recommend to use [PM2](http://pm2.keymetrics.io/) to run the se
 ## Development Workflow
 ### Routes
 We use the [next-routes](https://github.com/fridays/next-routes) package to generate server and client routes.
-Your app routes can be created in the `server/routes.ts` file. Refer to the [next-routes](https://github.com/fridays/next-routes/blob/master/README.md) documentation for how to set up routes. Route files can be added to `src/components/pages`.
+Your app routes can be created in the `server/routes.ts` file. Refer to the [next-routes](https://github.com/fridays/next-routes/blob/master/README.md) documentation for how to set up routes. Route index files can be added to `pages`.
 
 ### Components
 The components are separated in `Modules` and `Common`. Modules are bundled components which depend on each other. Common components are components that are self-contained and can be used through the entire app.
