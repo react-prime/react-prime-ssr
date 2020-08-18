@@ -103,26 +103,6 @@ const config = (phase: string, config) => {
           },
         ];
 
-        // Include all relevant directories with .tsx files that need to be transpiled
-        config.module!.rules.forEach((rule) => {
-          const ruleContainsTs = rule.test?.toString().includes('tsx');
-
-          if (ruleContainsTs) {
-            if (Array.isArray(rule.include)) {
-              rule.include = rule.include.map((includePath) => {
-                // Go down a directory to include everything from 'src'
-                if (typeof includePath === 'string' && includePath.includes('src')) {
-                  return path.resolve('src');
-                }
-
-                return includePath;
-              });
-
-              rule.include?.push(path.resolve('server'));
-            }
-          }
-        });
-
         // Preserve Next rules while appending our rules
         config.module!.rules = [...config.module!.rules, ...rules];
 

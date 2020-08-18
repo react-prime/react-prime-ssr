@@ -2,12 +2,10 @@ import path from 'path';
 import next from 'next';
 import express from 'express';
 import { port, env } from '../config/env';
-import nextOptions from '../config/next';
 import router from './router';
 
 const app = next({
   dev: env === 'development',
-  dir: nextOptions.pagesDir,
 });
 
 const handle = router.getRequestHandler(app);

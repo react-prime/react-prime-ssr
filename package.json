@@ -4,7 +4,7 @@
   "description": "A starter kit to create comprehensive server side rendered React apps with Redux",
   "scripts": {
     "start": "npm run build:nextconfig; nodemon",
-    "build": "npm run build:nextconfig; next build src/components; tsc --project tsconfig.server.json",
+    "build": "npm run build:nextconfig; next build; tsc --project tsconfig.server.json",
     "build:server": "rimraf dist/src/; rimraf serverDist/; tsc --project tsconfig.server.json; npm run server:move; rimraf serverDist/",
     "build:nextconfig": "npm run clean:nextconfig; tsc --project tsconfig.nextconfig.json",
     "server:move": "mkdir -p dist/src/server; mv serverDist/src/server/ dist/src/server/; mv serverDist/config/ dist/src/",
@@ -32,7 +32,7 @@
   "dependencies": {
     "express": "4.17.1",
     "lodash": "4.17.19",
-    "next": "9.4.4",
+    "next": "9.5.2",
     "next-routes": "1.4.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
