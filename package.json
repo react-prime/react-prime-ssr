@@ -1,6 +1,6 @@
 {
   "name": "react-prime-ssr",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "A starter kit to create comprehensive server side rendered React apps with Redux",
   "scripts": {
     "start": "npm run build:nextconfig; nodemon",
@@ -87,6 +87,7 @@
   },
   "resolutions": {
     "minimist": "^1.2.5",
-    "webpack-bundle-analyzer": "^3.3.2"
+    "webpack-bundle-analyzer": "^3.3.2",
+    "serialize-javascript": "^3.1.0"
   }
 }
