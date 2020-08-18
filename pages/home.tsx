@@ -16,12 +16,12 @@ const Home: i.NextPageComponent = () => {
       <PrimeContent>
         <p>
           Created by
-          <Anchor external to="https://github.com/JBostelaar"> @JBostelaar </Anchor>
+          <Anchor external to="https://github.com/sandervspl"> @sandervspl </Anchor>
           and maintained by
           <Anchor external to="https://labela.nl/"> LabelA</Anchor>
         </p>
         <GithubLink
-          href="https://github.com/JBostelaar/react-prime"
+          href="https://github.com/react-prime/react-prime-ssr"
           target="_blank"
           rel="noopener noreferrer"
         >
