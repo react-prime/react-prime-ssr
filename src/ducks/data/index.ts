@@ -16,7 +16,7 @@ const initialState: i.DataState = {
   loading: false,
 };
 
-export default (state = initialState, action: ActionType<typeof dataActions>): i.DataState => {
+const reducer = (state = initialState, action: ActionType<typeof dataActions>): i.DataState => {
   switch (action.type) {
     case 'data/GET':
       return {
@@ -49,3 +49,5 @@ export const getData: i.GetData = () => (dispatch) => {
     dispatch(dataActions.success(true));
   }, 2000);
 };
+
+export default reducer;
