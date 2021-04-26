@@ -46,10 +46,10 @@ Data.getInitialProps = ({ store, query }) => {
 type DataProps = {
   data: i.DataState;
   query: DataQueries;
-}
+};
 
 type DataQueries = {
   page?: number;
-}
+};
 
 export default withRedux(Data);
