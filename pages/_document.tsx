@@ -1,5 +1,5 @@
 import React from 'react';
-import Document, { Head, Main, NextScript, DocumentProps, DocumentContext } from 'next/document';
+import Document, { Head, Main, NextScript, DocumentProps, DocumentContext, Html } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
 class NextDocument extends Document<DocumentProps> {
@@ -30,7 +30,7 @@ class NextDocument extends Document<DocumentProps> {
 
   render() {
     return (
-      <html lang="nl">
+      <Html lang="nl">
         <Head>
           {this.props.styles}
         </Head>
@@ -38,7 +38,7 @@ class NextDocument extends Document<DocumentProps> {
           <Main />
           <NextScript />
         </body>
-      </html>
+      </Html>
     );
   }
 }

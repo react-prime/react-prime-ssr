@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import path from 'path';
-import { Configuration, EntryFunc, Entry } from 'webpack';
+import type { NextConfig } from 'next/dist/next-server/server/config-shared';
+import type * as webpack from 'webpack';
 import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from 'next/constants';
+
 import nextOptions from './config/next';
 
 const APP_ENV = process.env.APP_ENV || 'development';
@@ -19,19 +21,17 @@ const GLOBALS = {
 };
 
 
-/**
- * NextJS does not seem to want Next Config to be typed
- * Thread: https://github.com/vercel/next.js/pull/10275
- */
-
-
 // Set up our Next environment based on build phase
-const config = (phase: string, config) => {
-  let cfg = {
+const config = (phase: string, config: NextConfig) => {
+  let cfg: NextConfig = {
     ...config,
     distDir: nextOptions.distDir,
     // Remove x-powered-by header to remove information about the server
     poweredByHeader: false,
+    future: {
+      // Enable webpack 5
+      webpack5: true,
+    },
   };
 
   /**
@@ -46,7 +46,7 @@ const config = (phase: string, config) => {
 
     cfg = {
       ...cfg,
-      webpack: (config: Configuration, { isServer }) => {
+      webpack: (config: webpack.Configuration, { isServer }) => {
         /**
          * WEBPACK CONFIG
          * Your regular Webpack configuration, except we have to work with an already existing
@@ -56,18 +56,26 @@ const config = (phase: string, config) => {
 
 
         // Push polyfills before all other code
-        const originalEntry = config.entry as EntryFunc;
 
-        config.entry = async () => {
-          const entries = await originalEntry() as Entry;
-          const mainEntry = entries['main.js'] as string[];
+        // Type-guard and type-cast for entry prop
+        function isEntryFn(obj: typeof config.entry): obj is () => Promise<EntryStatic> {
+          return typeof obj === 'function';
+        }
 
-          if (mainEntry && !mainEntry.includes(nextOptions.polyfillsPath)) {
-            mainEntry.unshift(nextOptions.polyfillsPath);
-          }
+        const originalEntry = config.entry;
 
-          return entries;
-        };
+        if (isEntryFn(originalEntry)) {
+          config.entry = async () => {
+            const entries = await originalEntry();
+            const mainEntry = entries['main.js'] as string[];
+
+            if (mainEntry && !mainEntry.includes(nextOptions.polyfillsPath)) {
+              mainEntry.unshift(nextOptions.polyfillsPath);
+            }
+
+            return entries;
+          };
+        }
 
 
         const rules = [
@@ -103,8 +111,14 @@ const config = (phase: string, config) => {
           },
         ];
 
-        // Preserve Next rules while appending our rules
-        config.module!.rules = [...config.module!.rules, ...rules];
+        // Add our rules
+        if (config.module) {
+          config.module.rules?.push(...rules);
+        } else {
+          config.module = {
+            rules,
+          };
+        }
 
         // Add plugins
         config.plugins = config.plugins!.concat(
@@ -192,5 +206,9 @@ const config = (phase: string, config) => {
 
   return cfg;
 };
+
+
+type EntryStatic = string | webpack.EntryObject | string[];
+
 
 module.exports = config;
