@@ -13,7 +13,8 @@
     "clean:nextconfig": "rimraf next.config.js",
     "lint": "eslint --ext .ts --ext .tsx src/",
     "analyze": "BUNDLE_ANALYZE=both npm run build",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "postinstall": "patch-package"
   },
   "keywords": [
     "react",
@@ -32,6 +33,7 @@
     "express": "4.17.1",
     "lodash": "4.17.21",
     "next": "10.1.3",
+    "next-redux-wrapper": "6.0.2",
     "next-routes": "1.4.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",

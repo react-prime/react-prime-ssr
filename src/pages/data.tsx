@@ -3,20 +3,17 @@ import React from 'react';
 
 import Logo from 'vectors/logo.svg';
 
-import { withRedux } from 'services';
+import { getData } from 'ducks/test';
 import { useSelector } from 'hooks';
 import { PrimeHeader, PrimeContent } from 'modules/Home/styled';
+import { wrapper } from 'store';
 
 /**
- * Make sure to use the NextPageReduxComponent type instead of NextPageComponent type
- * When you use withRedux()
  * The first parameter of this type is the component props type
  * The second parameter is for typing URL queries
  */
-const Data: i.NextPageReduxComponent<DataProps, DataQueries> = ({ data, query }) => {
-  // This line here is to test Redux functionality
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const dataLoading = useSelector((state) => state.data.loading);
+const Data: i.NextPageComponent<DataProps, DataQueries> = ({ query }) => {
+  const data = useSelector((state) => state.test);
 
   return (
     <>
@@ -24,27 +21,27 @@ const Data: i.NextPageReduxComponent<DataProps, DataQueries> = ({ data, query })
         <Logo />
       </PrimeHeader>
       <PrimeContent>
-        This page is to show how to use Redux.<br />
-        This page will also NOT be generated as static because of that<br />
-        queries: {JSON.stringify(query)}
+        This page is to show how to use Redux.<br /><br />
+        data: <pre>{JSON.stringify(data, null, 2)}</pre>
+        queries: <pre>{JSON.stringify(query)}</pre>
       </PrimeContent>
     </>
   );
 };
 
-/**
- * Queries from the URL are available here
- * When using withRedux(), the Redux store is available on server side for dispatch and getState()
- */
-Data.getInitialProps = ({ store, query }) => {
+// Return a getServerSideProps function instead of using Data.getInitialProps
+// See: https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
+export const getServerSideProps = wrapper.getServerSideProps(async ({ store, query }) => {
+  await store.dispatch(getData());
+
   return {
-    data: store.getState().data,
-    query,
+    props: {
+      query,
+    },
   };
-};
+});
 
 type DataProps = {
-  data: i.DataState;
   query: DataQueries;
 };
 
@@ -52,4 +49,4 @@ type DataQueries = {
   page?: number;
 };
 
-export default withRedux(Data);
+export default Data;

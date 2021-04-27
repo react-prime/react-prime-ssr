@@ -1,0 +1,27 @@
+diff --git a/node_modules/next-redux-wrapper/es6/index.d.ts b/node_modules/next-redux-wrapper/es6/index.d.ts
+index fbb21e2..248ddfa 100644
+--- a/node_modules/next-redux-wrapper/es6/index.d.ts
++++ b/node_modules/next-redux-wrapper/es6/index.d.ts
+@@ -26,12 +26,19 @@ export interface GetStaticPropsContext {
+     preview?: boolean;
+     previewData?: any;
+ }
+-export declare const createWrapper: <S extends {} = any, A extends Action<any> = AnyAction>(makeStore: MakeStore<S, A>, config?: Config<S>) => {
++// [Label A]: Modified the type of this constructor function to add thunk dispatch type support
++export declare const createWrapper: <S extends Store<any, any>>(
++  makeStore: MakeStore<
++    State extends Store<infer T> ? T : never,
++    A extends Store<any, infer T> ? T : never
++  >,
++  config?: Config<State>
++) => {
+     getServerSideProps: <P extends {} = any>(callback: (context: GetServerSidePropsContext & {
+-        store: Store<S, A>;
++        store: S;
+     }) => void | P) => GetServerSideProps<P, ParsedUrlQuery>;
+     getStaticProps: <P_1 extends {} = any>(callback: (context: GetStaticPropsContext & {
+-        store: Store<S, A>;
++        store: S;
+     }) => void | P_1) => GetStaticProps<P_1, ParsedUrlQuery>;
+     withRedux: (Component: any) => React.FunctionComponent<WrapperProps> & {
+         getInitialProps?(context: NextPageContext<any, AnyAction>): WrapperProps | Promise<WrapperProps>;

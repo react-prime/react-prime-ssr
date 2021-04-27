@@ -1,11 +1,13 @@
 import * as i from 'types';
-import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
+import { combineReducers, createStore, applyMiddleware, compose, Store } from 'redux';
+import { createWrapper, Context } from 'next-redux-wrapper';
 import thunk from 'redux-thunk';
+
 import * as reducers from 'ducks';
 
 import { isServer } from 'services';
 
-const store = (initialState = {} as i.ReduxState): i.Store => {
+const makeStore = (context: Context): i.Store => {
   let middleware = applyMiddleware(thunk);
   const combinedReducers = combineReducers(reducers);
 
@@ -17,7 +19,9 @@ const store = (initialState = {} as i.ReduxState): i.Store => {
     middleware = compose(middleware, window.__REDUX_DEVTOOLS_EXTENSION__());
   }
 
-  return createStore(combinedReducers, initialState, middleware);
+  return createStore(combinedReducers, {}, middleware);
 };
 
-export default store;
+export const wrapper = createWrapper<i.Store>(makeStore);
+
+export default makeStore;

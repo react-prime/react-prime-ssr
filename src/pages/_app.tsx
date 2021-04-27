@@ -1,14 +1,14 @@
-import * as i from 'types';
 import React from 'react';
-import type { AppInitialProps, AppProps } from 'next/app';
+import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ThemeProvider } from 'styled-components';
 
 import { RouterContextProvider } from 'hooks';
 import { GlobalStyling } from 'styles';
 import theme from 'styles/theme';
+import { wrapper } from 'store';
 
-const App: React.VFC<Props> = ({ Component, pageProps }) => {
+const App: React.VFC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
@@ -26,8 +26,4 @@ const App: React.VFC<Props> = ({ Component, pageProps }) => {
   );
 };
 
-type Props = AppInitialProps & AppProps & {
-  reduxStore: i.Store;
-};
-
-export default App;
+export default wrapper.withRedux(App);
