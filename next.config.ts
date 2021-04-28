@@ -128,32 +128,45 @@ const config = (phase: string, config: NextConfig) => {
         ];
 
         // Add our rules
-        if (config.module) {
-          config.module.rules?.push(...rules);
-        } else {
+        if (!config.module) {
           config.module = {
-            rules,
+            rules: [],
           };
         }
 
+        config.module.rules = [
+          ...config.module.rules!,
+          ...rules,
+        ];
+
+
         // Add plugins
-        config.plugins = config.plugins!.concat(
+        if (!config.plugins) {
+          config.plugins = [];
+        }
+
+        config.plugins = [
+          ...config.plugins,
           new webpack.DefinePlugin(GLOBALS),
           new CopyWebpackPlugin({
             patterns: [
               { from: path.resolve('public'), to: path.resolve('dist/static') },
             ],
           }),
-        );
+        ];
+
 
         // Add tsconfig paths to webpack
-        if (config.resolve) {
-          if (Array.isArray(config.resolve.plugins)) {
-            config.resolve.plugins.push(new TSConfigPathsPlugin());
-          } else {
-            config.resolve.plugins = [new TSConfigPathsPlugin()];
-          }
+        if (!config.resolve) {
+          config.resolve = {
+            plugins: [],
+          };
         }
+
+        config.resolve.plugins = [
+          ...config.resolve.plugins!,
+          new TSConfigPathsPlugin(),
+        ];
 
         return config;
       },
