@@ -4,15 +4,13 @@ import type { NextConfig } from 'next/dist/next-server/server/config-shared';
 import type * as webpack from 'webpack';
 import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from 'next/constants';
 
-import nextOptions from './config/next';
-
-const APP_ENV = process.env.APP_ENV || 'development';
+import { NODE_ENV, APP_ENV, PORT } from './config/env';
 
 const GLOBALS = {
   'process.env': {
-    NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
-    APP_ENV: JSON.stringify(process.env.APP_ENV || 'development'),
-    PORT: process.env.PORT || 3000,
+    NODE_ENV: JSON.stringify(NODE_ENV),
+    APP_ENV: JSON.stringify(APP_ENV),
+    PORT: PORT,
   },
   __DEV__: APP_ENV === 'development',
   __TEST__: APP_ENV === 'test',
@@ -25,7 +23,7 @@ const GLOBALS = {
 const config = (phase: string, config: NextConfig) => {
   let cfg: NextConfig = {
     ...config,
-    distDir: nextOptions.distDir,
+    distDir: 'dist',
     // Remove x-powered-by header to remove information about the server
     poweredByHeader: false,
     future: {
@@ -68,9 +66,10 @@ const config = (phase: string, config: NextConfig) => {
           config.entry = async () => {
             const entries = await originalEntry();
             const mainEntry = entries['main.js'] as string[];
+            const polyfillsPath = path.resolve('config/polyfills.ts');
 
-            if (mainEntry && !mainEntry.includes(nextOptions.polyfillsPath)) {
-              mainEntry.unshift(nextOptions.polyfillsPath);
+            if (mainEntry && !mainEntry.includes(polyfillsPath)) {
+              mainEntry.unshift(polyfillsPath);
             }
 
             return entries;

@@ -1,11 +1,11 @@
 import path from 'path';
 import next from 'next';
 import express from 'express';
-import { port, env } from '../config/env';
+import { PORT, NODE_ENV } from '../config/env';
 import router from './router';
 
 const app = next({
-  dev: env === 'development',
+  dev: NODE_ENV === 'development',
 });
 
 const handle = router.getRequestHandler(app);
@@ -43,8 +43,8 @@ app.prepare()
     // Handle other routes
     server.get('*', handle);
 
-    server.listen(port, () => {
-      console.info(`[${env}] Server running on http://localhost:${port}`);
+    server.listen(PORT, () => {
+      console.info(`[${NODE_ENV}] Server running on http://localhost:${PORT}`);
     });
   })
   .catch((err) => {
