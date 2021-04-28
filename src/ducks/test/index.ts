@@ -60,7 +60,7 @@ export const getData: i.GetData = () => async (dispatch) => {
     setTimeout(() => {
       dispatch(testActions.success(true));
       res();
-    }, 2000);
+    }, 500);
   });
 };
 
