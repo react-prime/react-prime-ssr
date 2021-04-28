@@ -3,8 +3,9 @@ import * as i from 'types';
 import { Store as ReduxStore, CombinedState } from 'redux';
 import { ThunkAction as IThunkAction, ThunkDispatch as IThunkDispatch } from 'redux-thunk';
 import type { HYDRATE } from 'next-redux-wrapper';
+import { ActionType, EmptyAction, PayloadAction, PayloadMetaAction } from 'typesafe-actions';
+
 import * as reducers from 'ducks';
-import { ActionType } from 'typesafe-actions';
 
 /** Store type. */
 export type Store = ReduxStore<CombinedState<i.ReduxState>, i.ActionTypes> & {
@@ -34,7 +35,11 @@ type HydrateAction<N extends string, S> = {
   payload: Record<N, S>;
 };
 
-export type Reducer<N extends string, S extends i.AnyObject, A extends Record<string, i.AnyFn>> =
+export type Reducer<
+  N extends string,
+  S extends i.AnyObject,
+  A extends Record<string, (...args: any) => EmptyAction<any> | PayloadAction<any, any> | PayloadMetaAction<any, any, any>>
+> =
   (
     state: S,
     action: HydrateAction<N, S> | ActionType<A>,
