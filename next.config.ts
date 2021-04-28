@@ -77,34 +77,51 @@ const config = (phase: string, config: NextConfig) => {
         }
 
 
+        const staticPathConfig = {
+          publicPath: '/_next/static/',
+          outputPath: `${isServer ? '../' : ''}static/`,
+        };
+
         const rules = [
           {
             test: /\.svg$/,
             oneOf: [
               {
                 resourceQuery: /external/,
-                loader: 'url-loader',
-                options: {
-                  limit: 10000,
-                },
+                use: [{
+                  loader: 'url-loader',
+                  options: {
+                    limit: 10000,
+                  },
+                }],
               },
               {
-                loader: '@svgr/webpack',
+                use: ['@svgr/webpack'],
               },
             ],
           },
           {
             test: /\.(jpe?g|png|gif|ico|webp)$/,
-            use: [
+            oneOf: [
               {
-                loader: 'url-loader',
-                options: {
-                  limit: 10000,
-                  fallback: 'file-loader',
-                  publicPath: '/_next/static/',
-                  outputPath: `${isServer ? '../' : ''}static/`,
-                  name: '[name].[ext]',
-                },
+                resourceQuery: /external/,
+                use: [{
+                  loader: 'file-loader',
+                  options: {
+                    ...staticPathConfig,
+                    name: '[name].[ext]',
+                  },
+                }],
+              },
+              {
+                use: [{
+                  loader: 'url-loader',
+                  options: {
+                    ...staticPathConfig,
+                    limit: 10000,
+                    name: '[name].[ext]',
+                  },
+                }],
               },
             ],
           },
