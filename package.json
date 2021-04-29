@@ -5,9 +5,7 @@
   "scripts": {
     "start": "npm run build:nextconfig; nodemon",
     "build": "npm run build:nextconfig; next build; tsc --project tsconfig.server.json",
-    "build:server": "rimraf dist/src/; rimraf serverDist/; tsc --project tsconfig.server.json; npm run server:move; rimraf serverDist/",
     "build:nextconfig": "npm run clean:nextconfig; tsc --project tsconfig.nextconfig.json",
-    "server:move": "mkdir -p dist/src/server; mv serverDist/src/server/ dist/src/server/; mv serverDist/config/ dist/src/",
     "server": "NODE_ENV=production node dist/server/index.js",
     "clean": "rimraf dist/",
     "clean:nextconfig": "rimraf next.config.js",
