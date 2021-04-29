@@ -1,5 +1,5 @@
 import * as i from 'types';
-import { combineReducers, createStore, applyMiddleware, compose, Store } from 'redux';
+import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import { createWrapper, Context } from 'next-redux-wrapper';
 import thunk from 'redux-thunk';
 

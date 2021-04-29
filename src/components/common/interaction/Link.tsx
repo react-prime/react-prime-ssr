@@ -80,7 +80,7 @@ type BaseProps = React.AnchorHTMLAttributes<Element> & {
   currentTab?: boolean;
   type?: 'route' | 'text' | 'mail' | 'phone';
   disabled?: boolean;
-}
+};
 
 /*
   If external prop is not present we can assume it's an internal link and only internal routes are
@@ -90,20 +90,20 @@ type InternalLinkProps = Omit<NextLinkProps, 'href'> & {
   external?: false;
   to: i.RouteNames;
   params?: RouteParams;
-}
+};
 
 /* If external prop is present all strings on "to" are allowed */
 type ExternalLinkProps = {
   external: true;
   to: string;
   params?: never;
-}
+};
 
 /* Combine all possible type combinations into a Discriminated Union type */
 type LinkProps = BaseProps & (
   | InternalLinkProps
   | ExternalLinkProps
-)
+);
 
 Link.defaultProps = {
   type: 'route',

@@ -9,7 +9,8 @@ const Provider: React.FC<ProviderProps> = ({ router, children }) => (
 
 type ProviderProps = {
   router: SingletonRouter;
-}
+};
 
 export const useRouter = (): SingletonRouter => useContext(RouterContext);
 export const RouterContextProvider = withRouter(Provider);
+
