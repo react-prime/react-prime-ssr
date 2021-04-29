@@ -36,9 +36,11 @@ require('esbuild').build({
   bundle: true,
   external: Object.keys(pkg.dependencies),
 })
-  .catch(() => process.exit(1));
+  .then(() => {
+    console.log('⚡️ Server compiled succesfully');
 
-if (isDev) {
-  console.log('⚡️ Server compiled succesfully');
-  runNextServer();
-}
+    if (isDev) {
+      runNextServer();
+    }
+  })
+  .catch(() => process.exit(1));
