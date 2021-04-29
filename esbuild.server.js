@@ -37,7 +37,7 @@ require('esbuild').build({
   external: Object.keys(pkg.dependencies),
 })
   .then(() => {
-    console.log('⚡️ Server compiled succesfully');
+    console.log('\n⚡️ Server compiled succesfully\n');
 
     if (isDev) {
       runNextServer();

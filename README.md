@@ -30,7 +30,6 @@ npm start
 * Start develop server: `$ npm start`
 * Create production build: `$ npm run build`
 * Start server: `$ npm run server`
-* Remove build folder: `$ npm run clean`
 * Run ESLint: `$ npm run lint`
 * Run webpack-bundle-analyzer: `$ npm run analyzer`
 
