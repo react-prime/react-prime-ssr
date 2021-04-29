@@ -4,7 +4,7 @@ import React from 'react';
 import Logo from 'vectors/logo.svg';
 import GithubLogo from 'images/github-logo.png';
 
-import { Anchor } from 'common';
+import { Anchor, Link } from 'common';
 import { PrimeHeader, PrimeContent, GithubLink } from 'modules/Home/styled';
 
 const Home: i.NextPageComponent = () => {
@@ -14,6 +14,9 @@ const Home: i.NextPageComponent = () => {
         <Logo />
       </PrimeHeader>
       <PrimeContent>
+        <p>
+          <Link to="data">Data Page</Link>
+        </p>
         <p>
           Created by
           <Anchor external to="https://github.com/sandervspl"> @sandervspl </Anchor>
