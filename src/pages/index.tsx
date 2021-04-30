@@ -4,7 +4,7 @@ import React from 'react';
 import Logo from 'vectors/logo.svg';
 import GithubLogo from 'images/github-logo.png';
 
-import { Anchor, Link } from 'common';
+import { Anchor } from 'common';
 import { PrimeHeader, PrimeContent, GithubLink } from 'modules/Home/styled';
 
 const Home: i.NextPageComponent = () => {
@@ -15,13 +15,13 @@ const Home: i.NextPageComponent = () => {
       </PrimeHeader>
       <PrimeContent>
         <p>
-          <Link to="data">Data Page</Link>
+          <Anchor to="/data">Data Page</Anchor>
         </p>
         <p>
           Created by
-          <Anchor external to="https://github.com/sandervspl"> @sandervspl </Anchor>
+          <Anchor to="https://github.com/sandervspl"> @sandervspl </Anchor>
           and maintained by
-          <Anchor external to="https://labela.nl/"> LabelA</Anchor>
+          <Anchor to="https://labela.nl/"> LabelA</Anchor>
         </p>
         <GithubLink
           href="https://github.com/react-prime/react-prime-ssr"

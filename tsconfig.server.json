@@ -2,12 +2,11 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "sourceMap": false,
-    "noEmit": false,
+    "noEmit": true,
     "skipLibCheck": true,
     "isolatedModules": false,
     "module": "commonjs",
-    "outDir": "dist",
-    "target": "es2017"
+    "outDir": "dist"
   },
   "include": [
     "src/types/declarations.d.ts",

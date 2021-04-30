@@ -1,21 +1,18 @@
-import * as i from 'types';
 import React from 'react';
 import _ from 'lodash';
-import { RouteParams } from 'next-routes';
-import { LinkProps as NextLinkProps } from 'next/link';
-
-import Router from 'router';
+import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 
 export const Link: React.FC<LinkProps> = ({
-  children, className, to, ariaLabel, currentTab, type, disabled, external, ...props
+  children, className, to, ariaLabel, currentTab, type, disabled, ...props
 }) => {
   const formattedAriaLabel = _.capitalize(ariaLabel);
+  const isExternalUrl = !to.startsWith('/');
 
   let linkProps: React.AnchorHTMLAttributes<Element> = {
     className: className || '',
   };
 
-  if (external || type !== 'route') {
+  if (isExternalUrl || type !== 'route') {
     const target = currentTab || type !== 'route'
       ? '_self'
       : '_blank';
@@ -51,30 +48,27 @@ export const Link: React.FC<LinkProps> = ({
       );
     }
 
-    const anchorProps = _.omit(props, 'external');
-
     return (
-      <a {...linkProps} {...anchorProps}>
+      <a {...linkProps} {...props}>
         {children}
       </a>
     );
   }
 
-  const anchorProps = _.omit(props, 'params');
-
   return (
-    <Router.Link {...props} route={to} params={props.params}>
+    <NextLink {...props} href={to}>
       {React.Children.only(
-        <a {...linkProps} {...anchorProps}>
+        <a {...linkProps} {...props}>
           {children}
         </a>,
       )}
-    </Router.Link>
+    </NextLink>
   );
 };
 
-type BaseProps = React.AnchorHTMLAttributes<Element> & {
+type LinkProps = React.AnchorHTMLAttributes<Element> & Omit<NextLinkProps, 'href'> & {
   children: React.ReactNode;
+  to: string;
   className?: string;
   ariaLabel?: string;
   currentTab?: boolean;
@@ -82,30 +76,6 @@ type BaseProps = React.AnchorHTMLAttributes<Element> & {
   disabled?: boolean;
 };
 
-/*
-  If external prop is not present we can assume it's an internal link and only internal routes are
-  allowed.
-*/
-type InternalLinkProps = Omit<NextLinkProps, 'href'> & {
-  external?: false;
-  to: i.RouteNames;
-  params?: RouteParams;
-};
-
-/* If external prop is present all strings on "to" are allowed */
-type ExternalLinkProps = {
-  external: true;
-  to: string;
-  params?: never;
-};
-
-/* Combine all possible type combinations into a Discriminated Union type */
-type LinkProps = BaseProps & (
-  | InternalLinkProps
-  | ExternalLinkProps
-);
-
 Link.defaultProps = {
   type: 'route',
-  params: {},
 };

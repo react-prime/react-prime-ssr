@@ -18,7 +18,6 @@ npm start
 * [React](https://reactjs.org/)
 * [Redux](https://redux.js.org/)
 * [Redux Thunk](https://github.com/gaearon/redux-thunk) to handle async actions
-* [Next Routes](https://github.com/fridays/next-routes)
 * [Styled-Components](https://www.styled-components.com)
 * [Workbox](https://developers.google.com/web/tools/workbox/) for offline support and caching
 * [Code splitting](https://reactjs.org/docs/code-splitting.html)
@@ -46,10 +45,6 @@ Run the server file to start server:
 For production I recommend to use [PM2](http://pm2.keymetrics.io/) to run the server with advanced process management.
 
 ## Development Workflow
-### Routes
-We use the [next-routes](https://github.com/fridays/next-routes) package to generate server and client routes.
-Your app routes can be created in the `server/routes.ts` file. Refer to the [next-routes](https://github.com/fridays/next-routes/blob/master/README.md) documentation for how to set up routes. Route index files can be added to `pages`.
-
 ### Components
 The components are separated in `Modules` and `Common`. Modules are bundled components which depend on each other. Common components are components that are self-contained and can be used through the entire app.
 
