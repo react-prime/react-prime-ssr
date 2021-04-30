@@ -1,13 +1,37 @@
 /* eslint-disable @typescript-eslint/no-var-requires, no-console */
-const cp = require('child_process');
 const pkg = require('../package.json');
+const watchPagesFolder = require('./watchPagesFolder');
 
 const fileName = 'server/index';
 const isDev = Boolean(process.env.DEV);
 
 let ls;
 
+require('esbuild').build({
+  tsconfig: 'tsconfig.server.json',
+  entryPoints: [`${fileName}.ts`],
+  outfile: `dist/${fileName}.js`,
+  platform: 'node',
+  target: 'node10',
+  bundle: true,
+  external: Object.keys(pkg.dependencies),
+})
+  .then(() => {
+    console.log('⚡️ Server compiled succesfully');
+
+    if (isDev) {
+      runNextServer();
+      watchPagesFolder();
+    }
+  })
+  .catch(() => {
+    process.exit(1);
+  });
+
+
 function runNextServer() {
+  const cp = require('child_process');
+
   if (ls) {
     ls.kill();
   }
@@ -26,21 +50,3 @@ function runNextServer() {
     });
   }
 }
-
-require('esbuild').build({
-  tsconfig: 'tsconfig.server.json',
-  entryPoints: [`${fileName}.ts`],
-  outfile: `dist/${fileName}.js`,
-  platform: 'node',
-  target: 'node10',
-  bundle: true,
-  external: Object.keys(pkg.dependencies),
-})
-  .then(() => {
-    console.log('\n⚡️ Server compiled succesfully\n');
-
-    if (isDev) {
-      runNextServer();
-    }
-  })
-  .catch(() => process.exit(1));
