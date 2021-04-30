@@ -3,9 +3,9 @@
   "version": "1.2.0",
   "description": "A starter kit to create comprehensive server side rendered React apps with Redux",
   "scripts": {
-    "start": "npm run build:nextconfig; DEV=true node esbuild.server.js",
-    "build": "npm run build:nextconfig; next build; node esbuild.server.js",
-    "build:nextconfig": "node esbuild.nextconfig.js",
+    "start": "npm run build:nextconfig; DEV=true node scripts/esbuild.server.js",
+    "build": "npm run build:nextconfig; next build; node scripts/esbuild.server.js",
+    "build:nextconfig": "node scripts/esbuild.nextconfig.js",
     "server": "NODE_ENV=production node dist/server/index.js",
     "lint": "eslint --ext .ts --ext .tsx src/",
     "analyze": "BUNDLE_ANALYZE=both npm run build",

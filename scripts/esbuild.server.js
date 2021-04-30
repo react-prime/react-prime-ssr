@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires, no-console */
 const cp = require('child_process');
-const pkg = require('./package.json');
+const pkg = require('../package.json');
 
 const fileName = 'server/index';
 const isDev = Boolean(process.env.DEV);

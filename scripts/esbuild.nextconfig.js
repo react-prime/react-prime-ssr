@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const pkg = require('./package.json');
+const pkg = require('../package.json');
+
 const fileName = 'next.config';
 
 require('esbuild').build({
