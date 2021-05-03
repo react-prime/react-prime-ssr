@@ -23,11 +23,7 @@ const Home: i.NextPageComponent = () => {
           and maintained by
           <Anchor to="https://labela.nl/"> LabelA</Anchor>
         </p>
-        <GithubLink
-          href="https://github.com/react-prime/react-prime-ssr"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <GithubLink to="https://github.com/react-prime/react-prime-ssr">
           <img src={GithubLogo} alt="github" />
         </GithubLink>
       </PrimeContent>

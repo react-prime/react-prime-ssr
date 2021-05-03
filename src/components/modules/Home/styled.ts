@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { Link } from 'common';
+
 export const PrimeHeader = styled.header`
   text-align: center;
   padding: 50px 10px;
@@ -17,7 +19,7 @@ export const PrimeContent = styled.section`
   line-height: 25px;
 `;
 
-export const GithubLink = styled.a`
+export const GithubLink = styled(Link)`
   width: 20px;
   height: 20px;
   display: inline-block;
