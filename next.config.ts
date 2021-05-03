@@ -213,7 +213,9 @@ const config = (phase: string, config: NextConfig) => {
 
     // Add Bundle Analyzer if requested by script
     if (process.env.BUNDLE_ANALYZE) {
-      const withBundleAnalyzer = require('@next/bundle-analyzer');
+      const withBundleAnalyzer = require('@next/bundle-analyzer')({
+        enabled: process.env.BUNDLE_ANALYZE,
+      });
 
       cfg = withBundleAnalyzer({
         ...cfg,
