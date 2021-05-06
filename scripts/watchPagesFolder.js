@@ -11,12 +11,12 @@ function logGenerateDone() {
 }
 
 function watchPagesFolder() {
-  const chokidar = require('chokidar');
-  const { resolve } = require('path');
-  const generateRoutesType = require('./generateRoutesType');
+  return new Promise((resolve, reject) => {
+    const chokidar = require('chokidar');
+    const path = require('path');
+    const generateRoutesType = require('./generateRoutesType');
 
-  try {
-    const watcher = chokidar.watch(resolve('src/pages'), {
+    const watcher = chokidar.watch(path.resolve('src/pages'), {
       ignored: /^\./,
       persistent: true,
     });
@@ -24,13 +24,19 @@ function watchPagesFolder() {
     watcher.on('all', (event, path) => {
       // Ignore file changes (file/folder name changes have the add/addDir event)
       if (event !== 'change') {
-        generateRoutesType(event, path);
-        logGenerateDone();
+        try {
+          generateRoutesType(event, path);
+          logGenerateDone();
+        } catch (err) {
+          reject(err);
+        }
       }
     });
-  } catch (err) {
-    throw err;
-  }
+
+    watcher.on('error', (err) => {
+      reject(err);
+    });
+  });
 }
 
 module.exports = watchPagesFolder;

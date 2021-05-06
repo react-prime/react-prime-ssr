@@ -21,10 +21,16 @@ require('esbuild').build({
 
     if (isDev) {
       runNextServer();
-      watchPagesFolder();
+      watchPagesFolder()
+        .catch((err) => {
+          console.error(err);
+          ls.kill();
+          process.exit(1);
+        });
     }
   })
   .catch(() => {
+    ls.kill();
     process.exit(1);
   });
 
