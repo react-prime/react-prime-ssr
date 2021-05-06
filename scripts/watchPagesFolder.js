@@ -24,13 +24,8 @@ function watchPagesFolder() {
     watcher.on('all', (event, path) => {
       // Ignore file changes (file/folder name changes have the add/addDir event)
       if (event !== 'change') {
-        generateRoutesType(event, path)
-          .then(() => {
-            logGenerateDone();
-          })
-          .catch((err) => {
-            console.error('❌ Error:', err);
-          });
+        generateRoutesType(event, path);
+        logGenerateDone();
       }
     });
   } catch (err) {
