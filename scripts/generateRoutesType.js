@@ -15,7 +15,6 @@ function generateRoutesType(event, filepath) {
   const path = require('path');
 
   return new Promise((resolve, reject) => {
-    throw Error();
     // Remove folder path from string
     // Remove index
     // Remove extension
@@ -30,6 +29,7 @@ function generateRoutesType(event, filepath) {
       filepath = filepath.slice(0, -1);
     }
 
+
     // Ignore Next files
     if (filepath.startsWith('_')) {
       return;
@@ -37,34 +37,54 @@ function generateRoutesType(event, filepath) {
 
 
     // Capture variable name from file name
-    const result = /\[(?<var>\w+)\]/.exec(filepath);
-    const varName = result?.groups?.var;
-
-    if (event === 'add') {
-    // Add var to type alias list
-      if (varName) {
-        if (varName === 'Routes') {
-          return reject('A route variable can not be named "Routes"');
-        }
-
-        // Add to set
-        typeAliases.add(varName);
-
-        // Replace with template type
-        const varFilepath = filepath.replace(/\[\w+\]/g, `\${${varName}}`);
-
-        files.set(filepath, varFilepath);
-      } else {
-        files.set(filepath, filepath);
-      }
-    }
+    const result = filepath.match(/\[\w+\]/g);
 
     if (event === 'unlink') {
       files.delete(filepath);
 
       // Remove from type alias list
-      if (varName && varName !== 'key' && varName !== 'value') {
-        typeAliases.delete(varName);
+      if (result) {
+        for (const varName of result) {
+          // Reserved names
+          if (varName === 'key' && varName === 'value') {
+            continue;
+          }
+
+          // Check if we need to delete any variable names we captured
+          let del = true;
+          for (const varFilepath of files.values()) {
+            if (varFilepath.includes(getText(varName))) {
+              del = false;
+            }
+          }
+
+          if (del) {
+            typeAliases.delete(getText(varName));
+          }
+        }
+      }
+    }
+
+    if (event === 'add') {
+      // Add var to type alias list
+      if (result) {
+        let varFilepath = filepath;
+
+        for (const varNameInBrackets of result) {
+          if (varNameInBrackets === 'Routes') {
+            return reject('A route variable can not be named "Routes"');
+          }
+
+          // Add to set
+          typeAliases.add(getText(varNameInBrackets));
+
+          // Replace with template type
+          varFilepath = varFilepath.replace(varNameInBrackets, `\${${getText(varNameInBrackets)}}`);
+        }
+
+        files.set(filepath, varFilepath);
+      } else {
+        files.set(filepath, filepath);
       }
     }
 
@@ -92,6 +112,10 @@ function generateRoutesType(event, filepath) {
 
     fs.writeFile(path.resolve(PATHS.Output), text, resolve);
   });
+}
+
+function getText(str) {
+  return str.match(/\w+/)[0];
 }
 
 module.exports = generateRoutesType;
