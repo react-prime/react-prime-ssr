@@ -43,10 +43,10 @@ function generateRoutesType(event, filepath) {
 
   for (const val of files.values()) {
     const quotes = val.includes('$') ? '`' : '\'';
-    const route = ` | ${quotes}/${val}${quotes}`;
+    const route = `${quotes}/${val}${quotes}`;
     const paramRoute = `\`/${val}?\${string}=\${string}\``;
 
-    types.push(`${route}\n | ${paramRoute}`);
+    types.push(` | ${route}\n | ${paramRoute}`);
   }
 
   const t = `// This file has been auto-generated
