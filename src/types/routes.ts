@@ -1,6 +1,10 @@
 // This file has been auto-generated
+
+type key = string;
+type value = string;
+
 export type Routes =
  | '/'
- | `/?${string}=${string}`
+ | `/?${key}=${value}`
  | '/data'
- | `/data?${string}=${string}`;
+ | `/data?${key}=${value}`;
