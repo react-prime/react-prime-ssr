@@ -16,6 +16,7 @@ function watchPagesFolder() {
     const path = require('path');
     const generateRoutesType = require('./generateRoutesType');
 
+    // Watch for any folder changes
     const watcher = chokidar.watch(path.resolve('src/pages'), {
       ignored: /^\./,
       persistent: true,
