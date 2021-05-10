@@ -7,7 +7,7 @@
 ## Quick start
 Use [create-react-prime](https://www.npmjs.com/package/create-react-prime) for easy install.
 ```
-npx create-react-prime -t ssr my-app
+npx create-react-prime -b react-ssr my-app
 cd my-app
 npm start
 ```
