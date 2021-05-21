@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires, no-console */
 const pkg = require('../package.json');
-const watchPagesFolder = require('./watchPagesFolder');
 
 const fileName = 'server/index';
 const isDev = Boolean(process.env.DEV);
@@ -21,12 +20,6 @@ require('esbuild').build({
 
     if (isDev) {
       runNextServer();
-      watchPagesFolder()
-        .catch((err) => {
-          console.error(err);
-          ls.kill();
-          process.exit(1);
-        });
     }
   })
   .catch(() => {

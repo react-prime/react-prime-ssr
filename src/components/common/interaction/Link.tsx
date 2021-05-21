@@ -1,4 +1,3 @@
-import * as i from 'types';
 import React from 'react';
 import _ from 'lodash';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
@@ -69,7 +68,7 @@ export const Link: React.FC<LinkProps> = ({
 
 type LinkProps = React.AnchorHTMLAttributes<Element> & Omit<NextLinkProps, 'href'> & {
   children: React.ReactNode;
-  to: i.Routes | `http${string}`;
+  to: `/${string}` | `http${string}`;
   className?: string;
   ariaLabel?: string;
   currentTab?: boolean;
