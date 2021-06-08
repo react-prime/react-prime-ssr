@@ -7,7 +7,7 @@
 ## Quick start
 Use [create-react-prime](https://www.npmjs.com/package/create-react-prime) for easy install.
 ```
-npx create-react-prime -t ssr my-app
+npx create-react-prime -b react-ssr my-app
 cd my-app
 npm start
 ```
@@ -18,7 +18,6 @@ npm start
 * [React](https://reactjs.org/)
 * [Redux](https://redux.js.org/)
 * [Redux Thunk](https://github.com/gaearon/redux-thunk) to handle async actions
-* [Next Routes](https://github.com/fridays/next-routes)
 * [Styled-Components](https://www.styled-components.com)
 * [Workbox](https://developers.google.com/web/tools/workbox/) for offline support and caching
 * [Code splitting](https://reactjs.org/docs/code-splitting.html)
@@ -30,7 +29,6 @@ npm start
 * Start develop server: `$ npm start`
 * Create production build: `$ npm run build`
 * Start server: `$ npm run server`
-* Remove build folder: `$ npm run clean`
 * Run ESLint: `$ npm run lint`
 * Run webpack-bundle-analyzer: `$ npm run analyzer`
 
@@ -47,10 +45,6 @@ Run the server file to start server:
 For production I recommend to use [PM2](http://pm2.keymetrics.io/) to run the server with advanced process management.
 
 ## Development Workflow
-### Routes
-We use the [next-routes](https://github.com/fridays/next-routes) package to generate server and client routes.
-Your app routes can be created in the `server/routes.ts` file. Refer to the [next-routes](https://github.com/fridays/next-routes/blob/master/README.md) documentation for how to set up routes. Route files can be added to `src/components/pages`.
-
 ### Components
 The components are separated in `Modules` and `Common`. Modules are bundled components which depend on each other. Common components are components that are self-contained and can be used through the entire app.
 

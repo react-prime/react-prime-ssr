@@ -15,16 +15,15 @@ const Home: i.NextPageComponent = () => {
       </PrimeHeader>
       <PrimeContent>
         <p>
-          Created by
-          <Anchor external to="https://github.com/JBostelaar"> @JBostelaar </Anchor>
-          and maintained by
-          <Anchor external to="https://labela.nl/"> LabelA</Anchor>
+          <Anchor to="/data">Data Page</Anchor>
         </p>
-        <GithubLink
-          href="https://github.com/JBostelaar/react-prime"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <p>
+          Created by
+          <Anchor to="https://github.com/sandervspl"> @sandervspl </Anchor>
+          and maintained by
+          <Anchor to="https://labela.nl/"> LabelA</Anchor>
+        </p>
+        <GithubLink to="https://github.com/react-prime/react-prime-ssr">
           <img src={GithubLogo} alt="github" />
         </GithubLink>
       </PrimeContent>

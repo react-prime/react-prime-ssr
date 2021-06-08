@@ -39,7 +39,7 @@
     },
     "lib": [
       "dom",
-      "es2017"
+      "esnext"
     ],
   },
   "typeRoots": [

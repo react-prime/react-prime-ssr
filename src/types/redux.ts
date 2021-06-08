@@ -2,10 +2,15 @@
 import * as i from 'types';
 import { Store as ReduxStore, CombinedState } from 'redux';
 import { ThunkAction as IThunkAction, ThunkDispatch as IThunkDispatch } from 'redux-thunk';
+import type { HYDRATE } from 'next-redux-wrapper';
+import { ActionType, EmptyAction, PayloadAction, PayloadMetaAction } from 'typesafe-actions';
+
 import * as reducers from 'ducks';
 
 /** Store type. */
-export type Store = ReduxStore<CombinedState<i.ReduxState>, i.ActionTypes>;
+export type Store = ReduxStore<CombinedState<i.ReduxState>, i.ActionTypes> & {
+  dispatch: i.ThunkDispatch;
+};
 
 /** Generates a list of all actions types. */
 export type ActionTypes = i.ValueOf<{
@@ -24,6 +29,21 @@ export type Action<P = any> = {
   error?: boolean;
   meta?: any;
 };
+
+type HydrateAction<N extends string, S> = {
+  type: typeof HYDRATE;
+  payload: Record<N, S>;
+};
+
+export type Reducer<
+  N extends string,
+  S extends i.AnyObject,
+  A extends Record<string, (...args: any) => EmptyAction<any> | PayloadAction<any, any> | PayloadMetaAction<any, any, any>>
+> =
+  (
+    state: S,
+    action: HydrateAction<N, S> | ActionType<A>,
+  ) => S;
 
 /** Thunk action type with pre-filled generics. */
 type ExtraArgument = i.AnyObject;

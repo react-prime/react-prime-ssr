@@ -1,15 +1,14 @@
 {
   "compilerOptions": {
+    "module": "commonjs",
+    "lib": ["esnext"],
+    "noEmit": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "module": "commonjs",
-    "outDir": ".",
-    "target": "es5",
-    "lib": [
-      "es2017"
-    ]
+    "removeComments": true,
+    "outDir": "."
   },
   "include": ["next.config.ts"],
   "exclude": []

@@ -1,6 +1,6 @@
 dist/
 node_modules/
-src/.next/
+**/.next/
 bundle_analytics/
 
 .idea

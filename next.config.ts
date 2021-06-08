@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import path from 'path';
-import { Configuration, EntryFunc, Entry } from 'webpack';
+import type { NextConfig } from 'next/dist/next-server/server/config-shared';
+import type * as webpack from 'webpack';
 import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from 'next/constants';
-import nextOptions from './config/next';
 
-const APP_ENV = process.env.APP_ENV || 'development';
+import { NODE_ENV, APP_ENV, PORT } from './config/env';
 
 const GLOBALS = {
   'process.env': {
-    NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
-    APP_ENV: JSON.stringify(process.env.APP_ENV || 'development'),
-    PORT: process.env.PORT || 3000,
+    NODE_ENV: JSON.stringify(NODE_ENV),
+    APP_ENV: JSON.stringify(APP_ENV),
+    PORT: PORT,
   },
   __DEV__: APP_ENV === 'development',
   __TEST__: APP_ENV === 'test',
@@ -19,19 +19,17 @@ const GLOBALS = {
 };
 
 
-/**
- * NextJS does not seem to want Next Config to be typed
- * Thread: https://github.com/vercel/next.js/pull/10275
- */
-
-
 // Set up our Next environment based on build phase
-const config = (phase: string, config) => {
-  let cfg = {
+const config = (phase: string, config: NextConfig) => {
+  let cfg: NextConfig = {
     ...config,
-    distDir: nextOptions.distDir,
+    distDir: 'dist',
     // Remove x-powered-by header to remove information about the server
     poweredByHeader: false,
+    future: {
+      // Enable webpack 5
+      webpack5: true,
+    },
   };
 
   /**
@@ -46,7 +44,7 @@ const config = (phase: string, config) => {
 
     cfg = {
       ...cfg,
-      webpack: (config: Configuration, { isServer }) => {
+      webpack: (config: webpack.Configuration, { isServer }) => {
         /**
          * WEBPACK CONFIG
          * Your regular Webpack configuration, except we have to work with an already existing
@@ -54,21 +52,10 @@ const config = (phase: string, config) => {
          * config of Next (unless you are trying to overwrite something) or things might break.
         */
 
-
-        // Push polyfills before all other code
-        const originalEntry = config.entry as EntryFunc;
-
-        config.entry = async () => {
-          const entries = await originalEntry() as Entry;
-          const mainEntry = entries['main.js'] as string[];
-
-          if (mainEntry && !mainEntry.includes(nextOptions.polyfillsPath)) {
-            mainEntry.unshift(nextOptions.polyfillsPath);
-          }
-
-          return entries;
+        const staticPathConfig = {
+          publicPath: '/_next/static/',
+          outputPath: `${isServer ? '../' : ''}static/`,
         };
-
 
         const rules = [
           {
@@ -76,74 +63,85 @@ const config = (phase: string, config) => {
             oneOf: [
               {
                 resourceQuery: /external/,
-                loader: 'url-loader',
-                options: {
-                  limit: 10000,
-                },
+                use: [{
+                  loader: 'url-loader',
+                  options: {
+                    limit: 10000,
+                  },
+                }],
               },
               {
-                loader: '@svgr/webpack',
+                use: ['@svgr/webpack'],
               },
             ],
           },
           {
             test: /\.(jpe?g|png|gif|ico|webp)$/,
-            use: [
+            oneOf: [
               {
-                loader: 'url-loader',
-                options: {
-                  limit: 10000,
-                  fallback: 'file-loader',
-                  publicPath: '/_next/static/',
-                  outputPath: `${isServer ? '../' : ''}static/`,
-                  name: '[name].[ext]',
-                },
+                resourceQuery: /external/,
+                use: [{
+                  loader: 'file-loader',
+                  options: {
+                    ...staticPathConfig,
+                    name: '[name].[ext]',
+                  },
+                }],
+              },
+              {
+                use: [{
+                  loader: 'url-loader',
+                  options: {
+                    ...staticPathConfig,
+                    limit: 10000,
+                    name: '[name].[ext]',
+                  },
+                }],
               },
             ],
           },
         ];
 
-        // Include all relevant directories with .tsx files that need to be transpiled
-        config.module!.rules.forEach((rule) => {
-          const ruleContainsTs = rule.test?.toString().includes('tsx');
+        // Add our rules
+        if (!config.module) {
+          config.module = {
+            rules: [],
+          };
+        }
 
-          if (ruleContainsTs) {
-            if (Array.isArray(rule.include)) {
-              rule.include = rule.include.map((includePath) => {
-                // Go down a directory to include everything from 'src'
-                if (typeof includePath === 'string' && includePath.includes('src')) {
-                  return path.resolve('src');
-                }
+        config.module.rules = [
+          ...config.module.rules!,
+          ...rules,
+        ];
 
-                return includePath;
-              });
-
-              rule.include?.push(path.resolve('server'));
-            }
-          }
-        });
-
-        // Preserve Next rules while appending our rules
-        config.module!.rules = [...config.module!.rules, ...rules];
 
         // Add plugins
-        config.plugins = config.plugins!.concat(
+        if (!config.plugins) {
+          config.plugins = [];
+        }
+
+        config.plugins = [
+          ...config.plugins,
           new webpack.DefinePlugin(GLOBALS),
           new CopyWebpackPlugin({
             patterns: [
               { from: path.resolve('public'), to: path.resolve('dist/static') },
             ],
           }),
-        );
+        ];
+
 
         // Add tsconfig paths to webpack
-        if (config.resolve) {
-          if (Array.isArray(config.resolve.plugins)) {
-            config.resolve.plugins.push(new TSConfigPathsPlugin());
-          } else {
-            config.resolve.plugins = [new TSConfigPathsPlugin()];
-          }
+        if (!config.resolve) {
+          config.resolve = {
+            plugins: [],
+          };
         }
+
+        config.resolve.plugins = [
+          ...config.resolve.plugins!,
+          new TSConfigPathsPlugin(),
+        ];
 
         return config;
       },
@@ -190,7 +188,9 @@ const config = (phase: string, config) => {
 
     // Add Bundle Analyzer if requested by script
     if (process.env.BUNDLE_ANALYZE) {
-      const withBundleAnalyzer = require('@zeit/next-bundle-analyzer');
+      const withBundleAnalyzer = require('@next/bundle-analyzer')({
+        enabled: process.env.BUNDLE_ANALYZE,
+      });
 
       cfg = withBundleAnalyzer({
         ...cfg,

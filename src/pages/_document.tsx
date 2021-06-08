@@ -1,5 +1,5 @@
 import React from 'react';
-import Document, { Head, Main, NextScript, DocumentProps, DocumentContext } from 'next/document';
+import Document, { Head, Main, NextScript, DocumentProps, DocumentContext, Html } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
 class NextDocument extends Document<DocumentProps> {
@@ -30,18 +30,15 @@ class NextDocument extends Document<DocumentProps> {
 
   render() {
     return (
-      <html lang="nl">
+      <Html lang="nl">
         <Head>
           {this.props.styles}
-          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=10" />
-          <link rel="manifest" href="/_next/static/manifest.json" />
-          <link rel="icon" sizes="192x192" href="/_next/static/favicon.ico" />
         </Head>
         <body>
           <Main />
           <NextScript />
         </body>
-      </html>
+      </Html>
     );
   }
 }
