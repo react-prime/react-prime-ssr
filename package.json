@@ -13,7 +13,7 @@
     "build": "npm run build:nextconfig; next build; node scripts/esbuild.server.js",
     "build:nextconfig": "node scripts/esbuild.nextconfig.js",
     "server": "NODE_ENV=production node dist/server/index.js",
-    "lint": "eslint --ext .ts --ext .tsx src/",
+    "lint": "eslint --ext .ts --ext .tsx --ext .js src/ server/ scripts/ ./next.config.ts",
     "analyze": "BUNDLE_ANALYZE=both npm run build",
     "typecheck": "tsc --noEmit"
   },
