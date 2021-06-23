@@ -36,14 +36,13 @@ type HydrateAction<N extends string, S> = {
 };
 
 export type Reducer<
-  N extends string,
-  S extends i.AnyObject,
-  A extends Record<string, (...args: any) => EmptyAction<any> | PayloadAction<any, any> | PayloadMetaAction<any, any, any>>
-> =
-  (
-    state: S,
-    action: HydrateAction<N, S> | ActionType<A>,
-  ) => S;
+  Name extends string,
+  State extends i.AnyObject,
+  Actions extends Record<string, (...args: any) => EmptyAction<any> | PayloadAction<any, any> | PayloadMetaAction<any, any, any>>
+> = (
+  state: State,
+  action: HydrateAction<Name, State> | ActionType<Actions>,
+) => State;
 
 /** Thunk action type with pre-filled generics. */
 type ExtraArgument = i.AnyObject;

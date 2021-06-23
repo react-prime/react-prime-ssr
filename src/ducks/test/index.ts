@@ -5,8 +5,7 @@ import * as i from 'types';
 import { HYDRATE } from 'next-redux-wrapper';
 import { action } from 'typesafe-actions';
 
-// Duck name, State struct type, typeof actions object
-type Reducer = i.Reducer<'test', i.TestState, typeof testActions>;
+import { TestReducer } from './types';
 
 export const testActions = {
   load: () => action('test/GET'),
@@ -20,7 +19,7 @@ const initialState: i.TestState = {
   loading: false,
 };
 
-const reducer: Reducer = (state = initialState, action) => {
+const reducer: TestReducer = (state = initialState, action) => {
   switch (action.type) {
     // HYDRATE is explained here:
     // https://github.com/kirill-konshin/next-redux-wrapper#state-reconciliation-during-hydration
