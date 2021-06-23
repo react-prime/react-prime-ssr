@@ -26,10 +26,6 @@ const config = (phase: string, config: NextConfig) => {
     distDir: 'dist',
     // Remove x-powered-by header to remove information about the server
     poweredByHeader: false,
-    future: {
-      // Enable webpack 5
-      webpack5: true,
-    },
   };
 
   /**
