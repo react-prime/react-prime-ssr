@@ -15,8 +15,7 @@
     "server": "NODE_ENV=production node dist/server/index.js",
     "lint": "eslint --ext .ts --ext .tsx src/",
     "analyze": "BUNDLE_ANALYZE=both npm run build",
-    "typecheck": "tsc --noEmit",
-    "postinstall": "npx patch-package"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "express": "4.17.1",

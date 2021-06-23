@@ -31,12 +31,12 @@ const Data: i.NextPageComponent<DataProps, DataQueries> = ({ query }) => {
 
 // Return a getServerSideProps function instead of using Data.getInitialProps
 // See: https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
-export const getServerSideProps = wrapper.getServerSideProps(async ({ store, query }) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
   await store.dispatch(getData());
 
   return {
     props: {
-      query,
+      query: ctx.query,
     },
   };
 });
