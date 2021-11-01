@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import path from 'path';
-import type { NextConfig } from 'next/dist/next-server/server/config-shared';
 import type * as webpack from 'webpack';
+import type { NextConfig } from 'next';
 import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from 'next/constants';
 
 import { NODE_ENV, APP_ENV, PORT } from './config/env';
@@ -48,51 +48,16 @@ const config = (phase: string, config: NextConfig) => {
          * config of Next (unless you are trying to overwrite something) or things might break.
         */
 
-        const staticPathConfig = {
-          publicPath: '/_next/static/',
-          outputPath: `${isServer ? '../' : ''}static/`,
-        };
-
         const rules = [
           {
             test: /\.svg$/,
             oneOf: [
               {
                 resourceQuery: /external/,
-                use: [{
-                  loader: 'url-loader',
-                  options: {
-                    limit: 10000,
-                  },
-                }],
+                type: 'asset/inline',
               },
               {
                 use: ['@svgr/webpack'],
-              },
-            ],
-          },
-          {
-            test: /\.(jpe?g|png|gif|ico|webp)$/,
-            oneOf: [
-              {
-                resourceQuery: /external/,
-                use: [{
-                  loader: 'file-loader',
-                  options: {
-                    ...staticPathConfig,
-                    name: '[name].[ext]',
-                  },
-                }],
-              },
-              {
-                use: [{
-                  loader: 'url-loader',
-                  options: {
-                    ...staticPathConfig,
-                    limit: 10000,
-                    name: '[name].[ext]',
-                  },
-                }],
               },
             ],
           },

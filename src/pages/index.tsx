@@ -1,8 +1,8 @@
 import * as i from 'types';
 import React from 'react';
+import Image from 'next/image';
 
 import Logo from 'vectors/logo.svg';
-import GithubLogo from 'images/github-logo.png';
 
 import { Anchor } from 'common';
 import { PrimeHeader, PrimeContent, GithubLink } from 'modules/Home/styled';
@@ -24,7 +24,7 @@ const Home: i.NextPageComponent = () => {
           <Anchor to="https://labela.nl/"> LabelA</Anchor>
         </p>
         <GithubLink to="https://github.com/react-prime/react-prime-ssr">
-          <img src={GithubLogo} alt="github" />
+          <Image src="/images/github-logo.png" width={128} height={128} alt="github" />
         </GithubLink>
       </PrimeContent>
     </>
