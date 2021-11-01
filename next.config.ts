@@ -114,19 +114,20 @@ const config = (phase: string, config: NextConfig) => {
    * This is the config for production builds in addition to the previous build phase
   */
   if (phase === PHASE_PRODUCTION_BUILD) {
-    const withOffline = require('next-offline');
+    const withPWA = require('next-pwa');
     const pkg = require('./package.json');
 
     // Add service worker to our production build with Workbox
-    cfg = withOffline({
+    cfg = withPWA({
       ...cfg,
-      transformManifest: (manifest) => ['/'].concat(manifest), // add the homepage to the cache
-      workboxOpts: {
-        swDest: 'static/service-worker.js',
+      pwa: {
+        dest: 'dist/static',
+        sw: 'service-worker.js',
         cacheId: pkg.name,
         skipWaiting: true,
         clientsClaim: true,
         include: [/\.html$/, /\.js$/, /\.png$/],
+        scope: '/',
         runtimeCaching: [
           {
             urlPattern: /^https?.*/,
