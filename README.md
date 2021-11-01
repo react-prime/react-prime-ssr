@@ -18,9 +18,9 @@ npm start
 * [React](https://reactjs.org/)
 * [Redux](https://redux.js.org/)
 * [Redux Thunk](https://github.com/gaearon/redux-thunk) to handle async actions
+* [Next Redux Wrapper](https://github.com/kirill-konshin/next-redux-wrapper) to simplify server-client state sync
 * [Styled-Components](https://www.styled-components.com)
 * [Workbox](https://developers.google.com/web/tools/workbox/) for offline support and caching
-* [Code splitting](https://reactjs.org/docs/code-splitting.html)
 * [Redux Dev Tools](https://github.com/gaearon/redux-devtools) for next generation DX (developer experience).
 * [ESLint](http://eslint.org) to maintain a consistent code style
 * Refer to `package.json` for more details
@@ -53,3 +53,6 @@ This boilerplate uses the [Ducks](https://github.com/erikras/ducks-modular-redux
 
 ### Redux DevTools
 To use de Redux DevTools install the [Redux DevTools extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) from the chrome webstore.
+
+### Static Assets
+Any static assets, such as images, are now placed inside the `public` folder. Next will optimize these assets when you use the `<Image />` component provided by Next and importing can be done simply by writing the relative URL (i.e. `/images/your-img.png`) in both CSS and JS. Because of the way SVG images are handled by React, these are still placed in the `src/static/vectors` folder and can be used as a React component.
