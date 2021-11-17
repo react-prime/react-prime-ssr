@@ -11,7 +11,7 @@ export const testActions = {
   load: () => action('test/GET'),
   success: (success: boolean) => action('test/GET_SUCCESS', success),
   failed: () => action('test/GET_FAILED'),
-} as const; // <-- Important if you don't want to explicitly type the return type of all actions
+};
 
 const initialState: i.TestState = {
   data: null,
@@ -19,7 +19,7 @@ const initialState: i.TestState = {
   loading: false,
 };
 
-const reducer: TestReducer = (state = initialState, action) => {
+const reducer: TestReducer = (state = initialState, action): i.TestState => {
   switch (action.type) {
     // HYDRATE is explained here:
     // https://github.com/kirill-konshin/next-redux-wrapper#state-reconciliation-during-hydration

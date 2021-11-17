@@ -7,6 +7,7 @@ export const PrimeHeader = styled.header`
   padding: 50px 10px;
   margin: 0 0 50px;
   background: ${(props) => props.theme.colors.black};
+  background-image: url(/images/github-logo.png);
 
   & > svg {
     width: 250px;
