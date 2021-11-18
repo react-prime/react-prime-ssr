@@ -14,7 +14,7 @@ const GLOBALS = {
   },
   __DEV__: APP_ENV === 'development',
   __TEST__: APP_ENV === 'test',
-  __ACC__: APP_ENV === 'acceptation',
+  __ACC__: APP_ENV === 'acceptance',
   __PROD__: APP_ENV === 'production',
 };
 
