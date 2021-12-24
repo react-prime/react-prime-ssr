@@ -1,5 +1,5 @@
 import * as i from 'types';
-import { useMutation, useQueryClient, useQuery, UseQueryResult } from 'react-query';
+import { useMutation, useQueryClient, useQuery, UseQueryResult, QueryClient } from 'react-query';
 
 export const useCreateUser = () => {
   const queryClient = useQueryClient();
@@ -22,11 +22,11 @@ export const useCreateUser = () => {
   );
 };
 
-export const fetchUser = () => (
+export const fetchUser = (userId: string) => (
   new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        id: '3783ce59-0e59-4a77-aaaf-e824f7c5e8f1',
+        id: userId,
         name: 'John Doe',
       });
     }, 1000);
@@ -34,11 +34,14 @@ export const fetchUser = () => (
 );
 
 export const useGetUser = (userId: string): UseQueryResult<i.Data | undefined> => {
+  const queryClient = new QueryClient();
+
   return useQuery(
-    ['entry', userId],
-    async () => await fetchUser(),
+    ['user', userId],
+    async () => await fetchUser(userId),
     {
       enabled: Boolean(userId),
+      initialData: queryClient.getQueryData(['user', userId]),
     },
   );
 };
