@@ -2,13 +2,16 @@ import React from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ThemeProvider } from 'styled-components';
+import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 import { RouterContextProvider } from 'hooks';
 import { GlobalStyling } from 'styles';
 import theme from 'styles/theme';
-import { wrapper } from 'store';
 
 const App: React.VFC<AppProps> = ({ Component, pageProps }) => {
+  const [queryClient] = React.useState(() => new QueryClient());
+
   return (
     <>
       <Head>
@@ -19,11 +22,16 @@ const App: React.VFC<AppProps> = ({ Component, pageProps }) => {
       <GlobalStyling />
       <RouterContextProvider>
         <ThemeProvider theme={theme}>
-          <Component {...pageProps} />
+          <QueryClientProvider client={queryClient}>
+            <Hydrate state={pageProps.dehydratedState}>
+              <Component {...pageProps} />
+            </Hydrate>
+            <ReactQueryDevtools />
+          </QueryClientProvider>
         </ThemeProvider>
       </RouterContextProvider>
     </>
   );
 };
 
-export default wrapper.withRedux(App);
+export default App;
