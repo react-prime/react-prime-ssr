@@ -3,12 +3,10 @@ import React from 'react';
 import Image from 'next/image';
 
 import Logo from 'vectors/logo.svg';
-import { fetchUser } from 'queries/example';
-import { staticPropsFetcher } from 'services';
 import { Anchor } from 'common';
 import { PrimeHeader, PrimeContent, GithubLink } from 'modules/Home/styled';
 
-const Home: i.NextPageComponent = ({ dehydratedState }) => {
+const Home: i.NextPageComponent = () => {
   return (
     <>
       <PrimeHeader>
@@ -17,7 +15,6 @@ const Home: i.NextPageComponent = ({ dehydratedState }) => {
       <PrimeContent>
         <p>
           <Anchor to="/data">Data Page</Anchor><br />
-          {dehydratedState.queries[0].state.status === 'success' ? 'Data loaded' : 'Data loading'}
         </p>
         <p>
           Created by
@@ -32,12 +29,5 @@ const Home: i.NextPageComponent = ({ dehydratedState }) => {
     </>
   );
 };
-
-export async function getStaticProps() {
-  return staticPropsFetcher(
-    ['user', 'user_id'],
-    () => fetchUser(),
-  );
-}
 
 export default Home;
