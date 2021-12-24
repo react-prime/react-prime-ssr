@@ -1,10 +1,10 @@
 import * as i from 'types';
 import React from 'react';
-import { dehydrate, QueryClient } from 'react-query';
 import Image from 'next/image';
 
 import Logo from 'vectors/logo.svg';
 import { fetchUser } from 'queries/example';
+import { staticPropsFetcher } from 'services';
 import { Anchor } from 'common';
 import { PrimeHeader, PrimeContent, GithubLink } from 'modules/Home/styled';
 
@@ -34,14 +34,10 @@ const Home: i.NextPageComponent = ({ dehydratedState }) => {
 };
 
 export async function getStaticProps() {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(['user', 'user_id'], () => fetchUser());
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
+  return staticPropsFetcher(
+    ['user', 'user_id'],
+    () => fetchUser(),
+  );
 }
 
 export default Home;
