@@ -1,5 +1,6 @@
 import * as i from 'types';
 import React from 'react';
+import { GetStaticProps } from 'next';
 import { DehydratedState } from 'react-query';
 
 import Logo from 'vectors/logo.svg';
@@ -27,10 +28,10 @@ const Data: i.NextPageComponent<DehydratedState> = () => {
 
 // Return a getServerSideProps function instead of using Data.getInitialProps
 // See: https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   return staticPropsFetcher<() => void>(
     ['user', userId], () => fetchUser(userId),
   );
-}
+};
 
 export default Data;
