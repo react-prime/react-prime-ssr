@@ -29,7 +29,7 @@ const Data: i.NextPageComponent<DehydratedState> = () => {
 // See: https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
 export async function getStaticProps() {
   return staticPropsFetcher<() => void>(
-    ['user', 'user_id'], () => fetchUser(userId),
+    ['user', userId], () => fetchUser(userId),
   );
 }
 

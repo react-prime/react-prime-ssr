@@ -9,7 +9,7 @@ export const staticPropsFetcher = async <Fn extends (...args: unknown[]) => unkn
 
   return {
     props: {
-      dehydratedState: dehydrate(queryClient),
+      ...dehydrate(queryClient),
     },
   };
 };
