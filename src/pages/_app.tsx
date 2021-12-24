@@ -2,16 +2,15 @@ import React from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ThemeProvider } from 'styled-components';
-import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
+import { Hydrate, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
+import queryClient from 'queryClient';
 import { RouterContextProvider } from 'hooks';
 import { GlobalStyling } from 'styles';
 import theme from 'styles/theme';
 
 const App: React.VFC<AppProps> = ({ Component, pageProps }) => {
-  const [queryClient] = React.useState(() => new QueryClient());
-
   return (
     <>
       <Head>
