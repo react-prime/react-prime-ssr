@@ -12,7 +12,7 @@ import { wrapper } from 'store';
  * The first parameter of this type is the component props type
  * The second parameter is for typing URL queries
  */
-const Data: i.NextPageComponent<DataProps, DataQueries> = ({ query }) => {
+const Page: i.NextPageComponent<PageProps, PageQueries> = ({ query }) => {
   const data = useSelector((state) => state.test);
 
   return (
@@ -21,7 +21,7 @@ const Data: i.NextPageComponent<DataProps, DataQueries> = ({ query }) => {
         <Logo />
       </PrimeHeader>
       <PrimeContent>
-        This page is to show how to use Redux.<br /><br />
+        This page is to show how to use SSR.<br /><br />
         data: <pre>{JSON.stringify(data, null, 2)}</pre>
         queries: <pre>{JSON.stringify(query)}</pre>
       </PrimeContent>
@@ -41,12 +41,12 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
   };
 });
 
-type DataProps = {
-  query: DataQueries;
+type PageProps = {
+  query: PageQueries;
 };
 
-type DataQueries = {
+type PageQueries = {
   page?: number;
 };
 
-export default Data;
+export default Page;

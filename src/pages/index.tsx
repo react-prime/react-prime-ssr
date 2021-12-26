@@ -14,9 +14,12 @@ const Home: i.NextPageComponent = () => {
         <Logo />
       </PrimeHeader>
       <PrimeContent>
-        <p>
-          <Anchor to="/data">Data Page</Anchor>
-        </p>
+        <ul>
+          <li><Anchor to="/ssr">SSR Page</Anchor></li>
+          <li><Anchor to="/ssg">SSG Page</Anchor></li>
+          <li><Anchor to="/issg/1">iSSG (build-time) Page</Anchor></li>
+          <li><Anchor to={`/issg/${Math.floor(Math.random() * 1000)}`}>iSSG (run-time) Page</Anchor></li>
+        </ul>
         <p>
           Created by
           <Anchor to="https://github.com/sandervspl"> @sandervspl </Anchor>
