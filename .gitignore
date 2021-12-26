@@ -8,6 +8,7 @@ bundle_analytics/
 .gitattributes
 next.config.js
 config/*.js
+**/*.tsbuildinfo
 
 # OS generated files #
 ######################
