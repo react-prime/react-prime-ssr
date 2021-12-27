@@ -1,6 +1,7 @@
 import * as i from 'types';
 import React from 'react';
 import Image from 'next/image';
+import { useQuery } from 'react-query';
 
 import Logo from 'vectors/logo.svg';
 
@@ -8,13 +9,22 @@ import { Anchor } from 'common';
 import { PrimeHeader, PrimeContent, GithubLink } from 'modules/Home/styled';
 
 const Data: i.NextPageComponent = () => {
+  const { data, isLoading } = useQuery<i.AnyObject>('data', () => new Promise((res) => {
+    setTimeout(() => res({ hello: 'world' }), 1000);
+  }));
+
   return (
     <>
       <PrimeHeader>
         <Logo />
       </PrimeHeader>
       <PrimeContent>
-        <h2>Data Page</h2>
+        <p>
+          <Anchor to="/">Home Page</Anchor>
+        </p>
+        <p>
+          {isLoading ? 'Fetching...' : JSON.stringify(data, null, 2)}
+        </p>
         <p>
           Created by
           <Anchor to="https://github.com/sandervspl"> @sandervspl </Anchor>

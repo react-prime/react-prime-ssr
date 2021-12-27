@@ -2,12 +2,15 @@ import React from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ThemeProvider } from 'styled-components';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { GlobalStyling } from 'styles';
 import theme from 'styles/theme';
 import { SafeHydrate } from 'services';
 
 import Component from './index';
+
+const queryClient = new QueryClient();
 
 const App: React.VFC<AppProps> = () => {
   return (
@@ -20,7 +23,9 @@ const App: React.VFC<AppProps> = () => {
       <SafeHydrate>
         <GlobalStyling />
         <ThemeProvider theme={theme}>
-          <Component />
+          <QueryClientProvider client={queryClient}>
+            <Component />
+          </QueryClientProvider>
         </ThemeProvider>
       </SafeHydrate>
     </>
