@@ -8,9 +8,6 @@ import { Anchor } from 'common';
 import { PrimeHeader, PrimeContent, GithubLink } from 'modules/Home/styled';
 
 const Data: i.NextPageComponent = () => {
-  // Will only log in browser, not in terminal
-  console.log('rendering');
-
   return (
     <>
       <PrimeHeader>
