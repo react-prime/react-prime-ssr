@@ -1,7 +1,6 @@
 import * as i from 'types';
 import React from 'react';
 import Image from 'next/image';
-import { Link } from 'react-router-dom';
 
 import Logo from 'vectors/logo.svg';
 
@@ -16,7 +15,7 @@ const Home: i.NextPageComponent = () => {
       </PrimeHeader>
       <PrimeContent>
         <p>
-          <Link to="/data">Data Page</Link>
+          <Anchor to="/data">Data Page</Anchor>
         </p>
         <p>
           Created by

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-
-import { Link } from './Link';
+import { Link } from 'react-router-dom';
 
 export const Anchor = styled(Link)`
   color: ${(props) => props.theme.colors.black};

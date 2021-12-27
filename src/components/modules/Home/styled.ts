@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-
-import { Link } from 'common';
+import { Link } from 'react-router-dom';
 
 export const PrimeHeader = styled.header`
   text-align: center;
