@@ -2,13 +2,12 @@ import React from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ThemeProvider } from 'styled-components';
-import { BrowserRouter } from 'react-router-dom';
 
 import { GlobalStyling } from 'styles';
 import theme from 'styles/theme';
 import { SafeHydrate } from 'services';
 
-import Routes from './Routes';
+import Component from './index';
 
 const App: React.VFC<AppProps> = () => {
   return (
@@ -21,9 +20,7 @@ const App: React.VFC<AppProps> = () => {
       <SafeHydrate>
         <GlobalStyling />
         <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <Routes />
-          </BrowserRouter>
+          <Component />
         </ThemeProvider>
       </SafeHydrate>
     </>
