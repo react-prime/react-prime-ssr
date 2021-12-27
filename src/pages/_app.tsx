@@ -16,9 +16,12 @@ const App: React.VFC<AppProps> = () => {
   return (
     <>
       <Head>
+        <meta name="description" content="React Prime Boilerplate" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=10" />
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
         <link rel="manifest" href="/_next/static/manifest.json" />
         <link rel="icon" sizes="192x192" href="/_next/static/favicon.ico" />
+        <title>React Prime</title>
       </Head>
       <SafeHydrate>
         <GlobalStyling />
