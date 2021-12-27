@@ -2,13 +2,15 @@ import React from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ThemeProvider } from 'styled-components';
+import { BrowserRouter } from 'react-router-dom';
 
-import { RouterContextProvider } from 'hooks';
 import { GlobalStyling } from 'styles';
 import theme from 'styles/theme';
-import { wrapper } from 'store';
+import { SafeHydrate } from 'services';
 
-const App: React.VFC<AppProps> = ({ Component, pageProps }) => {
+import Routes from './Routes';
+
+const App: React.VFC<AppProps> = () => {
   return (
     <>
       <Head>
@@ -16,14 +18,16 @@ const App: React.VFC<AppProps> = ({ Component, pageProps }) => {
         <link rel="manifest" href="/_next/static/manifest.json" />
         <link rel="icon" sizes="192x192" href="/_next/static/favicon.ico" />
       </Head>
-      <GlobalStyling />
-      <RouterContextProvider>
+      <SafeHydrate>
+        <GlobalStyling />
         <ThemeProvider theme={theme}>
-          <Component {...pageProps} />
+          <BrowserRouter>
+            <Routes />
+          </BrowserRouter>
         </ThemeProvider>
-      </RouterContextProvider>
+      </SafeHydrate>
     </>
   );
 };
 
-export default wrapper.withRedux(App);
+export default App;

@@ -26,6 +26,13 @@ const config = (phase: string, config: NextConfig) => {
     distDir: 'dist',
     // Remove x-powered-by header to remove information about the server
     poweredByHeader: false,
+    // CSR — route all to pages/index.js
+    rewrites: async () => ([
+      {
+        source: '/:any*',
+        destination: '/',
+      },
+    ]),
   };
 
   /**

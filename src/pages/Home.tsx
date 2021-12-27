@@ -1,6 +1,7 @@
 import * as i from 'types';
 import React from 'react';
 import Image from 'next/image';
+import { Link } from 'react-router-dom';
 
 import Logo from 'vectors/logo.svg';
 
@@ -8,18 +9,18 @@ import { Anchor } from 'common';
 import { PrimeHeader, PrimeContent, GithubLink } from 'modules/Home/styled';
 
 const Home: i.NextPageComponent = () => {
+  // Will only log in browser, not in terminal
+  console.log('rendering');
+
   return (
     <>
       <PrimeHeader>
         <Logo />
       </PrimeHeader>
       <PrimeContent>
-        <ul>
-          <li><Anchor to="/ssr">SSR Page</Anchor></li>
-          <li><Anchor to="/ssg">SSG Page</Anchor></li>
-          <li><Anchor to="/issg/1">iSSG (build-time) Page</Anchor></li>
-          <li><Anchor to={`/issg/${Math.floor(Math.random() * 1000)}`}>iSSG (run-time) Page</Anchor></li>
-        </ul>
+        <p>
+          <Link to="/data">Data Page</Link>
+        </p>
         <p>
           Created by
           <Anchor to="https://github.com/sandervspl"> @sandervspl </Anchor>
