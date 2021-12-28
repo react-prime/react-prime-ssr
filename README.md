@@ -16,12 +16,9 @@ npm start
 * [TypeScript](https://www.typescriptlang.org/)
 * [NextJS](https://nextjs.org/)
 * [React](https://reactjs.org/)
-* [Redux](https://redux.js.org/)
-* [Redux Thunk](https://github.com/gaearon/redux-thunk) to handle async actions
-* [Next Redux Wrapper](https://github.com/kirill-konshin/next-redux-wrapper) to simplify server-client state sync
+* [React Query](https://react-query.tanstack.com/overview)
 * [Styled-Components](https://www.styled-components.com)
 * [Workbox](https://developers.google.com/web/tools/workbox/) for offline support and caching
-* [Redux Dev Tools](https://github.com/gaearon/redux-devtools) for next generation DX (developer experience).
 * [ESLint](http://eslint.org) to maintain a consistent code style
 * Refer to `package.json` for more details
 
@@ -46,13 +43,28 @@ For production I recommend to use [PM2](http://pm2.keymetrics.io/) to run the se
 
 ## Development Workflow
 ### Components
-The components are separated in `Modules` and `Common`. Modules are bundled components which depend on each other. Common components are components that are self-contained and can be used through the entire app.
+The components are separated in `common`, `modules` and `pages`.
+- The `common` folder includes components are self-contained and can be used through the entire app
+- The `modules` are bundled components which depend on each other.
+- The `pages` folder contain top level pages of the application
 
-### Ducks
-This boilerplate uses the [Ducks](https://github.com/erikras/ducks-modular-redux) pattern for Redux, that means that the actionTypes, actions and reducers are bundled together in an isolated module.
+### Queries
+To manage data throughout the while application this boilerplate makes use of [React Query](https://react-query.tanstack.com/). A simple query is similar to the following code snippet:
 
-### Redux DevTools
-To use de Redux DevTools install the [Redux DevTools extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) from the chrome webstore.
+```typescript
+export const useGetItems = () => {
+  return useQuery<ServerResponse, Error, ReselectedData>(
+    'items', // either a string, or an array
+    async () => await api.get({ path: '/users' }),
+    {
+      select: (response) => {
+        // format or select parts of the response
+        return response;
+      }
+    },
+  );
+};
+```
 
 ### Static Assets
 Any static assets, such as images, are now placed inside the `public` folder. Next will optimize these assets when you use the `<Image />` component provided by Next and importing can be done simply by writing the relative URL (i.e. `/images/your-img.png`) in both CSS and JS. Because of the way SVG images are handled by React, these are still placed in the `src/static/vectors` folder and can be used as a React component.

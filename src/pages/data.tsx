@@ -1,19 +1,17 @@
 import * as i from 'types';
 import React from 'react';
+import { GetStaticProps } from 'next';
+import { DehydratedState } from 'react-query';
 
 import Logo from 'vectors/logo.svg';
-
-import { getData } from 'ducks/test';
-import { useSelector } from 'hooks';
+import { fetchUser, useGetUser } from 'queries/example';
+import { staticPropsFetcher } from 'services';
 import { PrimeHeader, PrimeContent } from 'modules/Home/styled';
-import { wrapper } from 'store';
 
-/**
- * The first parameter of this type is the component props type
- * The second parameter is for typing URL queries
- */
-const Data: i.NextPageComponent<DataProps, DataQueries> = ({ query }) => {
-  const data = useSelector((state) => state.test);
+const userId = '3783ce59-0e59-4a77-aaaf-e824f7c5e8f1';
+
+const Data: i.NextPageComponent<DehydratedState> = () => {
+  const { data } = useGetUser(userId);
 
   return (
     <>
@@ -21,9 +19,8 @@ const Data: i.NextPageComponent<DataProps, DataQueries> = ({ query }) => {
         <Logo />
       </PrimeHeader>
       <PrimeContent>
-        This page is to show how to use Redux.<br /><br />
+        This page is to show how to use React Query.<br /><br />
         data: <pre>{JSON.stringify(data, null, 2)}</pre>
-        queries: <pre>{JSON.stringify(query)}</pre>
       </PrimeContent>
     </>
   );
@@ -31,22 +28,10 @@ const Data: i.NextPageComponent<DataProps, DataQueries> = ({ query }) => {
 
 // Return a getServerSideProps function instead of using Data.getInitialProps
 // See: https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
-export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
-  await store.dispatch(getData());
-
-  return {
-    props: {
-      query: ctx.query,
-    },
-  };
-});
-
-type DataProps = {
-  query: DataQueries;
-};
-
-type DataQueries = {
-  page?: number;
+export const getStaticProps: GetStaticProps = async () => {
+  return staticPropsFetcher<() => void>(
+    ['user', userId], () => fetchUser(userId),
+  );
 };
 
 export default Data;

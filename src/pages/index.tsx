@@ -3,7 +3,6 @@ import React from 'react';
 import Image from 'next/image';
 
 import Logo from 'vectors/logo.svg';
-
 import { Anchor } from 'common';
 import { PrimeHeader, PrimeContent, GithubLink } from 'modules/Home/styled';
 
@@ -15,7 +14,7 @@ const Home: i.NextPageComponent = () => {
       </PrimeHeader>
       <PrimeContent>
         <p>
-          <Anchor to="/data">Data Page</Anchor>
+          <Anchor to="/data">Data Page</Anchor><br />
         </p>
         <p>
           Created by
