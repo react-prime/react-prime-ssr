@@ -4,6 +4,9 @@ import type { Configuration } from 'webpack';
 import type { NextConfig } from 'next';
 import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from 'next/constants';
 
+if (!process.env.APP_ENV) {
+  throw new Error('Invalid script used. To build the app, use either "npm run build:acc" or "npm run build:prod"');
+}
 
 const ENV = {
   APP_ENV: JSON.stringify(process.env.APP_ENV || 'development'),
