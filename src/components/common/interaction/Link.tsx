@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import _ from 'lodash';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 
@@ -8,7 +8,7 @@ export const Link: React.FC<LinkProps> = ({
   const formattedAriaLabel = _.capitalize(ariaLabel);
   const isExternalUrl = !to.startsWith('/');
 
-  let linkProps: React.AnchorHTMLAttributes<Element> = {
+  let htmlAnchorProps: React.AnchorHTMLAttributes<HTMLAnchorElement> = {
     className: className || '',
   };
 
@@ -26,8 +26,8 @@ export const Link: React.FC<LinkProps> = ({
     }
 
     if (type !== 'text') {
-      linkProps = {
-        ...linkProps,
+      htmlAnchorProps = {
+        ...htmlAnchorProps,
         target,
         href,
         rel: 'noopener noreferrer',
@@ -36,20 +36,20 @@ export const Link: React.FC<LinkProps> = ({
     }
 
     if (type === 'text' || disabled) {
-      linkProps = {
-        ...linkProps,
-        className: `${linkProps.className} disabled`,
+      htmlAnchorProps = {
+        ...htmlAnchorProps,
+        className: `${htmlAnchorProps.className} disabled`,
       };
 
       return (
-        <span {...linkProps} {...props}>
+        <span {...htmlAnchorProps} {...props}>
           {children}
         </span>
       );
     }
 
     return (
-      <a {...linkProps} {...props}>
+      <a {...htmlAnchorProps} {...props}>
         {children}
       </a>
     );
@@ -58,7 +58,7 @@ export const Link: React.FC<LinkProps> = ({
   return (
     <NextLink {...props} href={to}>
       {React.Children.only(
-        <a {...linkProps} {...props}>
+        <a {...htmlAnchorProps} {...props}>
           {children}
         </a>,
       )}
