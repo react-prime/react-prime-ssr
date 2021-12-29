@@ -15,7 +15,8 @@
     "server": "NODE_ENV=production node dist/server/index.js",
     "lint": "eslint --ext .ts --ext .tsx --ext .js src/ server/ scripts/ ./next.config.ts",
     "analyze": "BUNDLE_ANALYZE=both npm run build",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "npx concurrently \"npm run lint\" \"npm run typecheck\""
   },
   "dependencies": {
     "express": "4.17.2",
