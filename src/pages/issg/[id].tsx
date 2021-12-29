@@ -30,7 +30,6 @@ const Page: i.NextPageComponent<PageProps, PageQueries> = ({ params }) => {
       </PrimeHeader>
       <PrimeContent>
         This page is to show how to use iSSG.<br /><br />
-        {/* data: <pre>{JSON.stringify(data, null, 2)}</pre> */}
         params: <pre>{JSON.stringify(params)}</pre>
       </PrimeContent>
     </>
