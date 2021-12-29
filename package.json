@@ -9,17 +9,19 @@
     "npm": ">=7.8.0"
   },
   "scripts": {
-    "start": "APP_ENV=development npm run cf-ts-gen && npm run build:nextconfig && next dev",
-    "build:acc": "APP_ENV=acceptation npm run cf-ts-gen && npm run build",
-    "build:prod": "APP_ENV=production npm run cf-ts-gen && npm run build",
-    "build": "npm run build:nextconfig && next build && node scripts/esbuild.server.js",
+    "start": "APP_ENV=development npm run build:nextconfig && concurrently \"APP_ENV=development npm run cf-ts-gen -- -p -i 15\" \"next dev\"",
     "build:nextconfig": "node scripts/esbuild.nextconfig.js",
+    "build:acc": "APP_ENV=acceptation npm run cs-ts-gen:build && npm run build:app",
+    "build:prod": "APP_ENV=production npm run cf-ts-gen:build && npm run build:app",
+    "build:app": "npm run build:nextconfig && next build && node scripts/esbuild.server.js",
     "server": "NODE_ENV=production node dist/server/index.js",
     "lint": "eslint --ext .ts --ext .tsx --ext .js src/ server/ scripts/ ./next.config.ts",
     "analyze": "BUNDLE_ANALYZE=both npm run build",
     "typecheck": "tsc --noEmit",
-    "test": "npx concurrently \"npm run lint\" \"npm run typecheck\"",
-    "cf-ts-gen": "contentful-typescript-codegen --output src/types/generated/contentful.d.ts && eslint --fix --quiet src/types/generated/contentful.d.ts"
+    "test": "concurrently \"npm run lint\" \"npm run typecheck\"",
+    "cf-ts-gen": "contentful-typescript-codegen --output src/types/generated/contentful.d.ts",
+    "cf-ts-gen:lint": "eslint --fix --quiet src/types/generated/contentful.d.ts",
+    "cf-ts-gen:build": "npm run cf-ts-gen && npm run cf-ts-gen:lint"
   },
   "dependencies": {
     "contentful": "9.1.5",
@@ -51,6 +53,7 @@
     "babel-plugin-lodash": "3.3.4",
     "babel-plugin-styled-components": "2.0.2",
     "chokidar": "3.5.2",
+    "concurrently": "6.5.1",
     "contentful-management": "7.47.2",
     "contentful-typescript-codegen": "3.2.3",
     "copy-webpack-plugin": "10.2.0",
