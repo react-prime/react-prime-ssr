@@ -42,6 +42,15 @@ Run the server file to start server:
 For production I recommend to use [PM2](http://pm2.keymetrics.io/) to run the server with advanced process management.
 
 ## Development Workflow
+### env files
+This project uses multiple `.env` files to simplify environment variables. To start using environment variables:
+
+- Create a `.env.local` file. This file will host all secret variables. 
+- Add a name and value (`ENV__name=value` format). When working with variables, start the name with either `DEV__`, `ACC__` or `PROD__` i.e. `DEV__ACCESS_TOKEN=abc123`
+- To use `.local.env` variables in the other `.env` files prepend them with a `$` (i.e. `ACCESS_TOKEN=$DEV__ACCESS_TOKEN`)
+- By default, these variables are not exposed to the browser. To expose them to the browser, prepend the name with `NEXT_PUBLIC_`
+  - Note: Do not do this is `.env.local`, only in the other `.env` files
+
 ### Components
 The components are separated in `common`, `modules` and `pages`.
 - The `common` folder includes components are self-contained and can be used through the entire app
