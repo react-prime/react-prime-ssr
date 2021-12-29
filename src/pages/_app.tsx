@@ -1,5 +1,5 @@
 import * as i from 'types';
-import React from 'react';
+import * as React from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ThemeProvider } from 'styled-components';
