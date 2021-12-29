@@ -31,7 +31,6 @@
       "services": ["src/services"],
       "services/*": ["src/services/*"],
       "queries/*": ["src/queries/*"],
-      "queryClient": ["src/queryClient"],
       "types": ["src/types/index"],
       "vectors/*": ["src/static/vectors/*"],
     },
