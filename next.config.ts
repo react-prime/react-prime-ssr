@@ -1,21 +1,18 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import path from 'path';
-import type * as webpack from 'webpack';
+import type { Configuration } from 'webpack';
 import type { NextConfig } from 'next';
 import { PHASE_PRODUCTION_BUILD, PHASE_PRODUCTION_SERVER } from 'next/constants';
 
-import { NODE_ENV, APP_ENV, PORT } from './config/env';
 
+const ENV = {
+  APP_ENV: JSON.stringify(process.env.APP_ENV || 'development'),
+};
 const GLOBALS = {
-  'process.env': {
-    NODE_ENV: JSON.stringify(NODE_ENV),
-    APP_ENV: JSON.stringify(APP_ENV),
-    PORT: PORT,
-  },
-  __DEV__: APP_ENV === 'development',
-  __TEST__: APP_ENV === 'test',
-  __ACC__: APP_ENV === 'acceptance',
-  __PROD__: APP_ENV === 'production',
+  DEV: JSON.stringify(ENV.APP_ENV === 'development'),
+  TEST: JSON.stringify(ENV.APP_ENV === 'test'),
+  ACC: JSON.stringify(ENV.APP_ENV === 'acceptance'),
+  PROD: JSON.stringify(ENV.APP_ENV === 'production'),
 };
 
 
@@ -26,6 +23,7 @@ const config = (phase: string, config: NextConfig) => {
     distDir: 'dist',
     // Remove x-powered-by header to remove information about the server
     poweredByHeader: false,
+    env: ENV,
   };
 
   /**
@@ -40,7 +38,7 @@ const config = (phase: string, config: NextConfig) => {
 
     cfg = {
       ...cfg,
-      webpack: (config: webpack.Configuration, { isServer }) => {
+      webpack: (config: Configuration, { isServer }) => {
         /**
          * WEBPACK CONFIG
          * Your regular Webpack configuration, except we have to work with an already existing

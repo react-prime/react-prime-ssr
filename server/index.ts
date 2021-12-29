@@ -2,10 +2,11 @@ import path from 'path';
 import { parse } from 'url';
 import next from 'next';
 import express from 'express';
-import { PORT, NODE_ENV } from '../config/env';
+
+const PORT = process.env.PORT || 3000;
 
 const app = next({
-  dev: NODE_ENV === 'development',
+  dev: process.env.NODE_ENV === 'development',
 });
 
 const handle = app.getRequestHandler();
@@ -47,7 +48,7 @@ app.prepare().then(() => {
   });
 
   server.listen(PORT, () => {
-    console.info(`[${NODE_ENV}] Server running on http://localhost:${PORT}`);
+    console.info(`[${process.env.NODE_ENV}] Server running on http://localhost:${PORT}`);
   });
 })
   .catch((err) => {

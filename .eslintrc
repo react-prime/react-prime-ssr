@@ -22,10 +22,10 @@
   },
   "ignorePatterns": ["**/dist/**/*.js"],
   "globals": {
-    "__DEV__": false,
-    "__TEST__": false,
-    "__ACC__": false,
-    "__PROD__": false
+    "DEV": false,
+    "TEST": false,
+    "ACC": false,
+    "PROD": false
   },
   "rules": {
     "array-bracket-spacing": ["error", "never"],

@@ -1,15 +1,16 @@
+import * as tf from 'type-fest';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // global variables
-declare const __DEV__: boolean;
-declare const __PROD__: boolean;
-declare const __ACC__: boolean;
-declare const __TEST__: boolean;
+declare const DEV: boolean;
+declare const PROD: boolean;
+declare const ACC: boolean;
+declare const TEST: boolean;
 
 // We have to declare how files other than .ts(x) or .js(x) are handled by our codebase because
 // Typescript does not know we are handling these files with Webpack.
 declare module '*.json' {
-  type Json = string | number | boolean | { [key: string]: Json } | Json[] | null;
-  const value: Json;
+  const value: tf.JsonObject;
   export default value;
 }
 

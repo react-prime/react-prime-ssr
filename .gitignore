@@ -5,6 +5,7 @@ bundle_analytics/
 
 .idea
 .vscode
+.env.local
 .gitattributes
 next.config.js
 config/*.js

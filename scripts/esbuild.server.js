@@ -2,7 +2,6 @@
 const pkg = require('../package.json');
 
 const fileName = 'server/index';
-const isDev = Boolean(process.env.DEV);
 
 let ls;
 
@@ -16,36 +15,9 @@ require('esbuild').build({
   external: Object.keys(pkg.dependencies),
 })
   .then(() => {
-    console.log('⚡️ Server compiled succesfully');
-
-    if (isDev) {
-      runNextServer();
-    }
+    console.log('⚡️ Server compiled succesfully!\n');
   })
   .catch(() => {
     ls.kill();
     process.exit(1);
   });
-
-
-function runNextServer() {
-  const cp = require('child_process');
-
-  if (ls) {
-    ls.kill();
-  }
-
-  ls = cp.spawn('node', ['dist/server/index.js'], { stdio: 'inherit' });
-
-  if (ls.stdout) {
-    ls.stdout.on('data', (data) => {
-      process.stdout.write(data);
-    });
-  }
-
-  if (ls.stderr) {
-    ls.stderr.on('data', (data) => {
-      process.stderr.write(data);
-    });
-  }
-}

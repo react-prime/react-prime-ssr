@@ -17,7 +17,6 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "config": ["config/index"],
       "modules": ["src/components/modules/index"],
       "modules/*": ["src/components/modules/*"],
       "common": ["src/components/common/index"],
