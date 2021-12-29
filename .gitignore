@@ -10,6 +10,7 @@ bundle_analytics/
 next.config.js
 config/*.js
 **/*.tsbuildinfo
+src/types/generated/
 
 # OS generated files #
 ######################

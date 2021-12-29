@@ -5,3 +5,4 @@ export * from './next';
 export * from 'styles/types';
 
 export * from 'queries/types';
+export * from './generated/contentful';
