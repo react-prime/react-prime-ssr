@@ -1,5 +1,5 @@
 import * as i from 'types';
-import React from 'react';
+import * as React from 'react';
 
 import Logo from 'vectors/logo.svg';
 import { fetchUser, useGetUser } from 'queries/example';
