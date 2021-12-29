@@ -10,7 +10,7 @@ import { RouterContextProvider } from 'hooks';
 import { GlobalStyling } from 'styles';
 import theme from 'styles/theme';
 
-const App: React.VFC<Props> = ({ Component, pageProps: { dehydratedState, ...pageProps } }) => {
+const App: React.VFC<Props> = ({ Component, pageProps: { state, ...pageProps } }) => {
   // This ensures that data is not shared between different users and requests,
   // while still only creating the QueryClient once per component lifecycle.
   const [queryClient] = React.useState(() => new QueryClient({
@@ -35,7 +35,7 @@ const App: React.VFC<Props> = ({ Component, pageProps: { dehydratedState, ...pag
       <RouterContextProvider>
         <ThemeProvider theme={theme}>
           <QueryClientProvider client={queryClient}>
-            <Hydrate state={dehydratedState}>
+            <Hydrate state={state}>
               <Component {...pageProps} />
             </Hydrate>
             <ReactQueryDevtools />
@@ -48,7 +48,7 @@ const App: React.VFC<Props> = ({ Component, pageProps: { dehydratedState, ...pag
 
 type Props = Omit<AppProps, 'pageProps'> & {
   pageProps: i.AnyObject & {
-    dehydratedState: DehydratedState;
+    state: DehydratedState;
   };
 };
 

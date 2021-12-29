@@ -8,6 +8,6 @@ export const serverQueryFetch = async <Fn extends i.AnyFn>(key: QueryKey, fetchF
   await queryClient.prefetchQuery(key, fetchFn);
 
   return {
-    dehydratedState: dehydrate(queryClient),
+    state: dehydrate(queryClient),
   };
 };
