@@ -9,7 +9,7 @@
     "npm": ">=7.8.0"
   },
   "scripts": {
-    "start": "APP_ENV=development npm run build:nextconfig && concurrently \"APP_ENV=development npm run cf-ts-gen -- -p -i 15\" \"next dev\"",
+    "start": "npm run build:nextconfig && concurrently \"APP_ENV=development npm run cf-ts-gen -- -p -i 15\" \"APP_ENV=development next dev\"",
     "build:nextconfig": "node scripts/esbuild.nextconfig.js",
     "build:acc": "APP_ENV=acceptation npm run cs-ts-gen:build && npm run build:app",
     "build:prod": "APP_ENV=production npm run cf-ts-gen:build && npm run build:app",
