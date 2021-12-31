@@ -2,6 +2,7 @@ import path from 'path';
 import { parse } from 'url';
 import next from 'next';
 import express from 'express';
+import color from 'kleur';
 
 const PORT = process.env.PORT || 3000;
 
@@ -48,7 +49,7 @@ app.prepare().then(() => {
   });
 
   server.listen(PORT, () => {
-    console.info(`[${process.env.NODE_ENV}] Server running on http://localhost:${PORT}`);
+    console.info(`\n⚡️ [node: ${process.env.NODE_ENV} / app: ${process.env.APP_ENV}] Server running on ${color.cyan(`http://localhost:${PORT}`)}\n`);
   });
 })
   .catch((err) => {
