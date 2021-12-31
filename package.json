@@ -1,7 +1,7 @@
 {
   "name": "react-prime-ssr",
   "version": "1.3.0",
-  "description": "A starter kit to create comprehensive server side rendered React apps with React Query",
+  "description": "A starter kit to create comprehensive React apps",
   "author": "Label A",
   "license": "ISC",
   "engines": {
@@ -9,21 +9,22 @@
     "npm": ">=7.8.0"
   },
   "scripts": {
-    "start": "npm run build:nextconfig && concurrently \"APP_ENV=development npm run cf-ts-gen -- -p -i 15\" \"APP_ENV=development next dev\"",
+    "start": "node scripts/development.js",
     "build:nextconfig": "node scripts/esbuild.nextconfig.js",
-    "build:acc": "APP_ENV=acceptation npm run cs-ts-gen:build && npm run build:app",
-    "build:prod": "APP_ENV=production npm run cf-ts-gen:build && npm run build:app",
-    "build:app": "npm run build:nextconfig && next build && node scripts/esbuild.server.js",
+    "build:acc": "node scripts/build.js APP_ENV=acceptance",
+    "build:prod": "node scripts/build.js APP_ENV=production",
     "server": "NODE_ENV=production node dist/server/index.js",
     "lint": "eslint --ext .ts --ext .tsx --ext .js src/ server/ scripts/ ./next.config.ts",
     "analyze": "BUNDLE_ANALYZE=both npm run build",
     "typecheck": "tsc --noEmit",
-    "test": "concurrently \"npm run lint\" \"npm run typecheck\"",
+    "test": "concurrently 'npm run lint' 'npm run typecheck'",
     "cf-ts-gen": "contentful-typescript-codegen --output src/types/generated/contentful.d.ts",
     "cf-ts-gen:lint": "eslint --fix --quiet src/types/generated/contentful.d.ts",
-    "cf-ts-gen:build": "npm run cf-ts-gen && npm run cf-ts-gen:lint"
+    "cf-ts-gen:build": "npm run cf-ts-gen && npm run cf-ts-gen:lint",
+    "gql:gen": "graphql-codegen"
   },
   "dependencies": {
+    "@graphql-codegen/cli": "2.3.1",
     "contentful": "9.1.5",
     "express": "4.17.2",
     "lodash": "4.17.21",
@@ -37,6 +38,10 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-export-default-from": "7.16.5",
+    "@graphql-cli/codegen": "2.1.6",
+    "@graphql-codegen/typescript": "2.4.2",
+    "@graphql-codegen/typescript-operations": "2.2.2",
+    "@graphql-codegen/typescript-react-query": "3.2.3",
     "@next/bundle-analyzer": "12.0.7",
     "@next/eslint-plugin-next": "12.0.7",
     "@svgr/webpack": "6.1.2",
@@ -69,6 +74,7 @@
     "eslint-plugin-react": "7.28.0",
     "eslint-plugin-react-hooks": "4.3.0",
     "file-loader": "6.2.0",
+    "kleur": "4.1.4",
     "next-pwa": "5.4.4",
     "ts-toolbelt": "9.6.0",
     "tsconfig-paths-webpack-plugin": "3.5.2",
