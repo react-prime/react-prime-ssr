@@ -11,6 +11,7 @@
     "noImplicitAny": false,
     "allowJs": false,
     "isolatedModules": true,
+    "incremental": true,
     "moduleResolution": "node",
     "target": "esnext",
     "module": "esnext",
@@ -33,8 +34,7 @@
       "types": ["src/types/index"],
       "vectors/*": ["src/static/vectors/*"],
     },
-    "lib": ["dom", "esnext"],
-    "incremental": true
+    "lib": ["dom", "esnext"]
   },
   "typeRoots": ["node_modules/@types"],
   "exclude": [

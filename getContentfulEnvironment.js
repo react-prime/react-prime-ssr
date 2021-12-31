@@ -8,7 +8,7 @@ dotenv.config({ path: '.env.local' });
 const PREFIX = {
   production: 'PROD',
   development: 'DEV',
-  acceptation: 'ACC',
+  acceptance: 'ACC',
 }[process.env.APP_ENV];
 
 module.exports = async () => {
