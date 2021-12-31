@@ -9,7 +9,6 @@ if (!process.env.APP_ENV) {
 // All build scripts, in order of execution
 const scripts = [
   'npm run build:nextconfig',
-  'npm run cf-ts-gen:build',
   'npm run gql:gen',
   'next build',
   'node scripts/esbuild.server.js',

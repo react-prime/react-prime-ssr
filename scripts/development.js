@@ -7,7 +7,6 @@ const scripts = [
   'npm run build:nextconfig',
   {
     concurrently: [
-      'npm run cf-ts-gen -- -p -i 15',
       'npm run gql:gen -- --watch',
       'next dev',
     ],

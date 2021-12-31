@@ -18,9 +18,6 @@
     "analyze": "BUNDLE_ANALYZE=both npm run build",
     "typecheck": "tsc --noEmit",
     "test": "concurrently 'npm run lint' 'npm run typecheck'",
-    "cf-ts-gen": "contentful-typescript-codegen --output src/types/generated/contentful.d.ts",
-    "cf-ts-gen:lint": "eslint --fix --quiet src/types/generated/contentful.d.ts",
-    "cf-ts-gen:build": "npm run cf-ts-gen && npm run cf-ts-gen:lint",
     "gql:gen": "graphql-codegen"
   },
   "dependencies": {
@@ -59,8 +56,6 @@
     "babel-plugin-styled-components": "2.0.2",
     "chokidar": "3.5.2",
     "concurrently": "6.5.1",
-    "contentful-management": "7.47.2",
-    "contentful-typescript-codegen": "3.2.3",
     "copy-webpack-plugin": "10.2.0",
     "dotenv": "10.0.0",
     "esbuild": "0.14.9",
