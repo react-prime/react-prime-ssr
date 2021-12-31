@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const { execSync, spawnSync } = require('child_process');
 const color = require('kleur');
 

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires, no-console */
 const pkg = require('../package.json');
 
 const fileName = 'server/index';
@@ -21,7 +20,7 @@ require('esbuild').build({
   },
 })
   .then(() => {
-    console.log('\n⚡️ Server compiled succesfully!\n');
+    console.info('\n⚡️ Server compiled succesfully!\n');
   })
   .catch(() => {
     ls.kill();
