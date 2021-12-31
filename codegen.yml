@@ -1,0 +1,20 @@
+schema:
+  - https://graphql.contentful.com/content/v1/spaces/vbq7o4t6rrh9:
+      headers:
+        Authorization: 'Bearer 0c0_W4FfqXOeuEtLmASPwAt9j66Qq6X7e93KP5kvJdQ'
+documents: './src/**/*.graphql'
+generates:
+  ./src/queries/generated.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-query
+    config:
+      exposeFetcher: true
+      exposeQueryKeys: true
+      fetcher:
+        endpoint: 'https://graphql.contentful.com/content/v1/spaces/vbq7o4t6rrh9'
+        fetchParams:
+          headers:
+            Content-Type: 'application/json'
+            Authorization: 'Bearer 0c0_W4FfqXOeuEtLmASPwAt9j66Qq6X7e93KP5kvJdQ'

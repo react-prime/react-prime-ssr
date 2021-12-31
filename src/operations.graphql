@@ -1,0 +1,8 @@
+query getAllUsers {
+  userCollection {
+    items {
+      name
+      birthdate
+    }
+  }
+}

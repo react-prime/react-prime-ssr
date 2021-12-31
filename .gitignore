@@ -11,6 +11,7 @@ next.config.js
 config/*.js
 **/*.tsbuildinfo
 src/types/generated/
+src/queries/generated.*
 
 # OS generated files #
 ######################

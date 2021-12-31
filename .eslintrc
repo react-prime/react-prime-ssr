@@ -20,7 +20,7 @@
         "version": "detect"
     }
   },
-  "ignorePatterns": ["**/dist/**/*.js"],
+  "ignorePatterns": ["**/dist/**/*.js", "src/queries/generated*"],
   "globals": {
     "DEV": false,
     "TEST": false,

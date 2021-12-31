@@ -3,12 +3,10 @@ import * as React from 'react';
 import type { GetStaticProps } from 'next';
 
 import Logo from 'vectors/logo.svg';
-import { fetchUser, useGetUser } from 'queries/example';
 import { serverQueryFetch } from 'services';
+import { useGetAllUsersQuery } from 'queries/generated';
 
 import { PrimeHeader, PrimeContent } from 'modules/Home/styled';
-
-const userId = '3783ce59-0e59-4a77-aaaf-e824f7c5e8f1';
 
 /**
  * SSG (static site generation) is like Gatsby: it will generate a static page during build-time
@@ -18,7 +16,7 @@ const userId = '3783ce59-0e59-4a77-aaaf-e824f7c5e8f1';
  * https://www.patterns.dev/posts/static-rendering/
  */
 const Page: i.NextPageComponent = () => {
-  const { data } = useGetUser(userId);
+  const { data } = useGetAllUsersQuery();
 
   return (
     <>
@@ -37,9 +35,9 @@ const Page: i.NextPageComponent = () => {
  * Get data from the backend during build-time
  */
 export const getStaticProps: GetStaticProps = async () => {
-  const query = serverQueryFetch(
-    ['user', userId],
-    () => fetchUser(userId),
+  const query = await serverQueryFetch(
+    useGetAllUsersQuery.getKey(),
+    useGetAllUsersQuery.fetcher(),
   );
 
   return {
