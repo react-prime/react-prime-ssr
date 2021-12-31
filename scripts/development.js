@@ -6,7 +6,7 @@ const scripts = [
   'npm run build:nextconfig',
   {
     concurrently: [
-      'npm run gql:gen -- --watch',
+      'DOTENV_CONFIG_PATH=./.env.development npm run gql:gen -- --watch',
       'next dev',
     ],
   },

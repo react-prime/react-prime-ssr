@@ -1,7 +1,7 @@
 schema:
-  - https://graphql.contentful.com/content/v1/spaces/vbq7o4t6rrh9:
+  - https://graphql.contentful.com/content/v1/spaces/${NEXT_PUBLIC_CF_SPACE_ID}:
       headers:
-        Authorization: 'Bearer 0c0_W4FfqXOeuEtLmASPwAt9j66Qq6X7e93KP5kvJdQ'
+        Authorization: 'Bearer ${NEXT_PUBLIC_CF_DELIVERY_ACCESS_TOKEN}'
 documents: './src/**/*.graphql'
 generates:
   ./schema.graphql:
@@ -15,8 +15,8 @@ generates:
       exposeFetcher: true
       exposeQueryKeys: true
       fetcher:
-        endpoint: 'https://graphql.contentful.com/content/v1/spaces/vbq7o4t6rrh9'
+        endpoint: 'https://graphql.contentful.com/content/v1/spaces/${NEXT_PUBLIC_CF_SPACE_ID}'
         fetchParams:
           headers:
             Content-Type: 'application/json'
-            Authorization: 'Bearer 0c0_W4FfqXOeuEtLmASPwAt9j66Qq6X7e93KP5kvJdQ'
+            Authorization: 'Bearer ${NEXT_PUBLIC_CF_DELIVERY_ACCESS_TOKEN}'

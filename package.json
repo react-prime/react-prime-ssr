@@ -18,7 +18,7 @@
     "analyze": "BUNDLE_ANALYZE=both npm run build",
     "typecheck": "tsc --noEmit",
     "test": "concurrently 'npm run lint' 'npm run typecheck'",
-    "gql:gen": "graphql-codegen"
+    "gql:gen": "graphql-codegen -r dotenv/config"
   },
   "dependencies": {
     "@graphql-codegen/cli": "2.3.1",
