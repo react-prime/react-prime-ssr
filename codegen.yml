@@ -4,6 +4,8 @@ schema:
         Authorization: 'Bearer 0c0_W4FfqXOeuEtLmASPwAt9j66Qq6X7e93KP5kvJdQ'
 documents: './src/**/*.graphql'
 generates:
+  ./schema.graphql:
+      - schema-ast
   ./src/queries/generated.ts:
     plugins:
       - typescript
