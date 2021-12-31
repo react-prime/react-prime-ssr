@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { execSync } = require('child_process');
+const { execSync, spawnSync } = require('child_process');
 const color = require('kleur');
 
 if (!process.env.APP_ENV) {
@@ -8,8 +8,12 @@ if (!process.env.APP_ENV) {
 
 // All build scripts, in order of execution
 const scripts = [
-  'npm run build:nextconfig',
-  'npm run gql:gen',
+  {
+    concurrently: [
+      'npm run build:nextconfig',
+      'npm run gql:gen',
+    ],
+  },
   'next build',
   'node scripts/esbuild.server.js',
 ];
@@ -19,12 +23,32 @@ const start = new Date();
 
 // Run all scripts with all env variables
 for (const script of scripts) {
-  execSync(
-    `NODE_ENV=production APP_ENV=${process.env.APP_ENV} ${script}`,
-    {
-      stdio: 'inherit',
-    },
-  );
+  switch (typeof script) {
+    case 'string':
+      execSync(
+        `NODE_ENV=production APP_ENV=${process.env.APP_ENV} ${script}`,
+        {
+          stdio: 'inherit',
+        },
+      );
+      break;
+    case 'object':
+      for (const key in script) {
+        // Join all scripts with all env variables to an array of strings
+        const scriptsWithEnv = script[key].map((str) => `"NODE_ENV=production APP_ENV=${process.env.APP_ENV} ${str}"`);
+
+        // Start process with program 'key' + all scripts and env variables
+        spawnSync(
+          key, scriptsWithEnv,
+          {
+            stdio: 'inherit',
+          },
+        );
+      }
+      break;
+    default:
+      throw new Error(`Unknown script type: ${typeof script}`);
+  }
 }
 
 const end = new Date();
