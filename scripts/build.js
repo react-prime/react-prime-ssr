@@ -2,14 +2,7 @@
 const { execSync } = require('child_process');
 const color = require('kleur');
 
-// Get args from input, excluding 'node' and file name
-const [,, ...args] = process.argv;
-
-// Get all env variables from args that are separated by '='
-const env = args.filter((arg) => arg.includes('='));
-const APP_ENV = env.find((arg) => arg.includes('APP_ENV'))?.split('=')[1];
-
-if (!APP_ENV) {
+if (!process.env.APP_ENV) {
   throw new Error(color.red('Something went wrong while building the app. No APP_ENV was found. Make sure to include it when running the build script.'));
 }
 
@@ -22,13 +15,13 @@ const scripts = [
   'node scripts/esbuild.server.js',
 ];
 
-console.info(`⚡️ Building ${color.cyan('server and app')} for ${color.cyan(APP_ENV)}...`);
+console.info(`⚡️ Building ${color.cyan('server and app')} for ${color.cyan(process.env.APP_ENV)}...`);
 const start = new Date();
 
 // Run all scripts with all env variables
 for (const script of scripts) {
   execSync(
-    `${env.join(' ')} ${script}`,
+    `NODE_ENV=production APP_ENV=${process.env.APP_ENV} ${script}`,
     {
       stdio: 'inherit',
     },

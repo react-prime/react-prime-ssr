@@ -2,14 +2,6 @@
 const { execSync, spawnSync } = require('child_process');
 const color = require('kleur');
 
-// Get args from input, excluding 'node' and file name
-const [,, ...args] = process.argv;
-
-args.push('APP_ENV=development');
-
-// Get all env variables from args that are separated by '='
-const env = args.filter((arg) => arg.includes('='));
-
 // All build scripts, in order of execution
 const scripts = [
   'npm run build:nextconfig',
@@ -29,7 +21,7 @@ for (const script of scripts) {
   switch (typeof script) {
     case 'string':
       execSync(
-        `${env.join(' ')} ${script}`,
+        `APP_ENV=development ${script}`,
         {
           stdio: 'inherit',
         },
@@ -38,7 +30,7 @@ for (const script of scripts) {
     case 'object':
       for (const key in script) {
         // Join all scripts with all env variables to an array of strings
-        const scriptsWithEnv = script[key].map((str) => `"${env.join(' ')} ${str}"`);
+        const scriptsWithEnv = script[key].map((str) => `"APP_ENV=development ${str}"`);
 
         // Start process with program 'key' + all scripts and env variables
         spawnSync(
