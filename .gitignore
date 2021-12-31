@@ -12,6 +12,7 @@ config/*.js
 **/*.tsbuildinfo
 src/types/generated/
 src/queries/generated.*
+schema.graphql
 
 # OS generated files #
 ######################
