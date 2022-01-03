@@ -21,11 +21,6 @@ const Page: i.NextPageComponent<PageProps, PageQueries> = () => {
   const router = useRouter<PageQueries>();
   const { data: user, isLoading } = useGetUserQuery({ id: router.query.id });
 
-  // Show a loader while the page is being built and rendered
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <>
       <PrimeHeader>
@@ -33,7 +28,7 @@ const Page: i.NextPageComponent<PageProps, PageQueries> = () => {
       </PrimeHeader>
       <PrimeContent>
         This page is to show how to use iSSG.<br /><br />
-        {isLoading ? <div>Loading...</div> : (
+        {router.isFallback || isLoading ? <div>Loading...</div> : (
           <>user: <pre>{JSON.stringify(user, null, 2)}</pre></>
         )}
       </PrimeContent>

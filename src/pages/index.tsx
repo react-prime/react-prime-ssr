@@ -7,15 +7,7 @@ import Logo from 'vectors/logo.svg';
 import { Anchor } from 'common';
 import { PrimeHeader, PrimeContent, GithubLink } from 'modules/Home/styled';
 
-const userId = '3783ce59-0e59-4a77-aaaf-e824f7c5e8f1';
-
 const Home: i.NextPageComponent = () => {
-  const [randomNum, setRandomNum] = React.useState<number | null>(null);
-
-  React.useEffect(() => {
-    setRandomNum(Math.floor(Math.random() * 1000));
-  }, []);
-
   return (
     <>
       <PrimeHeader>
@@ -23,10 +15,9 @@ const Home: i.NextPageComponent = () => {
       </PrimeHeader>
       <PrimeContent>
         <ul>
-          <li><Anchor to={`/ssr/${userId}`}>SSR Page</Anchor></li>
+          <li><Anchor to="/ssr/1rCyFsX3xKMEufbh0GgrtZ">SSR Page</Anchor></li>
           <li><Anchor to="/ssg">SSG Page</Anchor></li>
-          <li><Anchor to="/issg/1">iSSG (build-time) Page</Anchor></li>
-          <li><Anchor to={`/issg/${randomNum}`}>iSSG (run-time) Page</Anchor></li>
+          <li><Anchor to="/issg/1rCyFsX3xKMEufbh0GgrtZ">iSSG (build-time) Page</Anchor></li>
         </ul>
         <p>
           Created by
