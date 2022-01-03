@@ -1,8 +1,31 @@
-query getAllUsers {
-  userCollection {
+query getUsers($preview: Boolean) {
+  userCollection(preview: $preview) {
     items {
       name
       birthdate
+      sys {
+        id
+      }
+    }
+  }
+}
+
+query getUserIds($preview: Boolean) {
+  userCollection(preview: $preview) {
+    items {
+      sys {
+        id
+      }
+    }
+  }
+}
+
+query getUser($id: String!, $preview: Boolean) {
+  user(id: $id, preview: $preview) {
+    name
+    birthdate
+    sys {
+      id
     }
   }
 }

@@ -4,7 +4,7 @@ import type { GetStaticProps } from 'next';
 
 import Logo from 'vectors/logo.svg';
 import { serverQueryFetch } from 'services';
-import { useGetAllUsersQuery } from 'queries/generated';
+import { useGetUsersQuery } from 'queries/generated';
 
 import { PrimeHeader, PrimeContent } from 'modules/Home/styled';
 
@@ -16,7 +16,7 @@ import { PrimeHeader, PrimeContent } from 'modules/Home/styled';
  * https://www.patterns.dev/posts/static-rendering/
  */
 const Page: i.NextPageComponent = () => {
-  const { data } = useGetAllUsersQuery();
+  const { data } = useGetUsersQuery();
 
   return (
     <>
@@ -36,8 +36,8 @@ const Page: i.NextPageComponent = () => {
  */
 export const getStaticProps: GetStaticProps = async () => {
   const query = await serverQueryFetch(
-    useGetAllUsersQuery.getKey(),
-    useGetAllUsersQuery.fetcher(),
+    useGetUsersQuery.getKey(),
+    useGetUsersQuery.fetcher(),
   );
 
   return {

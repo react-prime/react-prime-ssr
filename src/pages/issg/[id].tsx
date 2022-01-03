@@ -1,9 +1,11 @@
 import * as i from 'types';
 import * as React from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { useRouter } from 'next/router';
 
 import Logo from 'vectors/logo.svg';
+import { serverQueryFetch } from 'services';
+import { useRouter } from 'services/hooks/useRouter';
+import { useGetUserQuery, useGetUserIdsQuery } from 'queries/generated';
 
 import { PrimeHeader, PrimeContent } from 'modules/Home/styled';
 
@@ -15,8 +17,9 @@ import { PrimeHeader, PrimeContent } from 'modules/Home/styled';
  *
  * https://www.patterns.dev/posts/incremental-static-rendering/
  */
-const Page: i.NextPageComponent<PageProps, PageQueries> = ({ params }) => {
-  const router = useRouter();
+const Page: i.NextPageComponent<PageProps, PageQueries> = () => {
+  const router = useRouter<PageQueries>();
+  const { data: user, isLoading } = useGetUserQuery({ id: router.query.id });
 
   // Show a loader while the page is being built and rendered
   if (router.isFallback) {
@@ -30,7 +33,9 @@ const Page: i.NextPageComponent<PageProps, PageQueries> = ({ params }) => {
       </PrimeHeader>
       <PrimeContent>
         This page is to show how to use iSSG.<br /><br />
-        params: <pre>{JSON.stringify(params)}</pre>
+        {isLoading ? <div>Loading...</div> : (
+          <>user: <pre>{JSON.stringify(user, null, 2)}</pre></>
+        )}
       </PrimeContent>
     </>
   );
@@ -40,14 +45,14 @@ const Page: i.NextPageComponent<PageProps, PageQueries> = ({ params }) => {
 /**
  * Generate all the (known) static paths for this route during build-time
  */
-export const getStaticPaths: GetStaticPaths = () => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const query = await useGetUserIdsQuery.fetcher()();
+  const users = query.userCollection?.items.filter((item) => item != null) || [];
+
   return {
-    paths: [
-      { params: { id: '1' } },
-      { params: { id: '2' } },
-    ],
-    // If a path is loaded that is not /1 or /2 (i.e. /3) then it will be built run-time
-    // and from there on it will be a static page like /1 and /2
+    paths: users.map((user) => ({
+      params: { id: user!.sys.id },
+    })),
     fallback: true,
   };
 };
@@ -57,18 +62,22 @@ export const getStaticPaths: GetStaticPaths = () => {
  * Get data from the backend during build-time
  */
 export const getStaticProps: GetStaticProps<PageProps, PageQueries> = async (ctx) => {
+  const query = await serverQueryFetch(
+    useGetUserQuery.getKey({ id: ctx.params!.id! }),
+    useGetUserQuery.fetcher({ id: ctx.params!.id! }),
+  );
+
   return {
     props: {
-      params: ctx.params!,
+      ...query,
     },
     // Revalidate the page's data every 5 minutes
     revalidate: 300,
   };
 };
 
-type PageProps = {
-  params: PageQueries;
-};
+// eslint-disable-next-line @typescript-eslint/ban-types
+type PageProps = {};
 
 type PageQueries = {
   id: string;
