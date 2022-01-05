@@ -1,8 +1,8 @@
 import * as i from 'types';
 import * as React from 'react';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import type { GetStaticPaths, GetStaticProps } from 'next';
+import Image from 'next/image';
 
-import Logo from 'vectors/logo.svg';
 import { serverQueryFetch } from 'services';
 import { useRouter } from 'services/hooks/useRouter';
 import { useGetUserQuery, useGetUserIdsQuery } from 'queries/generated';
@@ -24,7 +24,7 @@ const Page: i.NextPageComponent<PageProps, PageQueries> = () => {
   return (
     <>
       <PrimeHeader>
-        <Logo />
+        <Image src="/vectors/logo.svg" width={250} height={102.3} alt="Prime logo" priority />
       </PrimeHeader>
       <PrimeContent>
         This page is to show how to use iSSG.<br /><br />

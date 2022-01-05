@@ -45,20 +45,7 @@ const config = (phase: string, config: NextConfig) => {
          * config of Next (unless you are trying to overwrite something) or things might break.
         */
 
-        const rules = [
-          {
-            test: /\.svg$/,
-            oneOf: [
-              {
-                resourceQuery: /external/,
-                type: 'asset/inline',
-              },
-              {
-                use: ['@svgr/webpack'],
-              },
-            ],
-          },
-        ];
+        const rules = [];
 
         // Add our rules
         if (!config.module) {

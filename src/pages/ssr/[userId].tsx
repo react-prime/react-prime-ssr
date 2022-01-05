@@ -1,10 +1,10 @@
 import * as i from 'types';
 import * as React from 'react';
+import type { GetServerSideProps } from 'next';
+import Image from 'next/image';
 
-import Logo from 'vectors/logo.svg';
 
 import { PrimeHeader, PrimeContent } from 'modules/Home/styled';
-import { GetServerSideProps } from 'next';
 import { useRouter } from 'services/hooks/useRouter';
 import { serverQueryFetch } from 'services';
 import { useGetUserQuery } from 'queries/generated';
@@ -20,7 +20,7 @@ const Page: i.NextPageComponent<PageProps, PageQueries> = () => {
   return (
     <>
       <PrimeHeader>
-        <Logo />
+        <Image src="/vectors/logo.svg" width={250} height={102.3} alt="Prime logo" priority />
       </PrimeHeader>
       <PrimeContent>
         This page is to show how to use SSR.<br /><br />

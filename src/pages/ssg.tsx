@@ -1,8 +1,8 @@
 import * as i from 'types';
 import * as React from 'react';
 import type { GetStaticProps } from 'next';
+import Image from 'next/image';
 
-import Logo from 'vectors/logo.svg';
 import { serverQueryFetch } from 'services';
 import { useGetUsersQuery } from 'queries/generated';
 
@@ -21,7 +21,7 @@ const Page: i.NextPageComponent = () => {
   return (
     <>
       <PrimeHeader>
-        <Logo />
+        <Image src="/vectors/logo.svg" width={250} height={102.3} alt="Prime logo" priority />
       </PrimeHeader>
       <PrimeContent>
         This page is to show how to use SSG.<br /><br />
