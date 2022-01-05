@@ -23,6 +23,9 @@ const config = (phase: string, config: NextConfig) => {
     // Remove x-powered-by header to remove information about the server
     poweredByHeader: false,
     env: ENV,
+    experimental: {
+      styledComponents: true,
+    },
   };
 
   /**

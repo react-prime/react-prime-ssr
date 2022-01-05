@@ -34,7 +34,6 @@
     "typesafe-actions": "5.1.0"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-export-default-from": "7.16.5",
     "@graphql-cli/codegen": "2.1.6",
     "@graphql-codegen/schema-ast": "2.4.1",
     "@graphql-codegen/typescript": "2.4.2",
@@ -53,8 +52,6 @@
     "@types/webpack": "5.28.0",
     "@typescript-eslint/eslint-plugin": "5.8.1",
     "@typescript-eslint/parser": "5.8.1",
-    "babel-plugin-lodash": "3.3.4",
-    "babel-plugin-styled-components": "2.0.2",
     "chokidar": "3.5.2",
     "concurrently": "6.5.1",
     "copy-webpack-plugin": "10.2.0",
@@ -82,11 +79,9 @@
   },
   "keywords": [
     "react",
-    "webpack",
     "express",
     "react-query",
     "boilerplate",
-    "babel",
     "styled-components",
     "ssr",
     "next"
