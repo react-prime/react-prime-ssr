@@ -8,8 +8,8 @@ import Logo from 'vectors/logo.svg';
 import { Anchor } from 'common';
 import { PrimeHeader, PrimeContent, GithubLink } from 'modules/Home/styled';
 
-const Home = React.lazy(() => import('./Home'));
-const Data = React.lazy(() => import('./Data'));
+const Home = React.lazy(() => import('../components/modules/Home'));
+const Data = React.lazy(() => import('../components/modules/Data'));
 
 const Component: React.VFC = () => {
   return (
