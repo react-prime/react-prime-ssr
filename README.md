@@ -4,6 +4,8 @@
 
 # React Prime SSR
 
+⚠️**This repository has been moved to the [Prime Monorepo](https://github.com/LabelA/prime-monorepo/tree/main/boilerplates/react-web)**.
+
 ## Quick start
 Use [create-react-prime](https://www.npmjs.com/package/create-react-prime) for easy install.
 ```
